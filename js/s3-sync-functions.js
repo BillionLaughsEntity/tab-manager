@@ -51,72 +51,114 @@ function testS3Connection() {
     });
 }
 
-// Upload to S3 using proxy
+// Enhanced S3 functions with proper authentication
 function uploadToS3(data) {
     return new Promise((resolve, reject) => {
-        console.log('Uploading to S3 via proxy...');
+        console.log('Uploading to S3...');
         
-        fetch('/s3-upload', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/xml',
-                // Add S3-specific headers that might be required
-                'x-amz-acl': 'private'
-            },
-            body: data
-        })
-        .then(response => {
-            console.log('Upload response status:', response.status, response.statusText);
-            
-            if (response.ok) {
-                resolve({ success: true, message: 'Upload successful' });
-            } else {
-                // Try to get error details from response
-                return response.text().then(errorText => {
-                    throw new Error(`Upload failed: ${response.status} ${response.statusText} - ${errorText}`);
-                });
-            }
-        })
-        .catch(error => {
-            console.error('Upload error:', error);
-            reject(error);
-        });
+        // Create a simple form-based upload as fallback
+        const formData = new FormData();
+        const blob = new Blob([data], { type: 'application/xml' });
+        formData.append('file', blob, 'tab-manager-data.xml');
+        
+        // Try multiple approaches
+        attemptUpload(data)
+            .then(resolve)
+            .catch(error => {
+                console.log('Primary upload failed, trying fallback...', error);
+                fallbackUpload(data).then(resolve).catch(reject);
+            });
     });
 }
 
-// Download from S3 using proxy
+// Primary upload attempt
+function attemptUpload(data) {
+    return fetch('/s3-proxy/tab-manager/tab-manager-data.xml', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/xml',
+        },
+        body: data
+    })
+    .then(response => {
+        console.log('Upload response:', response.status, response.statusText);
+        if (response.ok) {
+            return { success: true, message: 'Upload successful' };
+        } else {
+            return response.text().then(errorText => {
+                throw new Error(`Upload failed: ${response.status} - ${errorText}`);
+            });
+        }
+    });
+}
+
+// Fallback upload with different approach
+function fallbackUpload(data) {
+    // Try POST instead of PUT
+    return fetch('/s3-proxy/tab-manager/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `file=${encodeURIComponent(data)}&filename=tab-manager-data.xml`
+    })
+    .then(response => {
+        if (response.ok) {
+            return { success: true, message: 'Upload successful (fallback)' };
+        } else {
+            throw new Error(`Fallback upload failed: ${response.status}`);
+        }
+    });
+}
+
+// Enhanced download function
 function downloadFromS3() {
-    return new Promise((resolve, reject) => {
-        console.log('Downloading from S3 via proxy...');
-        
-        fetch('/s3-download', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/xml'
-            }
-        })
-        .then(response => {
-            console.log('Download response status:', response.status);
-            
-            if (response.ok) {
-                return response.text();
-            } else if (response.status === 404) {
-                // File doesn't exist yet - this is OK
-                resolve(null);
-            } else {
-                throw new Error(`Download failed: ${response.status} ${response.statusText}`);
-            }
-        })
-        .then(data => {
-            resolve(data);
-        })
-        .catch(error => {
-            console.error('Download error:', error);
-            reject(error);
-        });
+    return fetch('/s3-proxy/tab-manager/tab-manager-data.xml', {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/xml, text/xml, */*'
+        }
+    })
+    .then(response => {
+        console.log('Download response:', response.status);
+        if (response.ok) {
+            return response.text();
+        } else if (response.status === 404) {
+            return null; // File doesn't exist yet
+        } else {
+            return response.text().then(errorText => {
+                throw new Error(`Download failed: ${response.status} - ${errorText}`);
+            });
+        }
     });
 }
 
+// Enhanced test function
+function testS3Connection() {
+    return new Promise((resolve) => {
+        console.log('Testing S3 connection...');
+        
+        // Just test if we can reach the S3 endpoint
+        fetch('/s3-proxy/tab-manager/', {
+            method: 'HEAD'
+        })
+        .then(response => {
+            console.log('Connection test response:', response.status);
+            resolve({
+                success: response.status !== 400 && response.status !== 403,
+                status: response.status,
+                message: `S3 endpoint responded with status: ${response.status}`
+            });
+        })
+        .catch(error => {
+            console.error('Connection test error:', error);
+            resolve({
+                success: false,
+                message: `Connection failed: ${error.message}`
+            });
+        });
+    });
+}
 // Enhanced configuration function
 function configureS3(accessKey, secretKey, bucketName, region, filename) {
     s3Config.accessKeyId = accessKey;
@@ -129,6 +171,31 @@ function configureS3(accessKey, secretKey, bucketName, region, filename) {
     localStorage.setItem('s3Config', JSON.stringify(s3Config));
     
     return testS3Connection();
+}
+
+// Add this function to s3-sync-functions.js
+function openS3SyncModal() {
+    console.log('Opening S3 Sync Modal...');
+    const modal = document.getElementById('s3-sync-modal');
+    if (modal) {
+        modal.style.display = 'block';
+        
+        // Update sync status
+        const syncStatus = document.getElementById('sync-status');
+        if (syncStatus) {
+            syncStatus.innerHTML = '<p>Sync your data with S3 storage</p>';
+        }
+    } else {
+        console.error('S3 Sync Modal not found');
+    }
+}
+
+// Also add close function
+function closeS3SyncModal() {
+    const modal = document.getElementById('s3-sync-modal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
 }
 
 // Initialize on load

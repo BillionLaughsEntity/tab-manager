@@ -1,14 +1,17 @@
 
+/* Обновленный стиль для .logo с эффектом свечения */
 .logo {
   font-size: 1.5rem;
   font-weight: 700;
   display: flex;
   align-items: center;
-  
-  /* Базовый контур и свечение */
   position: relative;
   padding: 10px;
   border-radius: 8px;
+  
+  /* Используем переменные из root */
+  color: var(--white-color);
+  background-color: var(--dark-color);
 }
 
 .logo::before {
@@ -22,17 +25,16 @@
   border-radius: 12px;
   pointer-events: none;
   
-  /* Анимация свечения */
-  animation: electricGlow 2s linear infinite;
-  
-  /* Многослойное свечение */
+  /* Используем цветовую схему из переменных */
   box-shadow: 
-    0 0 10px #3498db,
-    0 0 20px #3498db,
-    0 0 30px #3498db,
-    0 0 40px #3498db,
-    0 0 50px #2980b9,
-    0 0 60px #2980b9;
+    0 0 10px var(--color-2),
+    0 0 20px var(--color-2),
+    0 0 30px var(--color-2),
+    0 0 40px var(--color-2),
+    0 0 50px var(--color-1),
+    0 0 60px var(--color-1);
+  
+  animation: electricGlow 2s linear infinite;
 }
 
 @keyframes electricGlow {
@@ -47,8 +49,7 @@
   }
 }
 
-/* Иконка (ваш существующий код) */
 .logo i {
   margin-right: 10px;
-  color: #3498db;
+  color: var(--color-2);
 }

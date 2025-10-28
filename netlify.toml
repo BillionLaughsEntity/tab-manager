@@ -1,7 +1,6 @@
-[build]
-  publish = "."
-
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
+  from = "/s3-proxy/*"
+  to = "https://s3.buckets.ru/:splat"
   status = 200
+  force = true
+  headers = {Access-Control-Allow-Origin = "*"}

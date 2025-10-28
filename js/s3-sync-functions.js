@@ -21,65 +21,34 @@ function initializeAWS() {
     return s3;
 }
 
-async function uploadToS3() {
-    try {
-        const s3 = initializeAWS();
-        const config = loadS3Config();
-        
-        // Generate XML from current data
-        const xmlContent = generateExportXML();
-        
-        const params = {
-            Bucket: config.bucketName,
-            Key: config.filename,
-            Body: xmlContent,
-            ContentType: 'application/xml'
-        };
-
-        updateSyncStatus('Uploading to S3...');
-        
-        await s3.upload(params).promise();
-        updateSyncStatus('Successfully uploaded to S3!', 'success');
-        
-        // Save upload timestamp
-        localStorage.setItem('lastS3Upload', new Date().toISOString());
-        
-    } catch (error) {
-        console.error('S3 Upload Error:', error);
-        updateSyncStatus(`Upload failed: ${error.message}`, 'error');
-    }
+// Updated upload function using proxy
+function uploadToS3(data) {
+    // Use Netlify proxy instead of direct S3
+    const proxyUrl = `/s3-proxy/tab-manager/tab-manager-data.xml`;
+    
+    return fetch(proxyUrl, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/xml',
+        },
+        body: data
+    })
+    .then(response => {
+        if (!response.ok) throw new Error('Upload failed');
+        return response;
+    });
 }
 
-async function downloadFromS3() {
-    try {
-        const s3 = initializeAWS();
-        const config = loadS3Config();
-        
-        const params = {
-            Bucket: config.bucketName,
-            Key: config.filename
-        };
 
-        updateSyncStatus('Downloading from S3...');
-        
-        const data = await s3.getObject(params).promise();
-        const xmlContent = data.Body.toString('utf-8');
-        
-        // Import the XML data
-        importFromXML(xmlContent);
-        updateSyncStatus('Successfully downloaded from S3!', 'success');
-        
-        // Save download timestamp
-        localStorage.setItem('lastS3Download', new Date().toISOString());
-        
-    } catch (error) {
-        console.error('S3 Download Error:', error);
-        if (error.code === 'NoSuchKey') {
-            updateSyncStatus('File not found in S3. Upload first?', 'warning');
-        } else {
-            updateSyncStatus(`Download failed: ${error.message}`, 'error');
-        }
-    }
+// Updated download function
+function downloadFromS3() {
+    const proxyUrl = `/s3-proxy/tab-manager/tab-manager-data.xml`;
+    
+    return fetch(proxyUrl)
+    .then(response => {
+        if (!response.ok) throw new Error('Download failed');
+        return response.text();
+    });
 }
 
 async function testS3Connection() {

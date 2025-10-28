@@ -3,4 +3,29 @@
   to = "https://s3.buckets.ru/:splat"
   status = 200
   force = true
-  headers = {Access-Control-Allow-Origin = "*"}
+  headers = { 
+    Access-Control-Allow-Origin = "*",
+    Access-Control-Allow-Methods = "GET, PUT, POST, DELETE, OPTIONS",
+    Access-Control-Allow-Headers = "*"
+  }
+
+# Add rewrite for specific S3 operations
+[[redirects]]
+  from = "/s3-upload"
+  to = "https://s3.buckets.ru/tab-manager/tab-manager-data.xml"
+  status = 200
+  force = true
+  headers = { 
+    Access-Control-Allow-Origin = "*",
+    Access-Control-Allow-Methods = "GET, PUT, OPTIONS",
+    Access-Control-Allow-Headers = "Content-Type, x-amz-acl, Authorization"
+  }
+
+[[redirects]]
+  from = "/s3-download" 
+  to = "https://s3.buckets.ru/tab-manager/tab-manager-data.xml"
+  status = 200
+  force = true
+  headers = { 
+    Access-Control-Allow-Origin = "*"
+  }

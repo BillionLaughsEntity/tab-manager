@@ -1,112 +1,135 @@
-// S3 Sync Functions
-function initializeAWS() {
-    const config = loadS3Config();
-    
-    if (!config.accessKeyId || !config.secretAccessKey) {
-        throw new Error('S3 configuration incomplete. Please configure access keys.');
+// Enhanced S3 sync functions with proper proxy handling
+let s3Config = {
+    accessKeyId: '',
+    secretAccessKey: '',
+    bucketName: 'tab-manager',
+    filename: 'tab-manager-data.xml',
+    region: 'ru-1'
+};
+
+// Initialize S3 config from localStorage
+function initializeS3Config() {
+    const savedConfig = localStorage.getItem('s3Config');
+    if (savedConfig) {
+        Object.assign(s3Config, JSON.parse(savedConfig));
     }
-
-    AWS.config.update({
-        accessKeyId: config.accessKeyId,
-        secretAccessKey: config.secretAccessKey,
-        region: config.region
-    });
-
-    const s3 = new AWS.S3({
-        endpoint: config.endpoint,
-        s3ForcePathStyle: true,
-        signatureVersion: 'v4'
-    });
-
-    return s3;
 }
 
-// Updated upload function using proxy
+// Test S3 connection using proxy
+function testS3Connection() {
+    return new Promise((resolve, reject) => {
+        console.log('Testing S3 connection via proxy...');
+        
+        // Use the proxy endpoint
+        fetch('/s3-download', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/xml'
+            }
+        })
+        .then(response => {
+            console.log('Test connection response status:', response.status);
+            
+            if (response.status === 200 || response.status === 404) {
+                // 200 = file exists, 404 = file doesn't exist but connection works
+                resolve({ success: true, status: response.status });
+            } else {
+                resolve({ 
+                    success: false, 
+                    status: response.status,
+                    message: `Server responded with status: ${response.status}`
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Test connection error:', error);
+            resolve({ 
+                success: false, 
+                message: `Network error: ${error.message}` 
+            });
+        });
+    });
+}
+
+// Upload to S3 using proxy
 function uploadToS3(data) {
-    // Use Netlify proxy instead of direct S3
-    const proxyUrl = `/s3-proxy/tab-manager/tab-manager-data.xml`;
-    
-    return fetch(proxyUrl, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/xml',
-        },
-        body: data
-    })
-    .then(response => {
-        if (!response.ok) throw new Error('Upload failed');
-        return response;
+    return new Promise((resolve, reject) => {
+        console.log('Uploading to S3 via proxy...');
+        
+        fetch('/s3-upload', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/xml',
+                // Add S3-specific headers that might be required
+                'x-amz-acl': 'private'
+            },
+            body: data
+        })
+        .then(response => {
+            console.log('Upload response status:', response.status, response.statusText);
+            
+            if (response.ok) {
+                resolve({ success: true, message: 'Upload successful' });
+            } else {
+                // Try to get error details from response
+                return response.text().then(errorText => {
+                    throw new Error(`Upload failed: ${response.status} ${response.statusText} - ${errorText}`);
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Upload error:', error);
+            reject(error);
+        });
     });
 }
 
-
-// Updated download function
+// Download from S3 using proxy
 function downloadFromS3() {
-    const proxyUrl = `/s3-proxy/tab-manager/tab-manager-data.xml`;
-    
-    return fetch(proxyUrl)
-    .then(response => {
-        if (!response.ok) throw new Error('Download failed');
-        return response.text();
+    return new Promise((resolve, reject) => {
+        console.log('Downloading from S3 via proxy...');
+        
+        fetch('/s3-download', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/xml'
+            }
+        })
+        .then(response => {
+            console.log('Download response status:', response.status);
+            
+            if (response.ok) {
+                return response.text();
+            } else if (response.status === 404) {
+                // File doesn't exist yet - this is OK
+                resolve(null);
+            } else {
+                throw new Error(`Download failed: ${response.status} ${response.statusText}`);
+            }
+        })
+        .then(data => {
+            resolve(data);
+        })
+        .catch(error => {
+            console.error('Download error:', error);
+            reject(error);
+        });
     });
 }
 
-async function testS3Connection() {
-    try {
-        const s3 = initializeAWS();
-        const config = loadS3Config();
-        
-        updateSyncStatus('Testing S3 connection...');
-        
-        const params = {
-            Bucket: config.bucketName,
-            MaxKeys: 1
-        };
-
-        await s3.listObjectsV2(params).promise();
-        updateSyncStatus('S3 connection successful!', 'success');
-        
-    } catch (error) {
-        console.error('S3 Connection Test Error:', error);
-        updateSyncStatus(`Connection failed: ${error.message}`, 'error');
-    }
-}
-
-function updateSyncStatus(message, type = 'info') {
-    const statusElement = document.getElementById('sync-status');
-    statusElement.innerHTML = `<p class="sync-status-${type}">${message}</p>`;
+// Enhanced configuration function
+function configureS3(accessKey, secretKey, bucketName, region, filename) {
+    s3Config.accessKeyId = accessKey;
+    s3Config.secretAccessKey = secretKey;
+    s3Config.bucketName = bucketName || 'tab-manager';
+    s3Config.region = region || 'ru-1';
+    s3Config.filename = filename || 'tab-manager-data.xml';
     
-    // Add last sync timestamps if available
-    const lastUpload = localStorage.getItem('lastS3Upload');
-    const lastDownload = localStorage.getItem('lastS3Download');
+    // Save to localStorage
+    localStorage.setItem('s3Config', JSON.stringify(s3Config));
     
-    if (lastUpload) {
-        statusElement.innerHTML += `<small>Last upload: ${new Date(lastUpload).toLocaleString()}</small><br>`;
-    }
-    if (lastDownload) {
-        statusElement.innerHTML += `<small>Last download: ${new Date(lastDownload).toLocaleString()}</small>`;
-    }
+    return testS3Connection();
 }
 
-function openS3SyncModal() {
-    const modal = document.getElementById('s3-sync-modal');
-    updateSyncStatus('Ready to sync with S3 storage');
-    modal.style.display = 'block';
-}
-
-// Helper function to generate XML for export (reuse your existing export function)
-function generateExportXML() {
-    const exportXmlContent = document.getElementById('export-xml-content');
-    // Trigger XML generation without showing modal
-    const originalDisplay = exportModal.style.display;
-    exportModal.style.display = 'none';
-    
-    // Use your existing export functionality
-    if (typeof generateExportData === 'function') {
-        return generateExportData();
-    } else {
-        // Fallback: use the existing export textarea content
-        exportBtn.click(); // This will populate the export textarea
-        return exportXmlContent.value;
-    }
-}
+// Initialize on load
+initializeS3Config();

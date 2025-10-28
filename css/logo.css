@@ -1,55 +1,11 @@
-
-/* Обновленный стиль для .logo с эффектом свечения */
 .logo {
-  font-size: 1.5rem;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  position: relative;
-  padding: 10px;
-  border-radius: 8px;
-  
-  /* Используем переменные из root */
-  color: var(--white-color);
-  background-color: var(--dark-color);
-}
-
-.logo::before {
-  content: '';
-  position: absolute;
-  top: -5px;
-  left: -5px;
-  right: -5px;
-  bottom: -5px;
-  background: transparent;
-  border-radius: 12px;
-  pointer-events: none;
-  
-  /* Используем цветовую схему из переменных */
-  box-shadow: 
-    0 0 10px var(--color-2),
-    0 0 20px var(--color-2),
-    0 0 30px var(--color-2),
-    0 0 40px var(--color-2),
-    0 0 50px var(--color-1),
-    0 0 60px var(--color-1);
-  
-  animation: electricGlow 2s linear infinite;
-}
-
-@keyframes electricGlow {
-  0% {
-    filter: hue-rotate(0deg);
-  }
-  50% {
-    filter: hue-rotate(180deg);
-  }
-  100% {
-    filter: hue-rotate(360deg);
-  }
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
 }
 
 .logo i {
-  margin-right: 10px;
-  color: var(--color-2);
-}
+    margin-right: 10px;
+    color: #3498db;
+} 

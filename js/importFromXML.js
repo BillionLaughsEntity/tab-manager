@@ -1,4 +1,4 @@
-// Import data from XML (updated for multi-link cards and trash bin)
+// Import data from XML (updated for workbooks structure)
 function importFromXML(xmlContent) {
     try {
         const parser = new DOMParser();
@@ -9,13 +9,21 @@ function importFromXML(xmlContent) {
             throw new Error('Invalid XML format');
         }
         
-        const profilesElement = xmlDoc.getElementsByTagName('profiles')[0];
-        if (!profilesElement) {
-            throw new Error('No profiles found in XML');
+        // Try to import workbooks first (new structure)
+        const workbooksElement = xmlDoc.getElementsByTagName('workbooks')[0];
+        if (workbooksElement) {
+            workbooks = importWorkbooks(workbooksElement);
+        } 
+        // Fallback to old profiles structure for backward compatibility
+        else {
+            const profilesElement = xmlDoc.getElementsByTagName('profiles')[0];
+            if (!profilesElement) {
+                throw new Error('No workbooks or profiles found in XML');
+            }
+            // Convert old profiles structure to workbooks
+            workbooks = convertProfilesToWorkbooks(profilesElement);
         }
         
-        // Import profiles
-        profiles = importProfiles(profilesElement);
         saveWorkbooks();
         
         // Import trash bin data
@@ -26,16 +34,27 @@ function importFromXML(xmlContent) {
         }
         
         // Update UI
+        renderWorkbookTabs();
         renderProfileTabs();
         renderEnvironments();
         
-        // Set current profile to the first one
-        if (profiles.length > 0) {
-            currentProfileId = profiles[0].id;
+        // Set current selections
+        if (workbooks.length > 0) {
+            currentWorkbookId = workbooks[0].id;
+            const currentWorkbook = getCurrentWorkbook();
+            if (currentWorkbook.profiles.length > 0) {
+                currentProfileId = currentWorkbook.profiles[0].id;
+            }
         }
         
         importModal.style.display = 'none';
         alert('Data imported successfully!');
+        
+        // Update counters
+        if (typeof updateAllCounters === 'function') {
+            updateAllCounters();
+        }
+        
     } catch (error) {
         alert('Error importing XML: ' + error.message);
         console.error('Import error:', error);

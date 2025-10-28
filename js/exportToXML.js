@@ -1,99 +1,91 @@
-// Update your exportToXML function to include trash bin data
+// Export to XML (updated for workbooks)
 function exportToXML() {
-    const xmlData = `<?xml version="1.0" encoding="UTF-8"?>
-<tabManagerData>
-    <workbooks>
-        ${workbooks.map(workbook => `
-        <workbook id="${workbook.id}" name="${escapeXml(workbook.name)}" color="${workbook.color || '#9b59b6'}">
-            <profiles>
-                ${(workbook.profiles || []).map(profile => `
-                <profile id="${profile.id}" name="${escapeXml(profile.name)}" color="${profile.color || '#3498db'}">
-                    <environments>
-                        ${(profile.environments || []).map(environment => `
-                        <environment id="${environment.id}" name="${escapeXml(environment.name)}">
-                            <tabs>
-                                ${(environment.tabs || []).map(tab => `
-                                <tab id="${tab.id}" name="${escapeXml(tab.name)}">
-                                    <links>
-                                        ${(tab.links || []).map(link => {
-                                            if (link.isMultiLink) {
-                                                return `
-                                        <link id="${link.id}" type="multi" title="${escapeXml(link.title)}">
-                                            ${(link.urls || []).map(url => `
-                                            <url>${escapeXml(url)}</url>
-                                            `).join('')}
-                                        </link>`;
-                                            } else if (link.isSearchLink) {
-                                                return `
-                                        <link id="${link.id}" type="search" title="${escapeXml(link.title)}">
-                                            <url>${escapeXml(link.url)}</url>
-                                        </link>`;
-                                            } else {
-                                                return `
-                                        <link id="${link.id}" type="single">
-                                            <title>${escapeXml(link.title)}</title>
-                                            <url>${escapeXml(link.url)}</url>
-                                        </link>`;
-                                            }
-                                        }).join('')}
-                                    </links>
-                                </tab>
-                                `).join('')}
-                            </tabs>
-                        </environment>
-                        `).join('')}
-                    </environments>
-                </profile>
-                `).join('')}
-            </profiles>
-        </workbook>
-        `).join('')}
-    </workbooks>
-    <trashBin>
-        ${trashBin.map(item => `
-        <trashItem id="${item.id}" deletedAt="${item.deletedAt}">
-            <title>${escapeXml(item.title)}</title>
-            <url>${escapeXml(item.url)}</url>
-            <origin>
-                <workbookId>${item.origin?.workbookId || ''}</workbookId>
-                <workbookName>${escapeXml(item.origin?.workbookName || '')}</workbookName>
-                <profileId>${item.origin?.profileId || ''}</profileId>
-                <profileName>${escapeXml(item.origin?.profileName || '')}</profileName>
-                <environmentId>${item.origin?.environmentId || ''}</environmentId>
-                <environmentName>${escapeXml(item.origin?.environmentName || '')}</environmentName>
-                <tabId>${item.origin?.tabId || ''}</tabId>
-                <tabName>${escapeXml(item.origin?.tabName || '')}</tabName>
-            </origin>
-            ${item.isMultiLink ? `
-            <type>multi</type>
-            <urls>
-                ${(item.urls || []).map(url => `
-                <url>${escapeXml(url)}</url>
-                `).join('')}
-            </urls>
-            ` : item.isSearchLink ? `
-            <type>search</type>
-            ` : `
-            <type>single</type>
-            `}
-        </trashItem>
-        `).join('')}
-    </trashBin>
-</tabManagerData>`;
+    const serializer = new XMLSerializer();
     
-    document.getElementById('export-xml-content').value = xmlData;
-    exportModal.style.display = 'flex';
-}
-
-// Add this function to handle XML file download
-function downloadXMLFile(xmlContent, filename = 'tabmanager_export.xml') {
-    const blob = new Blob([xmlContent], { type: 'application/xml' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    // Create root element
+    const root = document.createElement('tabManagerData');
+    root.setAttribute('version', APP_VERSION);
+    root.setAttribute('exportDate', new Date().toISOString());
+    
+    // Add workbooks
+    const workbooksElem = document.createElement('workbooks');
+    workbooks.forEach(workbook => {
+        const workbookElem = document.createElement('workbook');
+        workbookElem.setAttribute('id', workbook.id);
+        workbookElem.setAttribute('name', workbook.name);
+        workbookElem.setAttribute('color', workbook.color);
+        
+        // Add profiles for this workbook
+        const profilesElem = document.createElement('profiles');
+        workbook.profiles.forEach(profile => {
+            const profileElem = document.createElement('profile');
+            profileElem.setAttribute('id', profile.id);
+            profileElem.setAttribute('name', profile.name);
+            profileElem.setAttribute('color', profile.color);
+            
+            // Add environments
+            const environmentsElem = document.createElement('environments');
+            profile.environments.forEach(environment => {
+                const environmentElem = document.createElement('environment');
+                environmentElem.setAttribute('id', environment.id);
+                environmentElem.setAttribute('name', environment.name);
+                
+                // Add tabs
+                const tabsElem = document.createElement('tabs');
+                environment.tabs.forEach(tab => {
+                    const tabElem = document.createElement('tab');
+                    tabElem.setAttribute('id', tab.id);
+                    tabElem.setAttribute('name', tab.name);
+                    
+                    // Add links
+                    const linksElem = document.createElement('links');
+                    tab.links.forEach(link => {
+                        const linkElem = document.createElement('link');
+                        linkElem.setAttribute('id', link.id);
+                        linkElem.setAttribute('title', escapeXml(link.title));
+                        linkElem.setAttribute('url', escapeXml(link.url));
+                        if (link.type === 'multi') {
+                            linkElem.setAttribute('type', 'multi');
+                            link.multiLinks.forEach(multiLink => {
+                                const multiLinkElem = document.createElement('multiLink');
+                                multiLinkElem.setAttribute('url', escapeXml(multiLink));
+                                linkElem.appendChild(multiLinkElem);
+                            });
+                        }
+                        linksElem.appendChild(linkElem);
+                    });
+                    
+                    tabElem.appendChild(linksElem);
+                    tabsElem.appendChild(tabElem);
+                });
+                
+                environmentElem.appendChild(tabsElem);
+                environmentsElem.appendChild(environmentElem);
+            });
+            
+            profileElem.appendChild(environmentsElem);
+            profilesElem.appendChild(profileElem);
+        });
+        
+        workbookElem.appendChild(profilesElem);
+        workbooksElem.appendChild(workbookElem);
+    });
+    
+    root.appendChild(workbooksElem);
+    
+    // Add trash bin if not empty
+    if (trashBin.length > 0) {
+        const trashBinElem = document.createElement('trashBin');
+        trashBin.forEach(item => {
+            const itemElem = document.createElement('trashItem');
+            itemElem.setAttribute('id', item.id);
+            itemElem.setAttribute('type', item.type);
+            itemElem.setAttribute('data', escapeXml(JSON.stringify(item.data)));
+            itemElem.setAttribute('deletedAt', item.deletedAt);
+            trashBinElem.appendChild(itemElem);
+        });
+        root.appendChild(trashBinElem);
+    }
+    
+    return '<?xml version="1.0" encoding="UTF-8"?>\n' + serializer.serializeToString(root);
 }

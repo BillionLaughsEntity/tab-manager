@@ -1,0 +1,82 @@
+/* Grid view specific styles */
+.links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    width: 100%;
+}
+
+/* Make sure grid items display properly */
+.link-card {
+    background: white;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    min-height: 140px;
+}
+
+
+/* Checkbox styles for all view types */
+.link-checkbox {
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+}
+
+/* Grid view checkbox positioning */
+.link-card .link-checkbox {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    transform: translateY(-50%);
+    right: 10px;
+}
+
+/* List view checkbox positioning */
+.link-list-item .link-checkbox {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: -5px; /* Отступ от правого края */
+}
+
+.links-table .link-checkbox {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+/* Для карточек */
+.links-table .link-card .link-checkbox {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+}
+
+/* Selected state for all view types */
+.link-card.selected,
+.link-list-item.selected,
+.table-row.selected {
+    background-color: rgba(52, 152, 219, 0.1) !important;
+    border: 2px solid #3498db;
+}
+
+/* Ensure list items and table rows have proper positioning for checkboxes */
+.link-list-item {
+    position: relative;
+    width: 1400px;
+}
+
+.table-row {
+    position: relative;
+    width: 30px;
+}

@@ -1,0 +1,150 @@
+.profile-tabs-container {
+    background: #2c3e50;
+    padding: 8px 15px;
+    display: flex;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    overflow-x: auto; /* Enable horizontal scrolling */
+    overflow-y: hidden; /* Prevent vertical scrolling */
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent; /* Firefox */
+    min-height: 48px;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    white-space: nowrap; /* Prevent wrapping */
+    scroll-behavior: smooth;
+    z-index: 150; /* Lower than workbook tabs */
+}
+
+/* Webkit browsers (Chrome, Safari, Edge) scrollbar styling */
+.profile-tabs-container::-webkit-scrollbar {
+    height: 8px; /* Make scrollbar visible */
+}
+
+.profile-tabs-container::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.profile-tabs-container::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+.profile-tabs-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* Remove the previous scrollbar hiding rules */
+.profile-tabs-container:not(:hover)::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3); /* Keep visible */
+}
+
+.profile-tabs-container::-webkit-scrollbar {
+    display: block; /* Change from 'none' to 'block' */
+}
+
+/* Better visual feedback when scrolling is available */
+.profile-tabs-container:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 20px;
+    background: linear-gradient(to left, #2c3e50, transparent);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.profile-tabs-container.scrollable:after {
+    opacity: 1;
+}
+
+.profile-tab {
+    padding: 4px 8px; /* Reduced padding */
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: none;
+    border-radius: 8px 8px 0 0;
+    margin-right: 5px;
+    cursor: pointer;
+    white-space: nowrap;
+    position: relative;
+    display: flex;
+    flex-direction: row; /* Changed to row layout for compactness */
+    align-items: center;
+    min-width: 170px; /* Reduced minimum width */
+    max-width: 300px; /* Added maximum width */
+    height: 32px; /* Fixed height for consistency */
+    border-left: 4px solid var(--profile-color, #3498db); /* Added border like environments */
+
+}
+
+.profile-tab.active {
+    background: #2c3e50;
+    font-weight: 600;
+}
+
+.profile-tab-close {
+    margin-left: 8px;
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+.profile-tab-close:hover {
+    opacity: 1;
+    color: #ff4800;
+    
+}
+
+/* Profile tab content adjustments */
+.profile-tab-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: flex-start;
+    position: relative;
+    min-width: 0; /* Allow content to shrink */
+}
+
+.add-profile-tab {
+    padding: 10px;
+    background: transparent;
+    color: #3498db;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+/* Profile Modal */
+.profile-modal-content {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+}
+
+.profile-tab-edit {
+    margin-left: 8px;
+    font-size: 0.8rem;
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.profile-tab-edit:hover {
+    opacity: 1;
+    color: #33e90e;
+}
+
+/* Add color to profile modal */
+.color-preview {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 10px;
+    display: inline-block;
+    vertical-align: middle;
+}

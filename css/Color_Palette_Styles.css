@@ -1,0 +1,34 @@
+/* Color Palette Styles */
+.color-palette {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 20px 0;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.color-option {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.color-option:hover {
+    transform: scale(1.1);
+    border-color: #2c3e50;
+}
+
+.color-option.selected {
+    border-color: #2c3e50;
+    transform: scale(1.1);
+    box-shadow: 0 0 0 2px white, 0 0 0 4px #2c3e50;
+}
+
+.color-modal-content {
+    max-height: 100vh; /* Increase from 80vh */
+}

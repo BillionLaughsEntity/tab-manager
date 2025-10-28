@@ -1,0 +1,125 @@
+/* Profile tab color styling */
+.profile-tab {
+    position: relative;
+    padding-left: 40px !important;
+    border-left: 4px solid var(--profile-color, #3498db); /* Keep on left side */
+    padding-left: 40px !important; /* Keep left padding for color indicator */
+}
+
+.profile-tab-color {
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    transform: translateY(-50%);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    margin-right: 6px; /* Added margin for spacing */
+}
+
+.profile-tab.active .profile-tab-color {
+    border-color: rgba(255, 255, 255, 0.7);
+}
+
+.profile-tab-name {
+    flex: 1;
+    text-align: left; /* Changed to left alignment */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: calc(100% - 60px); /* Adjusted for compact layout */
+    margin-top: 0; /* Removed margin */
+    font-size: 0.9rem; /* Slightly smaller font */
+}
+
+.profile-tab-actions {
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the right */
+    width: auto; /* Auto width instead of 100% */
+    margin-top: 0; /* Removed margin */
+    padding: 0 2px; /* Reduced padding */
+    margin-left: auto; /* Push to the right */
+}
+
+.profile-tab-action {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    font-size: 0.7rem; /* Smaller buttons */
+    padding: 2px 4px; /* Reduced padding */
+    border-radius: 3px;
+    transition: all 0.3s ease;
+    flex: none; /* Don't stretch buttons */
+    margin: 0 1px; /* Reduced margin */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px; /* Fixed width */
+    height: 18px; /* Fixed height */
+}
+
+.profile-tab-action:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.profile-tab-edit:hover {
+    color: #33e90e;
+}
+
+.profile-tab-color-picker:hover {
+    color: #3498db;
+}
+
+.profile-tab-close:hover {
+    color: #ff4800;
+}
+
+.add-profile-tab {
+    padding: 6px 8px; /* Reduced padding */
+    background: transparent;
+    color: #3498db;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem; /* Slightly smaller */
+    height: 32px; /* Match profile tab height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Gradient fade effect at edges */
+.profile-tabs-container::before,
+.profile-tabs-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 30px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.profile-tabs-container::before {
+    left: 0;
+    background: linear-gradient(to right, #2c3e50, transparent);
+}
+
+.profile-tabs-container::after {
+    right: 0;
+    background: linear-gradient(to left, #2c3e50, transparent);
+}
+
+/* Hide gradients when at scroll boundaries */
+.profile-tabs-container.at-start::before,
+.profile-tabs-container.at-end::after {
+    opacity: 0;
+}
+
+/* Active profile tab styling */
+.profile-tab.active {
+    background: rgba(52, 152, 219, 0.2);
+    font-weight: 600;
+}

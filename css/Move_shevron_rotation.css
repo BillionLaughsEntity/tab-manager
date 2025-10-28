@@ -1,0 +1,6 @@
+/* Fix chevron rotation */
+.move-link-profile.expanded .move-link-profile-header i,
+.move-tab-profile.expanded .move-tab-profile-header i,
+.move-link-environment.expanded .move-link-environment-header i {
+    transform: rotate(180deg);
+}

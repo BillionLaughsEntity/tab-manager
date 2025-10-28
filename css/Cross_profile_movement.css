@@ -1,0 +1,173 @@
+/* Enhanced styles for cross-profile movement */
+.move-link-profile.current-profile {
+    border-left: 4px solid #3498db;
+}
+
+.move-link-profile-header {
+    background: #f8f9fa;
+    padding: 12px 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.move-link-profile-header .profile-badge {
+    font-size: 0.7em;
+    background: #3498db;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 10px;
+    margin-left: 8px;
+}
+
+.move-link-environment-header {
+    background: #f0f0f0;
+    padding: 10px 12px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.move-link-tab {
+    padding: 12px 15px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.move-link-tab:hover {
+    background: #f8f9fa;
+}
+
+.move-link-tab.selected {
+    background: #e3f2fd;
+    font-weight: 600;
+    border-left: 3px solid #3498db;
+}
+
+.move-link-tab:last-child {
+    border-bottom: none;
+}
+
+/* Path indicator for selected destination */
+.selected-destination-path {
+    background: #e8f5e8;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 6px;
+    border-left: 4px solid #2ecc71;
+    font-size: 0.9em;
+}
+
+.selected-destination-path strong {
+    color: #27ae60;
+}
+
+/* Add this to your CSS */
+#toggle-selection-mode-btn {
+    background: #f39c12 !important;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 300;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+}
+
+#toggle-selection-mode-btn:hover {
+    background: #e67e22 !important;
+}
+
+#toggle-selection-mode-btn i {
+    margin-right: 8px;
+}
+
+.bulk-clone-btn {
+    background: #9b59b6;
+    color: white;
+}
+
+.bulk-clone-btn:hover {
+    background: #8e44ad;
+}
+
+.bulk-clone-btn:disabled {
+    background: #bdc3c7;
+    cursor: not-allowed;
+}
+
+.bulk-clone-btn {
+    background: #9b59b6;
+    color: white;
+}
+
+.bulk-clone-btn:hover {
+    background: #8e44ad;
+}
+
+.bulk-clone-btn:disabled {
+    background: #bdc3c7;
+    cursor: not-allowed;
+}
+
+.view-type-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.view-type-toggle {
+    background: #9b59b6;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.view-type-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    display: none;
+    min-width: 150px;
+    z-index: 1000;
+}
+
+.view-type-menu.show {
+    display: block;
+}
+
+.view-type-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+}
+
+.view-type-option:hover {
+    background: #f5f5f5;
+}

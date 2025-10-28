@@ -1,0 +1,28 @@
+/* Counters Styles */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.counters {
+    display: flex;
+    gap: 15px;
+    margin-left: 20px;
+}
+
+.counter-item {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #ecf0f1;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Optional: Add hover effects */
+.counter-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transition: background 0.2s ease;
+}

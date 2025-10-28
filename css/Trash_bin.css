@@ -1,0 +1,157 @@
+/* Trash Bin Button in Header */
+.trash-bin-btn {
+    background: #e74c3c !important;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 300;
+    margin-left: 10px;
+}
+
+.trash-bin-btn:hover {
+    background: #c0392b !important;
+}
+
+/* Trash Bin Modal */
+.trash-bin-modal-content {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.trash-bin-empty {
+    text-align: center;
+    padding: 40px;
+    color: #7f8c8d;
+}
+
+/* Improve trash bin styles */
+.trash-bin-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    background: white;
+    transition: background 0.2s ease;
+}
+
+.trash-bin-item:hover {
+    background: #f8f9fa;
+}
+
+.trash-bin-item-icon {
+    margin-right: 15px;
+    color: #95a5a6;
+    font-size: 1.2rem;
+    width: 30px;
+    text-align: center;
+    margin-top: 2px;
+}
+
+.trash-bin-item-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.trash-bin-item-title {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 5px;
+    font-size: 1.1rem;
+}
+
+.trash-bin-item-url {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    word-break: break-all;
+    margin-bottom: 5px;
+}
+
+.trash-bin-item-origin {
+    color: #95a5a6;
+    font-size: 0.8rem;
+    margin-bottom: 3px;
+}
+
+.trash-bin-item-deleted {
+    color: #e74c3c;
+    font-size: 0.8rem;
+    font-style: italic;
+}
+
+        .trash-bin-item-actions {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.trash-bin-action-btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s ease;
+}
+
+.trash-bin-restore-btn {
+    background: #2ecc71;
+    color: white;
+}
+
+.trash-bin-restore-btn:hover {
+    background: #27ae60;
+}
+
+.trash-bin-permanently-delete-btn {
+    background: #e74c3c;
+    color: white;
+}
+
+.trash-bin-permanently-delete-btn:hover {
+    background: #c0392b;
+}
+
+.trash-bin-empty {
+    text-align: center;
+    padding: 40px;
+    color: #7f8c8d;
+}
+
+.trash-bin-empty i {
+    display: block;
+    margin-bottom: 15px;
+}
+.trash-bin-clear-all-btn {
+    background: #e74c3c;
+    color: white;
+    margin-top: 20px;
+}
+
+.trash-bin-clear-all-btn:hover {
+    background: #c0392b;
+}
+
+.trash-bin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.trash-bin-count {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}

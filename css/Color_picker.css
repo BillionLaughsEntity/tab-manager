@@ -1,0 +1,46 @@
+/* Add these styles to your existing CSS */
+.color-picker-container {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.color-picker-container label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.html5-color-input {
+    width: 80px;
+    height: 80px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+.selected-color-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: #7f8c8d;
+}
+
+.color-preview-box {
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    border: 2px solid #ddd;
+    display: inline-block;
+}
+
+/* Hide the original color options if you want to keep them as fallback */
+.color-option {
+    display: none;
+}

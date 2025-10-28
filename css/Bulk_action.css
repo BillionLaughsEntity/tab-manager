@@ -1,0 +1,65 @@
+/* Bulk Action Bar */
+.bulk-action-bar {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2c3e50;
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    display: none;
+    align-items: center;
+    gap: 15px;
+    z-index: 1000;
+    border: 1px solid #34495e;
+}
+
+.bulk-action-bar.visible {
+    display: flex;
+}
+
+.bulk-selection-count {
+    color: white;
+    font-weight: 600;
+    margin-right: 15px;
+}
+
+.bulk-action-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.bulk-move-btn {
+    background: #3498db;
+    color: white;
+}
+
+.bulk-move-btn:hover {
+    background: #2980b9;
+}
+
+.bulk-delete-btn {
+    background: #e74c3c;
+    color: white;
+}
+
+.bulk-delete-btn:hover {
+    background: #c0392b;
+}
+
+.bulk-cancel-btn {
+    background: #95a5a6;
+    color: white;
+}
+
+.bulk-cancel-btn:hover {
+    background: #7f8c8d;
+}

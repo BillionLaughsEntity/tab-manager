@@ -1,0 +1,9 @@
+.side-panel {
+    width: 400px;
+    background: #2c3e50;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    max-height: 100vh;
+}

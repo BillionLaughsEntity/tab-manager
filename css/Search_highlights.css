@@ -1,0 +1,68 @@
+/* Search Highlight Styles - Persistent subtle coloring */
+.search-highlight-workbook {
+    background: linear-gradient(90deg, rgba(155, 89, 182, 0.15) 0%, rgba(155, 89, 182, 0.05) 100%) !important;
+    border-right: 4px solid #9b59b6 !important;
+    box-shadow: 0 0 10px rgba(155, 89, 182, 0.3);
+}
+
+.search-highlight-profile {
+    background: linear-gradient(90deg, rgba(52, 152, 219, 0.15) 0%, rgba(52, 152, 219, 0.05) 100%) !important;
+    border-left: 4px solid #2bec82 !important;
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.2);
+}
+
+.search-highlight-environment {
+    background: linear-gradient(90deg, rgba(46, 204, 113, 0.1) 0%, rgba(46, 204, 113, 0.05) 100%) !important;
+    border: 1px solid rgba(0, 255, 106, 0.3) !important;
+}
+
+.search-highlight-environment-header {
+    background: linear-gradient(90deg, rgba(46, 204, 113, 0.2) 0%, rgba(46, 204, 113, 0.1) 100%) !important;
+    border-left: 4px solid #2ecc71 !important;
+}
+
+.search-highlight-tab {
+    background: linear-gradient(90deg, rgba(241, 196, 15, 0.15) 0%, rgba(241, 196, 15, 0.05) 100%) !important;
+    border-left: 3px solid #f1c40f !important;
+    box-shadow: 0 0 5px rgba(241, 196, 15, 0.2);
+}
+
+/* Make sure the highlights are visible on active states */
+.workbook-tab.active.search-highlight-workbook {
+    background: linear-gradient(90deg, rgba(155, 89, 182, 0.25) 0%, rgba(155, 89, 182, 0.1) 100%) !important;
+}
+
+.profile-tab.active.search-highlight-profile {
+    background: linear-gradient(90deg, rgba(52, 152, 219, 0.25) 0%, rgba(52, 152, 219, 0.1) 100%) !important;
+}
+
+.tab-item.active.search-highlight-tab {
+    background: linear-gradient(90deg, rgba(241, 196, 15, 0.25) 0%, rgba(52, 152, 219, 0.2) 100%) !important;
+}
+
+/* Animation for search highlights */
+.search-highlight-workbook,
+.search-highlight-profile,
+.search-highlight-environment,
+.search-highlight-tab {
+    animation: searchPulse 2s ease-in-out;
+}
+
+@keyframes searchPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+/* Ensure search highlights persist during interactions */
+.search-highlight-workbook:hover {
+    background: linear-gradient(90deg, rgba(155, 89, 182, 0.25) 0%, rgba(155, 89, 182, 0.15) 100%) !important;
+}
+
+.search-highlight-profile:hover {
+    background: linear-gradient(90deg, rgba(52, 152, 219, 0.25) 0%, rgba(52, 152, 219, 0.15) 100%) !important;
+}
+
+.search-highlight-tab:hover {
+    background: linear-gradient(90deg, rgba(241, 196, 15, 0.25) 0%, rgba(241, 196, 15, 0.15) 100%) !important;
+}

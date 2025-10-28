@@ -1,0 +1,58 @@
+/* Multi-link card specific styles */
+.multi-link-field {
+    margin-bottom: 15px;
+}
+
+.link-input-with-action {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.link-input-with-action input {
+    flex: 1;
+}
+
+.add-link-field-btn {
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.add-link-field-btn:hover {
+    background: #2980b9;
+}
+
+.remove-link-field-btn {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.remove-link-field-btn:hover {
+    background: #c0392b;
+}
+
+.multi-link-count {
+    background: #3498db;
+    color: white;
+    border-radius: 12px;
+    padding: 2px 8px;
+    font-size: 0.8rem;
+    margin-left: 8px;
+}

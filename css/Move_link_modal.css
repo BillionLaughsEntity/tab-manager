@@ -1,0 +1,37 @@
+/* Move Link Modal - Enhanced for cross-profile movement */
+.move-link-modal-content {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.move-link-profile {
+    margin-bottom: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.move-link-profile-header {
+    padding: 12px 15px;
+    background: #f8f9fa;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.move-link-profile-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.move-link-profile.expanded .move-link-profile-content {
+    max-height: 1000px;
+}

@@ -1,0 +1,82 @@
+/* Reorder Links Modal - Simplified with up/down buttons */
+.reorder-links-modal-content {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.reorder-links-list {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.reorder-link-item {
+    padding: 12px 15px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    background: white;
+    transition: background 0.2s ease;
+}
+
+.reorder-link-item:hover {
+    background: #f8f9fa;
+}
+
+.reorder-link-item:last-child {
+    border-bottom: none;
+}
+
+.reorder-link-item i {
+    margin-right: 10px;
+    color: #95a5a6;
+}
+
+.reorder-link-title {
+    flex: 1;
+    font-weight: 500;
+}
+
+.reorder-link-url {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    margin-right: 15px;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.reorder-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.reorder-btn {
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.reorder-btn:disabled {
+    background: #bdc3c7;
+    cursor: not-allowed;
+}
+
+.reorder-btn:hover:not(:disabled) {
+    background: #2980b9;
+}

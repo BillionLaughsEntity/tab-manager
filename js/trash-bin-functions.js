@@ -406,6 +406,9 @@ function loadTrashBin() {
 
 // Version-aware trash bin functions
 function saveTrashBin() {
+    console.log('💾 Saving trash bin to localStorage:', trashBin);
+    localStorage.setItem('tabManagerTrashBin', JSON.stringify(trashBin));
+    
     try {
         localStorage.setItem(`${APP_VERSION}_tabManagerTrashBin`, JSON.stringify(trashBin));
         console.log(`Trash bin saved for ${APP_VERSION}`);

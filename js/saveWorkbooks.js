@@ -1,5 +1,9 @@
 // Override the existing saveWorkbooks function to be version-aware
 function saveWorkbooks() {
+
+    console.log('💾 Saving workbooks to localStorage:', workbooks);
+    localStorage.setItem('tabManagerWorkbooks', JSON.stringify(workbooks));
+
     try {
         const dataToSave = {
             workbooks: workbooks,
@@ -14,4 +18,9 @@ function saveWorkbooks() {
     } catch (error) {
         console.error('Error saving data:', error);
     }
+
+    // Verify it was saved
+    const saved = JSON.parse(localStorage.getItem('tabManagerWorkbooks'));
+    console.log('✅ Verified saved workbooks:', saved);
+    
 }

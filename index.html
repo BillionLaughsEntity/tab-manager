@@ -957,6 +957,25 @@
             renderEnvironments();
             // initializeS3Config();
             // Initialize counters
+            if (workbooks.length > 0) {
+                currentWorkbookId = workbooks[0].id;
+                renderProfileTabs();
+                
+                const currentWorkbook = getCurrentWorkbook();
+                if (currentWorkbook.profiles.length > 0) {
+                    // Make sure we have a valid currentProfileId
+                    if (!currentProfileId || !currentWorkbook.profiles.find(p => p.id === currentProfileId)) {
+                        currentProfileId = currentWorkbook.profiles[0].id;
+                    }
+                    
+                    // Switch to the current profile (this will render environments)
+                    const currentProfile = currentWorkbook.profiles.find(p => p.id === currentProfileId);
+                    if (currentProfile) {
+                        switchProfile(currentProfile);
+                    }
+                }
+            }
+
             if (typeof updateAllCounters === 'function') {
                 updateAllCounters();
             }
@@ -1179,7 +1198,7 @@
     <script src="js/importWorkbooks.js"></script>
     <script src="js/debugExportModal.js"></script>
     <script src="js/testEnvironmentDeletion.js"></script>
-    
+
     <!-- Event listeners LAST -->
     <script src="js/event-listeners.js"></script>
     <!-- Event listeners LAST -->

@@ -1,0 +1,32 @@
+/* Outlook Email Modal Styles */
+.email-preview {
+    background: #f5f5f5;
+    padding: 10px;
+    border-radius: 4px;
+    margin: 10px 0;
+    font-size: 0.9em;
+    word-break: break-all;
+}
+
+.email-preview strong {
+    color: #333;
+}
+
+#email-preview-text {
+    color: #666;
+    font-family: monospace;
+}
+
+.form-group textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    resize: vertical;
+}
+
+.form-group textarea:focus {
+    outline: none;
+    border-color: #3498db;
+}

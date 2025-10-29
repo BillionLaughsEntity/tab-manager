@@ -54,6 +54,11 @@ function setupEventListeners() {
     // document.getElementById('close-s3-sync-modal')?.addEventListener('click', function() {
     //     document.getElementById('s3-sync-modal').style.display = 'none';
     // });
+
+    // Add to your existing event listeners setup
+    if (typeof setupOutlookEmailListeners === 'function') {
+        setupOutlookEmailListeners();
+    }
     
     document.getElementById('close-workbook-color-modal').addEventListener('click', () => {
         document.getElementById('workbook-color-modal').style.display = 'none';

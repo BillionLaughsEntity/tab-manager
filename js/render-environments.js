@@ -6,12 +6,24 @@ function renderEnvironments() {
     
     console.log('Current profile:', currentProfile);
     console.log('Environments container:', environmentsContainer);
+
+    if (!environmentsContainer) {
+        console.error('Environments container not found!');
+        return;
+    }
     
     if (!currentProfile || !environmentsContainer) {
         console.error('Cannot render environments: missing profile or container');
         environmentsContainer.innerHTML = '<div class="no-environments">No environments available</div>';
         return;
     }
+
+     if (!currentProfile) {
+        console.log('No current profile selected, showing empty state');
+        environmentsContainer.innerHTML = '<div class="no-environments">Select a profile to view environments</div>';
+        return;
+    }
+    
     
     environmentsContainer.innerHTML = '';
     

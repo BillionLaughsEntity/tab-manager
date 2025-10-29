@@ -1,18 +1,38 @@
-// Switch to a different workbook
+// Switch to a different workbook - FIXED VERSION
 function switchWorkbook(workbookId) {
+    console.log('=== SWITCH WORKBOOK DEBUG ===');
+    console.log('Switching to workbook:', workbookId);
+    
     currentWorkbookId = workbookId;
-    currentProfileId = null;
     currentEnvironment = null;
     currentTab = null;
     
+    // Get the new current workbook
+    const currentWorkbook = getCurrentWorkbook();
+    console.log('Current workbook:', currentWorkbook);
+    
+    // Set the current profile to the first one in the NEW workbook
+    if (currentWorkbook && currentWorkbook.profiles.length > 0) {
+        currentProfileId = currentWorkbook.profiles[0].id;
+        console.log('Set current profile to:', currentProfileId);
+    } else {
+        currentProfileId = null;
+        console.log('No profiles in workbook, setting currentProfileId to null');
+    }
+    
     // Update UI
-    renderProfileTabs(); // This now shows only current workbook's profiles
-    renderEnvironments();
-    noTabsMessage.style.display = 'block';
-    linksGrid.style.display = 'none';
-    addLinkSection.style.display = 'none';
-    reorderLinksBtn.style.display = 'none';
-    currentTabName.textContent = 'Select a tab to get started';
+    renderProfileTabs();
+    
+    // Only render environments if we have a current profile
+    if (currentProfileId) {
+        renderEnvironments();
+    } else {
+        // Clear environments container
+        const environmentsContainer = document.getElementById('environments-container');
+        if (environmentsContainer) {
+            environmentsContainer.innerHTML = '<div class="no-environments">No profiles available. Create a profile first.</div>';
+        }
+    }
     
     // Update active workbook tab
     document.querySelectorAll('.workbook-tab').forEach(tab => {
@@ -22,10 +42,12 @@ function switchWorkbook(workbookId) {
         }
     });
     
-    // Set the current profile to the first one in the NEW workbook
-    const currentWorkbook = getCurrentWorkbook();
-    if (currentWorkbook.profiles.length > 0) {
-        currentProfileId = currentWorkbook.profiles[0].id;
-        renderEnvironments();
-    }
+    // Clear links display
+    noTabsMessage.style.display = 'block';
+    linksGrid.style.display = 'none';
+    addLinkSection.style.display = 'none';
+    reorderLinksBtn.style.display = 'none';
+    currentTabName.textContent = 'Select a tab to get started';
+    
+    console.log('Workbook switch completed');
 }

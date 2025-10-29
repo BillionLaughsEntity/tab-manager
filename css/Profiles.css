@@ -75,11 +75,10 @@
     display: flex;
     flex-direction: row; /* Changed to row layout for compactness */
     align-items: center;
-    /*min-width: 170px; /* Reduced minimum width
+    min-width: 170px; /* Reduced minimum width */
     max-width: 300px; /* Added maximum width */
     height: 32px; /* Fixed height for consistency */
     border-left: 4px solid var(--profile-color, #3498db); /* Added border like environments */
-    flex-shrink: 0;
 
 }
 

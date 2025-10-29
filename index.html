@@ -129,9 +129,7 @@
             <button class="header-btn" id="migrate-data-btn" style="background: #e67e22;">
                 <i class="fas fa-history"></i>Migrate Old Data
             </button>
-            <button class="header-btn s3-sync-btn" id="s3-sync-btn" style="background: #27ae60;">
-                <i class="fas fa-cloud"></i>S3 Sync
-            </button>
+            
         </div>
     </div>
 
@@ -825,65 +823,7 @@
         </div>
     </div>
 
-    <!-- S3 Sync Configuration Modal -->
-    <div class="modal" id="s3-config-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">S3 Sync Configuration</h3>
-                <span class="close-modal">&times;</span>
-            </div>
-            <div class="form-group">
-                <label for="s3-access-key">AWS Access Key ID</label>
-                <input type="text" id="s3-access-key" placeholder="Enter Access Key ID">
-            </div>
-            <div class="form-group">
-                <label for="s3-secret-key">AWS Secret Access Key</label>
-                <input type="password" id="s3-secret-key" placeholder="Enter Secret Access Key">
-            </div>
-            <div class="form-group">
-                <label for="s3-bucket-name">Bucket Name</label>
-                <input type="text" id="s3-bucket-name" placeholder="backup" value="backup">
-            </div>
-            <div class="form-group">
-                <label for="s3-region">Region</label>
-                <input type="text" id="s3-region" placeholder="ru-1" value="ru-1">
-            </div>
-            <div class="form-group">
-                <label for="s3-filename">File Name</label>
-                <input type="text" id="s3-filename" placeholder="tab-manager-data.xml" value="tab-manager-data.xml">
-            </div>
-            <div class="modal-actions">
-                <button class="modal-btn modal-btn-secondary" id="close-s3-config-modal">Cancel</button>
-                <button class="modal-btn modal-btn-primary" id="save-s3-config-btn">Save Configuration</button>
-                <button class="modal-btn modal-btn-success" id="test-s3-connection-btn">Test Connection</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- S3 Sync Actions Modal -->
-    <div class="modal" id="s3-sync-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">S3 Sync</h3>
-                <span class="close-modal">&times;</span>
-            </div>
-            <div class="sync-status" id="sync-status">
-                <p>Sync your data with S3 storage</p>
-            </div>
-            <div class="modal-actions">
-                <button class="modal-btn modal-btn-secondary" id="close-s3-sync-modal">Cancel</button>
-                <button class="modal-btn modal-btn-info" id="upload-to-s3-btn">
-                    <i class="fas fa-cloud-upload-alt"></i> Upload to S3
-                </button>
-                <button class="modal-btn modal-btn-warning" id="download-from-s3-btn">
-                    <i class="fas fa-cloud-download-alt"></i> Download from S3
-                </button>
-                <button class="modal-btn modal-btn-success" id="configure-s3-btn">
-                    <i class="fas fa-cog"></i> Configure S3
-                </button>
-            </div>
-        </div>
-    </div>
+   
 
     <script>
         // Updated data structure with workbooks

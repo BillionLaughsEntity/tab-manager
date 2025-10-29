@@ -1,34 +1,41 @@
-// Render environments in the side panel
+// In render-environments.js - Update the environment rendering to include proper delete functionality
 function renderEnvironments() {
-    environmentsContainer.innerHTML = '';
+    console.log('=== RENDER ENVIRONMENTS DEBUG ===');
+    const environmentsContainer = document.getElementById('environments-container');
     const currentProfile = getCurrentProfile();
     
-    if (!currentProfile || !currentProfile.environments || currentProfile.environments.length === 0) {
-        environmentsContainer.innerHTML = '<p style="padding: 20px; text-align: center; color: rgba(255,255,255,0.7)">No environments yet. Create your first one!</p>';
+    console.log('Current profile:', currentProfile);
+    console.log('Environments container:', environmentsContainer);
+    
+    if (!currentProfile || !environmentsContainer) {
+        console.error('Cannot render environments: missing profile or container');
+        environmentsContainer.innerHTML = '<div class="no-environments">No environments available</div>';
         return;
     }
+    
+    environmentsContainer.innerHTML = '';
+    
+    if (currentProfile.environments.length === 0) {
+        environmentsContainer.innerHTML = '<div class="no-environments">No environments yet. Click + to add one.</div>';
+        console.log('No environments to render');
+        return;
+    }
+    
+    console.log('Rendering', currentProfile.environments.length, 'environments');
     
     currentProfile.environments.forEach(environment => {
         const environmentElement = document.createElement('div');
         environmentElement.className = 'environment';
-        if (environment === currentEnvironment) {
-            environmentElement.classList.add('expanded');
-        }
+        environmentElement.dataset.environmentId = environment.id;
         
         environmentElement.innerHTML = `
-            <div class="environment-header" style="border-left-color: ${getCurrentProfile().color}">
-                <div class="environment-name">
-                    <i class="fas fa-chevron-down"></i>
-                    ${environment.name}
-                </div>
+            <div class="environment-header">
+                <div class="environment-name">${environment.name}</div>
                 <div class="environment-actions">
-                    <button class="environment-action-btn reorder-tabs-btn" title="Reorder Tabs">
-                        <i class="fas fa-sort"></i>
-                    </button>
                     <button class="environment-action-btn rename-environment-btn" title="Rename Environment">
                         <i class="fas fa-edit"></i>
                     </button>
-                    <button class="environment-action-btn move-environment-btn" title="Move Environment">
+                    <button class="environment-action-btn move-environment-btn" title="Move Environment to Another Profile">
                         <i class="fas fa-arrows-alt"></i>
                     </button>
                     <button class="environment-action-btn delete-environment-btn" title="Delete Environment">
@@ -36,64 +43,98 @@ function renderEnvironments() {
                     </button>
                 </div>
             </div>
-            <div class="environment-content">
-                <div class="tabs-list" id="tabs-${environment.id}">
-                    <!-- Tabs will be added here -->
-                </div>
+            <div class="tabs-container" data-environment-id="${environment.id}">
+                <!-- Tabs will be rendered here by renderTabs.js -->
             </div>
         `;
         
         environmentsContainer.appendChild(environmentElement);
-
-        // Add event listener for reorder tabs button (add this with the other environment action buttons)
-        const reorderTabsBtn = environmentElement.querySelector('.reorder-tabs-btn');
-        reorderTabsBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            openReorderTabsModal(environment);
-        });
         
-        // Add event listeners for environment header
-        const environmentHeader = environmentElement.querySelector('.environment-header');
-        environmentHeader.addEventListener('click', () => {
-            // Toggle expanded class
-            const wasExpanded = environmentElement.classList.contains('expanded');
+        // Render tabs for this environment
+        renderTabs(environment);
+        
+        // Add event listeners for this environment
+        addEnvironmentEventListeners(environmentElement, environment);
+    });
+    
+    console.log('Environments rendered successfully');
+}
+
+// Add this function to handle environment event listeners
+function addEnvironmentEventListeners(environmentElement, environment) {
+    console.log('Adding event listeners for environment:', environment.name);
+    
+    // Delete button
+    const deleteBtn = environmentElement.querySelector('.delete-environment-btn');
+    if (deleteBtn) {
+        deleteBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            console.log('Delete button clicked for environment:', environment.name);
             
-            // Close all environments first
-            document.querySelectorAll('.environment.expanded').forEach(env => {
-                env.classList.remove('expanded');
-            });
-            
-            // If it wasn't expanded, expand it
-            if (!wasExpanded) {
-                environmentElement.classList.add('expanded');
+            const confirmDelete = confirm(`Are you sure you want to delete the environment "${environment.name}" and all its tabs?`);
+            if (confirmDelete) {
+                deleteEnvironment(environment);
             }
         });
-        
-        // Add event listeners for environment actions
-        const renameBtn = environmentElement.querySelector('.rename-environment-btn');
-        const moveBtn = environmentElement.querySelector('.move-environment-btn');
-        const deleteBtn = environmentElement.querySelector('.delete-environment-btn');
-        
+        console.log('Delete event listener added');
+    } else {
+        console.error('Delete button not found for environment:', environment.name);
+    }
+    
+    // Rename button
+    const renameBtn = environmentElement.querySelector('.rename-environment-btn');
+    if (renameBtn) {
         renameBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             environmentToRename = environment;
             document.getElementById('rename-environment-input').value = environment.name;
             renameEnvironmentModal.style.display = 'flex';
         });
-        
-        deleteBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (confirm(`Are you sure you want to delete the environment "${environment.name}"?`)) {
-                deleteEnvironment(environment);
-            }
-        });
-
+    }
+    
+    // Move button
+    const moveBtn = environmentElement.querySelector('.move-environment-btn');
+    if (moveBtn) {
         moveBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            openMoveEnvironmentModal(environment); // This is correct for environments
+            openMoveEnvironmentModal(environment);
         });
-        
-        // Render tabs for this environment
-        renderTabs(environment);
+    }
+    
+    // Environment click (to select it)
+    environmentElement.addEventListener('click', (e) => {
+        if (!e.target.closest('.environment-actions')) {
+            selectEnvironment(environment);
+        }
     });
+}
+
+// Add this function if it doesn't exist
+function selectEnvironment(environment) {
+    console.log('Selecting environment:', environment.name);
+    currentEnvironment = environment;
+    currentTab = null;
+    
+    // Update UI to show selected state
+    document.querySelectorAll('.environment').forEach(envEl => {
+        envEl.classList.remove('active');
+    });
+    
+    document.querySelector(`.environment[data-environment-id="${environment.id}"]`).classList.add('active');
+    
+    // Update tab header
+    document.getElementById('current-tab-name').textContent = 'Select a tab';
+    
+    // Clear links display
+    const linksGrid = document.getElementById('links-grid');
+    const noTabsMessage = document.getElementById('no-tabs-message');
+    
+    if (linksGrid) linksGrid.style.display = 'none';
+    if (noTabsMessage) noTabsMessage.style.display = 'block';
+    
+    // Hide add link section
+    const addLinkSection = document.getElementById('add-link-section');
+    if (addLinkSection) addLinkSection.style.display = 'none';
+    
+    console.log('Environment selected:', environment.name);
 }

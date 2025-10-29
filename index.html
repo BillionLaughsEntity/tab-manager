@@ -80,7 +80,6 @@
     <link rel="stylesheet" href="css/counters.css">
     <link rel="stylesheet" href="css/s3-sync.css">
     <link rel="stylesheet" href="css/email.css">
-    <!-- <link rel="stylesheet" href="css/Basic_fallback_styles.css">-->
 </head>
 <body>
     <!-- Header -->
@@ -91,7 +90,6 @@
                 <div class="counters">
                 <span class="counter-item" id="workbooks-counter">0 Workbooks</span>
                 <span class="counter-item" id="profiles-counter">0 Profiles</span>
-                <span class="counter-item" id="environment-counter">0 Environments</span>
                 <span class="counter-item" id="tabs-counter">0 Tabs</span>
                 <span class="counter-item" id="links-counter">0 Links</span>
             </div>
@@ -937,7 +935,6 @@
         // ===== VERSION-AWARE STORAGE MANAGER =====
         const APP_VERSION = 'v18-search'; // UNIQUE FOR V18
 
-        // In your main script - Update the init function
         function init() {
             console.log('Initializing V18 Tab Manager...');
             
@@ -957,28 +954,9 @@
             // Render UI components
             renderWorkbookTabs();
             renderProfileTabs();
-            checkCSSLoading();
-            // Don't call renderEnvironments() here - let switchProfile handle it
-            
+            renderEnvironments();
+            // initializeS3Config();
             // Initialize counters
-            if (workbooks.length > 0) {
-                currentWorkbookId = workbooks[0].id;
-                
-                const currentWorkbook = getCurrentWorkbook();
-                if (currentWorkbook.profiles.length > 0) {
-                    // Make sure we have a valid currentProfileId
-                    if (!currentProfileId || !currentWorkbook.profiles.find(p => p.id === currentProfileId)) {
-                        currentProfileId = currentWorkbook.profiles[0].id;
-                    }
-                    
-                    // Switch to the current profile (this will render environments)
-                    const currentProfile = currentWorkbook.profiles.find(p => p.id === currentProfileId);
-                    if (currentProfile) {
-                        switchProfile(currentProfile);
-                    }
-                }
-            }
-
             if (typeof updateAllCounters === 'function') {
                 updateAllCounters();
             }
@@ -1000,6 +978,18 @@
                 createDefaultWorkbook();
             }
             
+            // Set initial selections
+            if (workbooks.length > 0) {
+                currentWorkbookId = workbooks[0].id;
+                renderProfileTabs();
+                
+                const currentWorkbook = getCurrentWorkbook();
+                if (currentWorkbook.profiles.length > 0) {
+                    currentProfileId = currentWorkbook.profiles[0].id;
+                    renderEnvironments();
+                }
+            }
+            
             // Optional: Auto-refresh counters every 3 seconds as backup
             setInterval(() => {
                 if (typeof updateAllCounters === 'function') {
@@ -1010,7 +1000,7 @@
             console.log(`V18 Tab Manager initialized successfully with version: ${APP_VERSION}`);
 
             setTimeout(verifyAllFixes, 500);
-            setTimeout(testTabSelection, 1000);
+            // setTimeout(testImportExport, 1000);
         }
 
         
@@ -1183,15 +1173,10 @@
     <script src="js/findDuplicateElements.js"></script>
     <script src="js/verifyAllFixes.js"></script>
     <script src="js/outlook-email.js"></script>
-    <script src="js/checkCSSLoading.js"></script>
-    <script src="js/checkCSSFiles.js"></script>
     
-
     <script src="js/debugXMLImport.js"></script>
     <script src="js/importWorkbooks.js"></script>
     <script src="js/debugExportModal.js"></script>
-    <script src="js/testEnvironmentDeletion.js"></script>
-    <script src="js/testTabSelection.js"></script>
 
     <!-- Event listeners LAST -->
     <script src="js/event-listeners.js"></script>

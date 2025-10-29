@@ -1,52 +1,54 @@
-// deleteEnvironment.js - Updated with debug logging
+// Update deleteEnvironment function
 function deleteEnvironment(environment) {
-    console.log('=== DELETE ENVIRONMENT DEBUG ===');
-    console.log('Environment to delete:', environment);
-    console.log('Current profile:', getCurrentProfile());
+    if (!environment) return;
     
-    if (!environment) {
-        console.error('No environment provided for deletion');
-        return;
+    // Move all tabs and links to trash before deleting
+    if (environment.tabs) {
+        environment.tabs.forEach(tab => {
+            if (tab.links) {
+                tab.links.forEach(link => {
+                    const trashItem = {
+                        id: 'trash-' + Date.now(),
+                        type: 'link',
+                        originalId: link.id,
+                        data: link,
+                        parentTab: {
+                            id: tab.id,
+                            name: tab.name
+                        },
+                        parentEnvironment: {
+                            id: environment.id,
+                            name: environment.name
+                        },
+                        parentProfile: getCurrentProfile() ? {
+                            id: getCurrentProfile().id,
+                            name: getCurrentProfile().name
+                        } : null,
+                        parentWorkbook: getCurrentWorkbook() ? {
+                            id: getCurrentWorkbook().id,
+                            name: getCurrentWorkbook().name
+                        } : null,
+                        deletedAt: new Date().toISOString()
+                    };
+                    trashBin.push(trashItem);
+                });
+            }
+        });
     }
     
-    const currentProfile = getCurrentProfile();
-    if (!currentProfile) {
-        console.error('No current profile found');
-        return;
-    }
-    
-    console.log('Environments before deletion:', currentProfile.environments);
-    
-    // Find the environment index
-    const environmentIndex = currentProfile.environments.findIndex(env => env.id === environment.id);
-    console.log('Environment index:', environmentIndex);
-    
-    if (environmentIndex === -1) {
-        console.error('Environment not found in current profile');
-        return;
-    }
-    
-    // Create trash item before removal
-    const trashItem = createTrashItem(environment, 'environment');
-    console.log('Created trash item:', trashItem);
-    
-    // Remove the environment
-    const deletedEnvironment = currentProfile.environments.splice(environmentIndex, 1)[0];
-    console.log('Deleted environment:', deletedEnvironment);
-    
-    // Add to trash bin
-    trashBin.push(trashItem);
-    console.log('Trash bin after deletion:', trashBin);
-    
-    // Save changes
-    saveWorkbooks();
     saveTrashBin();
-    console.log('Data saved successfully');
     
-    // Update UI
+    // Now remove the environment
+    const currentProfile = getCurrentProfile();
+    currentProfile.environments = currentProfile.environments.filter(env => env !== environment);
+    
+    // Reset current environment if it was deleted
+    if (currentEnvironment === environment) {
+        currentEnvironment = null;
+        currentTab = null;
+        renderLinks(null);
+    }
+    
+    saveWorkbooks();
     renderEnvironments();
-    updateAllCounters();
-    
-    console.log('Environment deletion completed successfully');
-    console.log('Environments after deletion:', currentProfile.environments);
 }

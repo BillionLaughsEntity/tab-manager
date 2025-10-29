@@ -694,30 +694,6 @@ function setupEventListeners() {
         }
     });
 
-    // Add this to your main script or event-listeners.js as a temporary fix
-    document.addEventListener('click', function(e) {
-        // Check if a delete environment button was clicked
-        if (e.target.closest('.delete-environment-btn')) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            const environmentElement = e.target.closest('.environment');
-            if (environmentElement) {
-                const environmentId = environmentElement.dataset.environmentId;
-                const currentProfile = getCurrentProfile();
-                const environment = currentProfile.environments.find(env => env.id === environmentId);
-                
-                if (environment) {
-                    console.log('Global handler: Deleting environment', environment.name);
-                    const confirmDelete = confirm(`Are you sure you want to delete "${environment.name}" and all its tabs?`);
-                    if (confirmDelete) {
-                        deleteEnvironment(environment);
-                    }
-                }
-            }
-        }
-    });
-
     // Add keyboard shortcut for selection mode (optional)
     // document.addEventListener('keydown', (e) => {
     //     if ((e.ctrlKey || e.metaKey) && e.key === 'a' && currentTab) {

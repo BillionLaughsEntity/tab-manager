@@ -1,56 +1,40 @@
-// In trash-bin-functions.js - Update createTrashItem function
-function createTrashItem(item, type) {
-    console.log('=== CREATE TRASH ITEM DEBUG ===');
-    console.log('Item:', item);
-    console.log('Type:', type);
+// Helper function to create trash item
+function createTrashItem(itemElement, index) {
+    const originElement = itemElement.getElementsByTagName('origin')[0];
     
-    if (!item || !type) {
-        console.error('Invalid parameters for createTrashItem');
-        return null;
-    }
-    
-    let trashData = {};
-    
-    switch (type) {
-        case 'environment':
-            trashData = {
-                id: item.id,
-                name: item.name,
-                tabs: item.tabs || []
-            };
-            break;
-            
-        case 'tab':
-            trashData = {
-                id: item.id,
-                name: item.name,
-                links: item.links || [],
-                environmentId: item.environmentId || (item.environment ? item.environment.id : null)
-            };
-            break;
-            
-        case 'link':
-            trashData = {
-                id: item.id,
-                title: item.title,
-                url: item.url,
-                type: item.type || 'regular',
-                links: item.links || [] // for multi-link cards
-            };
-            break;
-            
-        default:
-            console.error('Unknown trash item type:', type);
-            return null;
-    }
-    
-    const trashItem = {
-        id: 'trash-' + Date.now(),
-        type: type,
-        data: trashData,
-        deletedAt: new Date().toISOString()
+    const trashedItem = {
+        id: itemElement.getAttribute('id') || 'trash-' + Date.now() + index,
+        title: itemElement.getElementsByTagName('title')[0]?.textContent || 'Deleted Item',
+        url: itemElement.getElementsByTagName('url')[0]?.textContent || '#',
+        deletedAt: itemElement.getAttribute('deletedAt') || new Date().toISOString(),
+        origin: originElement ? {
+            profileId: originElement.getElementsByTagName('profileId')[0]?.textContent || '',
+            profileName: originElement.getElementsByTagName('profileName')[0]?.textContent || '',
+            environmentId: originElement.getElementsByTagName('environmentId')[0]?.textContent || '',
+            environmentName: originElement.getElementsByTagName('environmentName')[0]?.textContent || '',
+            tabId: originElement.getElementsByTagName('tabId')[0]?.textContent || '',
+            tabName: originElement.getElementsByTagName('tabName')[0]?.textContent || ''
+        } : null
     };
     
-    console.log('Created trash item:', trashItem);
-    return trashItem;
+    // Handle different link types
+    const typeElement = itemElement.getElementsByTagName('type')[0];
+    if (typeElement) {
+        const type = typeElement.textContent;
+        if (type === 'multi') {
+            trashedItem.isMultiLink = true;
+            processMultiLinkUrls(itemElement, trashedItem);
+        } else if (type === 'search') {
+            trashedItem.isSearchLink = true;
+        }
+    }
+    
+    // Check if it's a multi-link by presence of urls element (backward compatibility)
+    const urlsElement = itemElement.getElementsByTagName('urls')[0];
+    if (urlsElement && !trashedItem.isMultiLink) {
+        trashedItem.isMultiLink = true;
+        processMultiLinkUrls(itemElement, trashedItem);
+    }
+    
+    return trashedItem;
 }

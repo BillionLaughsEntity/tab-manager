@@ -1,62 +1,92 @@
-// renderLinks.js - Fixed version
-function renderLinks() {
-    console.log('=== RENDER LINKS DEBUG ===');
-    console.log('Current tab:', currentTab);
+// Complete renderLinks function with view type support and proper checkbox handling
+function renderLinks(tab) {
+
+    // Add null check
+    if (!tab) {
+        console.warn('renderLinks called with null tab, clearing links display');
+        linksGrid.innerHTML = '';
+        document.getElementById('links-counter').textContent = '0 Links';
+        return;
+    }
+    
+    // Add links null check
+    if (!tab.links) {
+        console.warn('Tab has no links array:', tab);
+        tab.links = [];
+    }
+    
+    console.log(`Rendering ${tab.links.length} links for tab:`, tab.name);
     
     const linksGrid = document.getElementById('links-grid');
-    const noTabsMessage = document.getElementById('no-tabs-message');
-    
-    if (!linksGrid || !noTabsMessage) {
-        console.error('Links container elements not found');
-        return;
-    }
-    
-    // Clear previous content
     linksGrid.innerHTML = '';
-    linksGrid.style.display = 'none';
-    noTabsMessage.style.display = 'block';
     
-    if (!currentTab) {
-        console.log('No current tab selected');
-        noTabsMessage.innerHTML = '<h2>Welcome to Tab Manager</h2><p>Select a tab to view its links</p>';
+    if (!tab.links || tab.links.length === 0) {
+        linksGrid.innerHTML = `
+            <div class="no-links-message">
+                <h3>No links yet</h3>
+                <p>Add your first link to get started!</p>
+            </div>
+        `;
         return;
     }
     
-    console.log('Current tab links:', currentTab.links);
+    // Clear the container first
+    linksGrid.innerHTML = '';
     
-    if (!currentTab.links || currentTab.links.length === 0) {
-        console.log('No links in current tab');
-        noTabsMessage.innerHTML = '<h2>No Links Yet</h2><p>Click "Add Link" to create your first link in this tab</p>';
-        return;
+    if (currentViewType === 'list') {
+        // List view
+        const listContainer = document.createElement('div');
+        listContainer.className = 'links-list-view';
+        
+        tab.links.forEach(link => {
+            createListViewLink(link, listContainer);
+        });
+        
+        linksGrid.appendChild(listContainer);
+        
+    } else if (currentViewType === 'table') {
+        // Table view
+        const tableContainer = document.createElement('div');
+        tableContainer.className = 'links-table-view';
+        tableContainer.innerHTML = `
+            <table class="links-table">
+                <thead>
+                    <tr>
+                        <th style="width: 30px;"></th> <!-- Checkbox column -->
+                        <th>Title</th>
+                        <th>URL</th>
+                        <th style="width: 150px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="links-table-body">
+                    <!-- Table rows will be added here -->
+                </tbody>
+            </table>
+        `;
+        
+        const tbody = tableContainer.querySelector('#links-table-body');
+        tab.links.forEach(link => {
+            createTableViewLink(link, tbody);
+        });
+        
+        linksGrid.appendChild(tableContainer);
+        
+    } else {
+        // Grid view
+        linksGrid.style.display = 'grid';
+        linksGrid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(300px, 1fr))';
+        linksGrid.style.gap = '20px';
+        linksGrid.style.width = '100%';
+        
+        tab.links.forEach(link => {
+            const card = createLinkCard(link);
+            card.dataset.linkId = link.id;
+            linksGrid.appendChild(card);
+        });
     }
-    
-    // Hide no links message and show grid
-    noTabsMessage.style.display = 'none';
-    linksGrid.style.display = 'grid';
-    
-    console.log('Rendering', currentTab.links.length, 'links');
-    
-    // Render links based on current view type
-    currentTab.links.forEach(link => {
-        let linkElement;
-        
-        switch (currentViewType) {
-            case 'list':
-                linkElement = createListViewLink(link);
-                break;
-            case 'table':
-                linkElement = createTableViewLink(link);
-                break;
-            case 'grid':
-            default:
-                linkElement = createLinkCard(link);
-                break;
-        }
-        
-        if (linkElement) {
-            linksGrid.appendChild(linkElement);
-        }
-    });
-    
-    console.log('Links rendered successfully');
+
+    // If we're in selection mode, add checkboxes to all views
+    if (isSelectionMode) {
+        addCheckboxesToAllViews();
+    }
 }

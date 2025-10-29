@@ -1020,7 +1020,7 @@
             console.log(`V18 Tab Manager initialized successfully with version: ${APP_VERSION}`);
 
             setTimeout(verifyAllFixes, 500);
-            
+            setTimeout(testImportExport, 1000);
         }
 
         
@@ -1197,8 +1197,6 @@
     <script src="js/s3-sync-proxy.js"></script>
     <script src="js/debugXMLImport.js"></script>
     <script src="js/importWorkbooks.js"></script>
-    <script src="js/debugProxyConnection.js"></script>
-    <script src="js/debugS3400Error.js"></script>
 
     <!-- Event listeners LAST -->
     <script src="js/event-listeners.js"></script>

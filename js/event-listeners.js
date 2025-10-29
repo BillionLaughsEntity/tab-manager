@@ -25,27 +25,7 @@ function setupEventListeners() {
     });
 
     // S3 Sync Event Listeners
-    // In event-listeners.js, around line 28:
-    try {
-        const s3SyncBtn = document.getElementById('s3-sync-btn');
-        if (s3SyncBtn) {
-            s3SyncBtn.addEventListener('click', function() {
-                if (typeof openS3SyncModal === 'function') {
-                    openS3SyncModal();
-                } else {
-                    console.warn('openS3SyncModal not available, opening config directly');
-                    // Fallback: open config modal directly
-                    const configModal = document.getElementById('s3-config-modal');
-                    if (configModal) configModal.style.display = 'block';
-                }
-            });
-        }
-    } catch (error) {
-        console.warn('S3 sync button setup failed:', error);
-    }
-
-
-
+    document.getElementById('s3-sync-btn')?.addEventListener('click', openS3SyncModal);
     document.getElementById('configure-s3-btn')?.addEventListener('click', openS3ConfigModal);
     document.getElementById('upload-to-s3-btn')?.addEventListener('click', uploadToS3);
     document.getElementById('download-from-s3-btn')?.addEventListener('click', downloadFromS3);

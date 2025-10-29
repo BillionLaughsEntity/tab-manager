@@ -119,15 +119,24 @@ function exportToXML() {
 
 
 // Add this function to exportToXML.js
-function downloadXMLFile() {
-    const xmlContent = exportToXML();
+function downloadXMLFile(xmlContent, filename) {
+    // If no xmlContent provided, generate it
+    if (!xmlContent) {
+        xmlContent = exportToXML();
+    }
+    
+    // If no filename provided, generate a default one
+    if (!filename) {
+        filename = `tab-manager-backup-${new Date().toISOString().split('T')[0]}.xml`;
+    }
+    
     const blob = new Blob([xmlContent], { type: 'application/xml' });
     const url = URL.createObjectURL(blob);
     
     // Create a temporary download link
     const a = document.createElement('a');
     a.href = url;
-    a.download = `tab-manager-backup-${new Date().toISOString().split('T')[0]}.xml`;
+    a.download = filename;
     
     // Trigger the download
     document.body.appendChild(a);

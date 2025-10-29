@@ -471,11 +471,17 @@ function setupEventListeners() {
         }
     });
 
-    // Add event listener for the download button (add this to your setupEventListeners function)
+    // Alternative: Keep custom filename but ensure function exists
     document.getElementById('download-xml-btn').addEventListener('click', () => {
+        // Use the existing XML content from the textarea
         const xmlContent = document.getElementById('export-xml-content').value;
-        const profileName = getCurrentProfile().name.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+        
+        // Generate filename
+        const currentProfile = getCurrentProfile();
+        const profileName = currentProfile ? currentProfile.name.replace(/[^a-z0-9]/gi, '_').toLowerCase() : 'backup';
         const filename = `tabmanager_${profileName}_${new Date().toISOString().split('T')[0]}.xml`;
+        
+        // Call the function
         downloadXMLFile(xmlContent, filename);
     });
 

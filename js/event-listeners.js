@@ -25,35 +25,35 @@ function setupEventListeners() {
     });
 
     // S3 Sync Event Listeners
-    document.getElementById('s3-sync-btn')?.addEventListener('click', openS3SyncModal);
-    document.getElementById('configure-s3-btn')?.addEventListener('click', openS3ConfigModal);
-    document.getElementById('upload-to-s3-btn')?.addEventListener('click', uploadToS3);
-    document.getElementById('download-from-s3-btn')?.addEventListener('click', downloadFromS3);
-    document.getElementById('test-s3-connection-btn')?.addEventListener('click', testS3Connection);
+    // document.getElementById('s3-sync-btn')?.addEventListener('click', openS3SyncModal);
+    // document.getElementById('configure-s3-btn')?.addEventListener('click', openS3ConfigModal);
+    // document.getElementById('upload-to-s3-btn')?.addEventListener('click', uploadToS3);
+    // document.getElementById('download-from-s3-btn')?.addEventListener('click', downloadFromS3);
+    // document.getElementById('test-s3-connection-btn')?.addEventListener('click', testS3Connection);
 
     // S3 Config Modal
-    document.getElementById('save-s3-config-btn')?.addEventListener('click', function() {
-        const config = {
-            accessKeyId: document.getElementById('s3-access-key').value,
-            secretAccessKey: document.getElementById('s3-secret-key').value,
-            bucketName: document.getElementById('s3-bucket-name').value,
-            region: document.getElementById('s3-region').value,
-            filename: document.getElementById('s3-filename').value
-        };
+    // document.getElementById('save-s3-config-btn')?.addEventListener('click', function() {
+     //    const config = {
+    //         accessKeyId: document.getElementById('s3-access-key').value,
+    //         secretAccessKey: document.getElementById('s3-secret-key').value,
+    //         bucketName: document.getElementById('s3-bucket-name').value,
+    //         region: document.getElementById('s3-region').value,
+    //         filename: document.getElementById('s3-filename').value
+    //     };
         
-        saveS3Config(config);
-        document.getElementById('s3-config-modal').style.display = 'none';
-        updateSyncStatus('S3 configuration saved!', 'success');
-    });
+    //     saveS3Config(config);
+    //     document.getElementById('s3-config-modal').style.display = 'none';
+    //     updateSyncStatus('S3 configuration saved!', 'success');
+    // });
 
     // Close modals
-    document.getElementById('close-s3-config-modal')?.addEventListener('click', function() {
-        document.getElementById('s3-config-modal').style.display = 'none';
-    });
+    // document.getElementById('close-s3-config-modal')?.addEventListener('click', function() {
+    //     document.getElementById('s3-config-modal').style.display = 'none';
+    // });
 
-    document.getElementById('close-s3-sync-modal')?.addEventListener('click', function() {
-        document.getElementById('s3-sync-modal').style.display = 'none';
-    });
+    // document.getElementById('close-s3-sync-modal')?.addEventListener('click', function() {
+    //     document.getElementById('s3-sync-modal').style.display = 'none';
+    // });
     
     document.getElementById('close-workbook-color-modal').addEventListener('click', () => {
         document.getElementById('workbook-color-modal').style.display = 'none';

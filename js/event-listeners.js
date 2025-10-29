@@ -440,9 +440,9 @@ function setupEventListeners() {
     });
 
     // Copy XML to clipboard
-    document.getElementById('copy-xml-btn').addEventListener('click', () => {
-        const xmlContent = document.getElementById('export-xml-content');
-        xmlContent.select();
+    document.getElementById('copy-xml-btn').addEventListener('click', function() {
+        const exportTextarea = document.getElementById('export-xml-content');
+        exportTextarea.select();
         document.execCommand('copy');
         alert('XML copied to clipboard!');
     });

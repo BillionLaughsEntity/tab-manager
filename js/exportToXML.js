@@ -116,3 +116,35 @@ function exportToXML() {
     
     return xml;
 }
+
+
+// Add this function to exportToXML.js
+function downloadXMLFile() {
+    const xmlContent = exportToXML();
+    const blob = new Blob([xmlContent], { type: 'application/xml' });
+    const url = URL.createObjectURL(blob);
+    
+    // Create a temporary download link
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `tab-manager-backup-${new Date().toISOString().split('T')[0]}.xml`;
+    
+    // Trigger the download
+    document.body.appendChild(a);
+    a.click();
+    
+    // Clean up
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+// Make sure escapeXml function exists (add it if missing)
+function escapeXml(unsafe) {
+    if (unsafe === null || unsafe === undefined) return '';
+    return unsafe.toString()
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&apos;');
+}

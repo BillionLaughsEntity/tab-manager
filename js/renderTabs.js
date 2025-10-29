@@ -8,7 +8,14 @@ function renderTabs(environment) {
         return;
     }
     
-    const tabsContainer = document.querySelector(`.tabs-container[data-environment-id="${environment.id}"]`);
+    // Fix the selector - it should find the tabs container within the specific environment
+    const environmentElement = document.querySelector(`.environment[data-environment-id="${environment.id}"]`);
+    if (!environmentElement) {
+        console.error('Environment element not found for:', environment.id);
+        return;
+    }
+    
+    const tabsContainer = environmentElement.querySelector('.tabs-container');
     console.log('Tabs container found:', tabsContainer);
     
     if (!tabsContainer) {

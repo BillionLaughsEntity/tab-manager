@@ -109,7 +109,7 @@ function addEnvironmentEventListeners(environmentElement, environment) {
     });
 }
 
-// Add this function if it doesn't exist
+// In render-environments.js - Update selectEnvironment function
 function selectEnvironment(environment) {
     console.log('Selecting environment:', environment.name);
     currentEnvironment = environment;
@@ -120,7 +120,12 @@ function selectEnvironment(environment) {
         envEl.classList.remove('active');
     });
     
-    document.querySelector(`.environment[data-environment-id="${environment.id}"]`).classList.add('active');
+    const environmentElement = document.querySelector(`.environment[data-environment-id="${environment.id}"]`);
+    if (environmentElement) {
+        environmentElement.classList.add('active');
+    } else {
+        console.error('Environment element not found for selection:', environment.id);
+    }
     
     // Update tab header
     document.getElementById('current-tab-name').textContent = 'Select a tab';

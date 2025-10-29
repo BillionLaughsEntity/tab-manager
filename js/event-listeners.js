@@ -55,6 +55,12 @@ function setupEventListeners() {
     //     document.getElementById('s3-sync-modal').style.display = 'none';
     // });
 
+    // In event-listeners.js, make sure you have this:
+    document.getElementById('export-btn').addEventListener('click', function() {
+        console.log('Export button clicked'); // Debug log
+        openExportModal();
+    });
+
     // Add to your existing event listeners setup
     if (typeof setupOutlookEmailListeners === 'function') {
         setupOutlookEmailListeners();
@@ -268,11 +274,38 @@ function setupEventListeners() {
         importModal.style.display = 'flex';
     });
 
-    // Import XML button
-    document.getElementById('import-xml-btn').addEventListener('click', () => {
-        const xmlContent = document.getElementById('import-xml-content').value.trim();
-        if (xmlContent) {
-            importFromXML(xmlContent);
+    // In event-listeners.js or wherever import is handled
+    document.getElementById('import-xml-btn').addEventListener('click', function() {
+        const xmlContent = document.getElementById('import-xml-content').value;
+        
+        if (!xmlContent.trim()) {
+            alert('Please paste XML content to import');
+            return;
+        }
+        
+        try {
+            const importedData = importFromXML(xmlContent);
+            
+            // Replace current data with imported data
+            workbooks = importedData.workbooks;
+            trashBin = importedData.trashBin || [];
+            
+            // Save to storage
+            saveWorkbooks();
+            saveTrashBin();
+            
+            // Refresh UI
+            renderWorkbookTabs();
+            renderProfileTabs();
+            renderEnvironments();
+            updateAllCounters();
+            
+            alert('Data imported successfully!');
+            document.getElementById('import-modal').style.display = 'none';
+            
+        } catch (error) {
+            alert('Error importing data: ' + error.message);
+            console.error('Import error:', error);
         }
     });
 

@@ -1,6 +1,14 @@
-// Render tabs for an environment
+// Render tabs for an environment - FIXED VERSION
 function renderTabs(environment) {
-    const tabsContainer = document.getElementById(`tabs-${environment.id}`);
+    console.log('=== RENDER TABS DEBUG ===');
+    console.log('Rendering tabs for environment:', environment.name);
+    
+    const tabsContainer = document.querySelector(`[data-environment-id="${environment.id}"] .tabs-container`);
+    if (!tabsContainer) {
+        console.error('Tabs container not found for environment:', environment.id);
+        return;
+    }
+    
     tabsContainer.innerHTML = '';
     
     if (!environment.tabs || environment.tabs.length === 0) {
@@ -8,9 +16,13 @@ function renderTabs(environment) {
         return;
     }
     
+    console.log('Rendering', environment.tabs.length, 'tabs');
+    
     environment.tabs.forEach(tab => {
         const tabElement = document.createElement('div');
         tabElement.className = 'tab-item';
+        tabElement.dataset.tabId = tab.id;
+        
         if (tab === currentTab && environment === currentEnvironment) {
             tabElement.classList.add('active');
         }
@@ -54,12 +66,22 @@ function renderTabs(environment) {
             openMoveTabModal(tab);
         });
 
-                
+        // FIXED DELETE EVENT LISTENER
         deleteBtn.addEventListener('click', (e) => {
+            e.preventDefault();
             e.stopPropagation();
+            e.stopImmediatePropagation();
+            
+            console.log('Delete button clicked for tab:', tab.name);
+            console.log('Environment:', environment.name);
+            
             if (confirm(`Are you sure you want to delete the tab "${tab.name}"?`)) {
-                deleteTab(tab);
+                deleteTab(tab, environment); // PASS THE ENVIRONMENT PARAMETER
             }
         });
+        
+        console.log('Added event listeners for tab:', tab.name);
     });
+    
+    console.log('Tabs rendered successfully for environment:', environment.name);
 }

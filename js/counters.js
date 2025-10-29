@@ -26,6 +26,19 @@ function updateProfilesCounter() {
     }
 }
 
+function updateEnvironmentsCounter() {
+    let totalEnvironments = 0;
+    workbooks.forEach(workbook => {
+        workbook.profiles.forEach(profile => {
+            totalEnvironments += profile.environments.length;
+        });
+    });
+    const counterElement = document.getElementById('environments-counter');
+    if (counterElement) {
+        counterElement.textContent = `${totalEnvironments} Environment${totalEnvironments !== 1 ? 's' : ''}`;
+    }
+}
+
 function updateTabsCounter() {
     let totalTabs = 0;
     workbooks.forEach(workbook => {

@@ -90,11 +90,19 @@ function createLinkCard(link) {
     });
     
     editBtn.addEventListener('click', () => {
-        if (link.isMultiLink) {
-            openEditMultiLinkCardModal(link);
+        console.log('Edit button clicked for link:', link.title);
+        console.log('openEditLinkModal function exists:', typeof openEditLinkModal);
+        console.log('openEditLinkModal value:', openEditLinkModal);
+        
+        if (typeof openEditLinkModal === 'function') {
+            console.log('Calling openEditLinkModal...');
+            openEditLinkModal(link);
         } else {
-            if (typeof openEditLinkModal === 'function') {
-                openEditLinkModal(link);
+            console.error('openEditLinkModal is not a function');
+            // Fallback to old method temporarily
+            console.log('Trying fallback...');
+            if (window.openEditLinkModal && typeof window.openEditLinkModal === 'function') {
+                window.openEditLinkModal(link);
             }
         }
     });

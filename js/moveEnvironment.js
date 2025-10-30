@@ -15,6 +15,7 @@ function moveEnvironment(environment, destinationProfile) {
     
     saveWorkbooks();
     renderEnvironments();
+    updateAllCounters();
     
     // Clear current selection if the moved environment was selected
     if (currentEnvironment === environment) {

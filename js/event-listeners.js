@@ -138,18 +138,6 @@ function setupEventListeners() {
     // Add this to your setupEventListeners function
     document.getElementById('toggle-selection-mode-btn').addEventListener('click', toggleSelectionMode);
 
-    // Add to setupEventListeners
-    document.getElementById('close-move-environment-modal').addEventListener('click', () => {
-        document.getElementById('move-environment-modal').style.display = 'none';
-    });
-
-    document.getElementById('save-move-environment-btn').addEventListener('click', () => {
-        if (environmentToMove && selectedDestinationProfile) {
-            moveEnvironment(environmentToMove, selectedDestinationProfile);
-            document.getElementById('move-environment-modal').style.display = 'none';
-        }
-    });
-
     // Add tab button
     addTabBtn.addEventListener('click', () => {
         if (!currentEnvironment) {

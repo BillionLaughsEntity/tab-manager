@@ -47,5 +47,7 @@ function openMoveEnvironmentModal(environment) {
         });
     });
     
-    document.getElementById('move-environment-modal').style.display = 'flex';
+    if (typeof openMoveEnvironmentModal === 'function') {
+        openMoveEnvironmentModal(environment);
+    }
 }

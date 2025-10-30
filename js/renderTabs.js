@@ -1,4 +1,4 @@
-// Render tabs for an environment - ORIGINAL VERSION
+// Render tabs for an environment - UPDATED VERSION
 function renderTabs(environment) {
     const tabsContainer = document.getElementById(`tabs-${environment.id}`);
     tabsContainer.innerHTML = '';
@@ -51,7 +51,14 @@ function renderTabs(environment) {
         
         moveBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            openMoveTabModal(tab);
+            // Use the function approach instead of direct modal access
+            if (typeof openMoveTabModal === 'function') {
+                openMoveTabModal(tab);
+            } else {
+                // Fallback to old way if function doesn't exist
+                tabToMove = tab;
+                document.getElementById('move-tab-modal').style.display = 'flex';
+            }
         });
 
         // FIX ONLY THE DELETE BUTTON - add environment parameter

@@ -68,7 +68,7 @@
             window.tabToMove = tab;
             window.selectedDestinationEnvironment = null;
             
-            populateDestinations();
+            populateDestinations(tab);
             modal.style.display = 'flex';
         }
     }
@@ -82,57 +82,59 @@
         }
     }
 
-    function populateDestinations() {
+    function populateDestinations(tab) {
         const destinationsContainer = document.getElementById('move-tab-destinations');
         if (!destinationsContainer) return;
         
         destinationsContainer.innerHTML = '';
         
-        // Get current environment (the one we're moving FROM)
-        const currentEnvironment = currentEnvironment;
-        const currentProfile = getCurrentProfile();
-        const currentWorkbook = getCurrentWorkbook();
+        // Get current environment from the tab's context
+        const currentEnvironment = findEnvironmentContainingTab(tab);
+        const currentProfile = window.getCurrentProfile ? window.getCurrentProfile() : null;
+        const currentWorkbook = window.getCurrentWorkbook ? window.getCurrentWorkbook() : null;
         
         let hasDestinations = false;
         
         // Show all environments from ALL profiles and workbooks except the current environment
-        workbooks.forEach(workbook => {
-            workbook.profiles.forEach(profile => {
-                profile.environments.forEach(environment => {
-                    // Skip the current environment
-                    if (environment.id !== currentEnvironment.id) {
-                        hasDestinations = true;
-                        
-                        const destinationItem = document.createElement('div');
-                        destinationItem.className = 'destination-item';
-                        destinationItem.innerHTML = `
-                            <input type="radio" name="tab-destination" id="tab-dest-${environment.id}" value="${environment.id}">
-                            <label for="tab-dest-${environment.id}">
-                                <div class="destination-header">
-                                    <strong>${environment.name}</strong>
-                                    <div class="destination-badges">
-                                        <span class="profile-badge">${profile.name}</span>
-                                        <span class="workbook-badge">${workbook.name}</span>
+        if (window.workbooks && Array.isArray(window.workbooks)) {
+            window.workbooks.forEach(workbook => {
+                workbook.profiles.forEach(profile => {
+                    profile.environments.forEach(environment => {
+                        // Skip the current environment (if found)
+                        if (!currentEnvironment || environment.id !== currentEnvironment.id) {
+                            hasDestinations = true;
+                            
+                            const destinationItem = document.createElement('div');
+                            destinationItem.className = 'destination-item';
+                            destinationItem.innerHTML = `
+                                <input type="radio" name="tab-destination" id="tab-dest-${environment.id}" value="${environment.id}">
+                                <label for="tab-dest-${environment.id}">
+                                    <div class="destination-header">
+                                        <strong>${environment.name}</strong>
+                                        <div class="destination-badges">
+                                            <span class="profile-badge">${profile.name}</span>
+                                            <span class="workbook-badge">${workbook.name}</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="destination-info">
-                                    ${environment.tabs.length} tab${environment.tabs.length !== 1 ? 's' : ''}
-                                </div>
-                            </label>
-                        `;
-                        
-                        const radio = destinationItem.querySelector('input[type="radio"]');
-                        radio.addEventListener('change', () => {
-                            if (radio.checked) {
-                                window.selectedDestinationEnvironment = environment;
-                            }
-                        });
-                        
-                        destinationsContainer.appendChild(destinationItem);
-                    }
+                                    <div class="destination-info">
+                                        ${environment.tabs ? environment.tabs.length : 0} tab${environment.tabs && environment.tabs.length !== 1 ? 's' : ''}
+                                    </div>
+                                </label>
+                            `;
+                            
+                            const radio = destinationItem.querySelector('input[type="radio"]');
+                            radio.addEventListener('change', () => {
+                                if (radio.checked) {
+                                    window.selectedDestinationEnvironment = environment;
+                                }
+                            });
+                            
+                            destinationsContainer.appendChild(destinationItem);
+                        }
+                    });
                 });
             });
-        });
+        }
         
         // If no other environments exist, show message
         if (!hasDestinations) {
@@ -140,11 +142,27 @@
         }
     }
 
+    // Helper function to find which environment contains the tab
+    function findEnvironmentContainingTab(tab) {
+        if (!window.workbooks || !tab) return null;
+        
+        for (const workbook of window.workbooks) {
+            for (const profile of workbook.profiles) {
+                for (const environment of profile.environments) {
+                    if (environment.tabs && environment.tabs.some(t => t.id === tab.id)) {
+                        return environment;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     function saveMove() {
         if (window.tabToMove && window.selectedDestinationEnvironment) {
             // Check if moveTab function exists
-            if (typeof moveTab === 'function') {
-                moveTab(window.tabToMove, window.selectedDestinationEnvironment);
+            if (typeof window.moveTab === 'function') {
+                window.moveTab(window.tabToMove, window.selectedDestinationEnvironment);
                 hideModal();
             } else {
                 console.error('moveTab function not found');

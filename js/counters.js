@@ -3,6 +3,7 @@
 function updateAllCounters() {
     updateWorkbooksCounter();
     updateProfilesCounter();
+    updateEnvironmentsCounter();
     updateTabsCounter();
     updateLinksCounter();
 }
@@ -30,15 +31,18 @@ function updateEnvironmentsCounter() {
     let totalEnvironments = 0;
     workbooks.forEach(workbook => {
         workbook.profiles.forEach(profile => {
-            profile.environments.forEach(environment => {
-                totalEnvironments += environment.tabs.length;
-            });
+            // COUNT THE ENVIRONMENTS, NOT THE TABS
+            totalEnvironments += profile.environments.length;
         });
     });  
-    const counterElement = document.getElementById('total-environments-counter');
+    
+    // USE THE CORRECT ELEMENT ID
+    const counterElement = document.getElementById('environments-counter');
     if (counterElement) {
-        counterElement.textContent = `${totalEnvironments} Environments${totalEnvironments > 1 ? 's' : ''}`;
+        counterElement.textContent = `${totalEnvironments} Environment${totalEnvironments !== 1 ? 's' : ''}`;
     }
+    
+    console.log('Environments count:', totalEnvironments);
 }
 
 function updateTabsCounter() {

@@ -80,3 +80,9 @@
 .reorder-btn:hover:not(:disabled) {
     background: #2980b9;
 }
+
+.reorder-link-actions {
+    display: flex;
+    gap: 5px;
+    margin-left: auto; /* This pushes the buttons to the right */
+}

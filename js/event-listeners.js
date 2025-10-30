@@ -538,17 +538,20 @@ function setupEventListeners() {
             console.error('openReorderEnvironmentsModal is not defined');
         }
     });
-
-       
-    document.getElementById('close-reorder-tabs-modal').addEventListener('click', () => {
-        document.getElementById('reorder-tabs-modal').style.display = 'none';
-    });
-
-    
-    document.getElementById('save-reorder-tabs-btn').addEventListener('click', () => {
-        saveReorderedTabs();
-        document.getElementById('reorder-tabs-modal').style.display = 'none';
-    });    
+        
+    // Reorder tabs button
+    document.getElementById('reorder-tabs-btn').addEventListener('click', function() {
+        if (!currentEnvironment) {
+            alert('Please select an environment first');
+            return;
+        }
+        
+        if (typeof openReorderTabsModal === 'function') {
+            openReorderTabsModal();
+        } else {
+            console.error('openReorderTabsModal is not defined');
+        }
+    });  
 
     // Add Multi-Link Card button
     document.getElementById('add-multi-link-card-btn').addEventListener('click', () => {

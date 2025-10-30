@@ -44,9 +44,9 @@ function renderTabs(environment) {
         
         editBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            tabToRename = tab;
-            document.getElementById('rename-tab-input').value = tab.name;
-            renameTabModal.style.display = 'flex';
+            if (typeof openRenameTabModal === 'function') {
+                openRenameTabModal(tab);
+            }
         });
         
         moveBtn.addEventListener('click', (e) => {

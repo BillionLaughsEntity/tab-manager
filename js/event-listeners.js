@@ -281,12 +281,7 @@ function setupEventListeners() {
     document.getElementById('close-tab-modal').addEventListener('click', () => {
         tabModal.style.display = 'none';
     });
-    
-      
-    document.getElementById('close-rename-tab-modal').addEventListener('click', () => {
-        renameTabModal.style.display = 'none';
-    });
-    
+        
     document.getElementById('close-edit-link-modal').addEventListener('click', () => {
         editLinkModal.style.display = 'none';
     });
@@ -305,15 +300,6 @@ function setupEventListeners() {
     });
     
     
-    // Save rename tab
-    document.getElementById('save-rename-tab-btn').addEventListener('click', () => {
-        const newName = document.getElementById('rename-tab-input').value.trim();
-        if (newName && tabToRename) {
-            renameTab(tabToRename, newName);
-            renameTabModal.style.display = 'none';
-        }
-    });
-
     // Save edit link
     document.getElementById('save-edit-link-btn').addEventListener('click', () => {
         const newTitle = document.getElementById('edit-link-title').value.trim();

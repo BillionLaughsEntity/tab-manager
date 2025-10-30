@@ -625,24 +625,24 @@ function setupEventListeners() {
     });
 
     // Add to setupEventListeners function
-    document.getElementById('close-color-modal').addEventListener('click', () => {
-        document.getElementById('color-modal').style.display = 'none';
-    });
+    // document.getElementById('close-color-modal').addEventListener('click', () => {
+    //     document.getElementById('color-modal').style.display = 'none';
+    // });
 
-    document.getElementById('save-color-btn').addEventListener('click', () => {
-        if (profileForColor) {
-            updateProfileColor(profileForColor, selectedColor);
-            document.getElementById('color-modal').style.display = 'none';
-        }
-    });
+    // document.getElementById('save-color-btn').addEventListener('click', () => {
+    //     if (profileForColor) {
+    //         updateProfileColor(profileForColor, selectedColor);
+    //         document.getElementById('color-modal').style.display = 'none';
+    //     }
+    // });
 
     // Color selection event listeners - use event delegation
-    document.getElementById('html5-color-picker').addEventListener('input', (e) => {
-        selectedColor = e.target.value;
+    //document.getElementById('html5-color-picker').addEventListener('input', (e) => {
+    //    selectedColor = e.target.value;
         // Update the preview
-        document.getElementById('selected-color-hex').textContent = selectedColor;
-        document.getElementById('color-preview-box').style.backgroundColor = selectedColor;
-    });
+    //    document.getElementById('selected-color-hex').textContent = selectedColor;
+    //    document.getElementById('color-preview-box').style.backgroundColor = selectedColor;
+    //});
 
     // Create Search Link button
     document.getElementById('create-search-link-btn').addEventListener('click', () => {

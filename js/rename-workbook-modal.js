@@ -95,8 +95,14 @@
         const newName = input.value.trim();
         
         if (newName && window.workbookToRename) {
-            renameWorkbook(window.workbookToRename, newName);
-            hideModal();
+            // Check if renameWorkbook function exists
+            if (typeof renameWorkbook === 'function') {
+                renameWorkbook(window.workbookToRename, newName);
+                hideModal();
+            } else {
+                console.error('renameWorkbook function not found');
+                alert('Error: Rename function not available');
+            }
         } else if (!newName) {
             alert('Please enter a name');
             input.focus();

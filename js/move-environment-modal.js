@@ -90,34 +90,45 @@
         
         // Get current profile (the one we're moving FROM)
         const currentProfile = getCurrentProfile();
-        const currentWorkbook = getCurrentWorkbook();
         
-        // Show all profiles in the current workbook except the current one
-        currentWorkbook.profiles.forEach(profile => {
-            if (profile.id !== currentProfile.id) {
-                const destinationItem = document.createElement('div');
-                destinationItem.className = 'destination-item';
-                destinationItem.innerHTML = `
-                    <input type="radio" name="environment-destination" id="environment-dest-${profile.id}" value="${profile.id}">
-                    <label for="environment-dest-${profile.id}">
-                        <strong>${profile.name}</strong>
-                        <span class="destination-info">${profile.environments.length} environment${profile.environments.length !== 1 ? 's' : ''}</span>
-                    </label>
-                `;
-                
-                const radio = destinationItem.querySelector('input[type="radio"]');
-                radio.addEventListener('change', () => {
-                    if (radio.checked) {
-                        window.selectedDestinationProfile = profile;
-                    }
-                });
-                
-                destinationsContainer.appendChild(destinationItem);
-            }
+        let hasDestinations = false;
+        
+        // Show all profiles from ALL workbooks except the current profile
+        workbooks.forEach(workbook => {
+            workbook.profiles.forEach(profile => {
+                // Skip the current profile
+                if (profile.id !== currentProfile.id) {
+                    hasDestinations = true;
+                    
+                    const destinationItem = document.createElement('div');
+                    destinationItem.className = 'destination-item';
+                    destinationItem.innerHTML = `
+                        <input type="radio" name="environment-destination" id="environment-dest-${profile.id}" value="${profile.id}">
+                        <label for="environment-dest-${profile.id}">
+                            <div class="destination-header">
+                                <strong>${profile.name}</strong>
+                                <span class="workbook-badge">${workbook.name}</span>
+                            </div>
+                            <div class="destination-info">
+                                ${profile.environments.length} environment${profile.environments.length !== 1 ? 's' : ''}
+                            </div>
+                        </label>
+                    `;
+                    
+                    const radio = destinationItem.querySelector('input[type="radio"]');
+                    radio.addEventListener('change', () => {
+                        if (radio.checked) {
+                            window.selectedDestinationProfile = profile;
+                        }
+                    });
+                    
+                    destinationsContainer.appendChild(destinationItem);
+                }
+            });
         });
         
         // If no other profiles exist, show message
-        if (destinationsContainer.children.length === 0) {
+        if (!hasDestinations) {
             destinationsContainer.innerHTML = '<p class="no-destinations">No other profiles available for moving environments.</p>';
         }
     }

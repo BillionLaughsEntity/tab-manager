@@ -4,6 +4,8 @@
     'use strict';
     
     let isInitialized = false;
+    let tabToMove = null;
+    let selectedDestinationEnvironment = null;
 
     function initMoveTabModal() {
         if (isInitialized) return;
@@ -64,9 +66,8 @@
     function showModal(tab) {
         const modal = document.getElementById('move-tab-modal');
         if (modal) {
-            // Store the tab to move globally
-            window.tabToMove = tab;
-            window.selectedDestinationEnvironment = null;
+            tabToMove = tab;
+            selectedDestinationEnvironment = null;
             
             populateDestinations(tab);
             modal.style.display = 'flex';
@@ -77,8 +78,8 @@
         const modal = document.getElementById('move-tab-modal');
         if (modal) {
             modal.style.display = 'none';
-            window.tabToMove = null;
-            window.selectedDestinationEnvironment = null;
+            tabToMove = null;
+            selectedDestinationEnvironment = null;
         }
     }
 
@@ -90,8 +91,6 @@
         
         // Get current environment from the tab's context
         const currentEnvironment = findEnvironmentContainingTab(tab);
-        const currentProfile = window.getCurrentProfile ? window.getCurrentProfile() : null;
-        const currentWorkbook = window.getCurrentWorkbook ? window.getCurrentWorkbook() : null;
         
         let hasDestinations = false;
         
@@ -125,7 +124,7 @@
                             const radio = destinationItem.querySelector('input[type="radio"]');
                             radio.addEventListener('change', () => {
                                 if (radio.checked) {
-                                    window.selectedDestinationEnvironment = environment;
+                                    selectedDestinationEnvironment = environment;
                                 }
                             });
                             
@@ -159,10 +158,10 @@
     }
 
     function saveMove() {
-        if (window.tabToMove && window.selectedDestinationEnvironment) {
+        if (tabToMove && selectedDestinationEnvironment) {
             // Check if moveTab function exists
             if (typeof window.moveTab === 'function') {
-                window.moveTab(window.tabToMove, window.selectedDestinationEnvironment);
+                window.moveTab(tabToMove, selectedDestinationEnvironment);
                 hideModal();
             } else {
                 console.error('moveTab function not found');

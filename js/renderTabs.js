@@ -51,13 +51,17 @@ function renderTabs(environment) {
         
         moveBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            // Use the function approach instead of direct modal access
+            // Use the function approach
             if (typeof openMoveTabModal === 'function') {
                 openMoveTabModal(tab);
             } else {
-                // Fallback to old way if function doesn't exist
+                // Fallback to old way
+                console.warn('openMoveTabModal not found, using fallback');
                 tabToMove = tab;
-                document.getElementById('move-tab-modal').style.display = 'flex';
+                const modal = document.getElementById('move-tab-modal');
+                if (modal) {
+                    modal.style.display = 'flex';
+                }
             }
         });
 

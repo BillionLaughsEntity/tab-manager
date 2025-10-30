@@ -80,6 +80,7 @@
     <link rel="stylesheet" href="css/counters.css">
     <link rel="stylesheet" href="css/s3-sync.css">
     <link rel="stylesheet" href="css/email.css">
+    <link rel="stylesheet" href="destination_for_move_profile.css"
 </head>
 <body>
     <!-- Header -->
@@ -599,24 +600,6 @@
         </div>
     </div>
 
-    <!-- Add this modal for moving profiles -->
-    <div class="modal" id="move-profile-modal">
-        <div class="move-tab-modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Move Profile</h3>
-                <span class="close-modal">&times;</span>
-            </div>
-            <p>Select a destination workbook for this profile:</p>
-            <div id="move-profile-destinations">
-                <!-- Destinations will be populated here -->
-            </div>
-            <div class="modal-actions">
-                <button class="modal-btn modal-btn-secondary" id="close-move-profile-modal">Cancel</button>
-                <button class="modal-btn modal-btn-primary" id="save-move-profile-btn">Move</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Outlook Email Modal -->
     <div class="modal" id="outlook-email-modal">
         <div class="modal-content">
@@ -824,7 +807,6 @@
     <script src="js/checkProfileScroll.js"></script>
     <script src="js/permanentlyDeleteFromTrash.js"></script>
     <script src="js/restoreFromTrash.js"></script>
-    
     <script src="js/moveWorkbookUp.js"></script>
     <script src="js/moveWorkbookDown.js"></script>
     <script src="js/deleteWorkbook.js"></script>
@@ -833,7 +815,6 @@
     <script src="js/updateProfileScroll.js"></script>
     <script src="js/forceMigrateOldData.js"></script>
     <script src="js/openMoveProfileModal.js"></script>
-    <script src="js/moveProfile.js"></script>
     <script src="js/permanentlyDeleteLink.js"></script>
     <script src="js/restoreLink.js"></script>
     <script src="js/addCheckboxesToLinks.js"></script>
@@ -855,7 +836,6 @@
     <script src="js/updateFieldLabels.js"></script>
     <script src="js/addLinkField.js"></script>
     <script src="js/openMultiLinkCardModal.js"></script>
-    <!-- <script src="js/saveReorderedTabs.js"></script> -->
     <script src="js/openReorderTabsModal.js"></script>
     <script src="js/moveEnvironmentUp.js"></script>
     <script src="js/moveEnvironmentDown.js"></script>
@@ -874,7 +854,6 @@
     <script src="js/switchProfile.js"></script>
     <script src="js/deleteProfile.js"></script>
     <script src="js/addProfile.js"></script>
-    
     <script src="js/escapeXml.js"></script>
     <script src="js/validateMultiLinkCard.js"></script>
     <script src="js/processMultiLinkUrls.js"></script>
@@ -903,7 +882,6 @@
     <script src="js/updateSelectedTabDestinationPath.js"></script>
     <script src="js/moveTab.js"></script>
     <script src="js/moveLink.js"></script>
-    
     <script src="js/deleteTab.js"></script>
     <script src="js/deleteEnvironment.js"></script>
     <script src="js/addLink.js"></script>
@@ -976,6 +954,12 @@
     <script src="js/debugXMLImport.js"></script>
     <script src="js/importWorkbooks.js"></script>
     <script src="js/debugExportModal.js"></script>
+    <!--move-block-->
+    <script src="js/moveProfile.js"></script>
+    <script src="js/move-profile-modal.js"></script>
+
+
+    <!--move-block ends-->
 
     <!-- Event listeners LAST -->
     <script src="js/event-listeners.js"></script>

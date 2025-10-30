@@ -43,5 +43,7 @@ function openMoveProfileModal(profile) {
         destinationsContainer.innerHTML = '<div style="padding: 20px; text-align: center; color: #7f8c8d;">No other workbooks available for moving profiles</div>';
     }
     
-    document.getElementById('move-profile-modal').style.display = 'flex';
+    if (typeof openMoveProfileModal === 'function') {
+        openMoveProfileModal(profile);
+    }
 }

@@ -35,20 +35,6 @@ function setupEventListeners() {
         setupOutlookEmailListeners();
     }
     
-    // Add to setupEventListeners function
-    document.getElementById('close-move-profile-modal').addEventListener('click', () => {
-        document.getElementById('move-profile-modal').style.display = 'none';
-    });
-
-    document.getElementById('save-move-profile-btn').addEventListener('click', () => {
-        if (profileToMove && selectedDestinationWorkbook) {
-            moveProfile(profileToMove, selectedDestinationWorkbook);
-            document.getElementById('move-profile-modal').style.display = 'none';
-        } else {
-            alert('Please select a destination workbook');
-        }
-    });
-
     // Manual migration button
     document.getElementById('migrate-data-btn').addEventListener('click', forceMigrateOldData);
     // Add workbook button
@@ -281,11 +267,7 @@ function setupEventListeners() {
     document.getElementById('close-tab-modal').addEventListener('click', () => {
         tabModal.style.display = 'none';
     });
-        
-    document.getElementById('close-edit-link-modal').addEventListener('click', () => {
-        editLinkModal.style.display = 'none';
-    });
-    
+           
     document.getElementById('close-move-link-modal').addEventListener('click', () => {
         moveLinkModal.style.display = 'none';
     });
@@ -299,23 +281,6 @@ function setupEventListeners() {
         profileModal.style.display = 'none';
     });
     
-    
-    // Save edit link
-    document.getElementById('save-edit-link-btn').addEventListener('click', () => {
-        const newTitle = document.getElementById('edit-link-title').value.trim();
-        const newUrl = document.getElementById('edit-link-url').value.trim();
-        
-        if (newTitle && newUrl && linkToEdit) {
-            if (!isValidUrl(newUrl)) {
-                alert('Please enter a valid URL (e.g., https://example.com)');
-                return;
-            }
-            
-            editLink(linkToEdit, newTitle, newUrl);
-            editLinkModal.style.display = 'none';
-        }
-    });
-
     // Update the save move button handler
     document.getElementById('save-move-link-btn').addEventListener('click', () => {
         if (window.bulkLinksToMove) {

@@ -1,0 +1,36 @@
+.destination-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    background: white;
+}
+
+.destination-item:hover {
+    background: #f8f9fa;
+}
+
+.destination-item input[type="radio"] {
+    margin-right: 10px;
+}
+
+.destination-item label {
+    flex: 1;
+    cursor: pointer;
+    margin: 0;
+}
+
+.destination-info {
+    font-size: 12px;
+    color: #6c757d;
+    margin-left: 8px;
+}
+
+.no-destinations {
+    text-align: center;
+    color: #6c757d;
+    font-style: italic;
+    padding: 20px;
+}

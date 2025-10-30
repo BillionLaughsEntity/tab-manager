@@ -511,8 +511,12 @@ function setupEventListeners() {
     });
 
     // Reorder profiles button
-    document.getElementById('reorder-profiles-btn').addEventListener('click', () => {
-        openReorderProfilesModal();
+    document.getElementById('reorder-profiles-btn').addEventListener('click', function() {
+        if (typeof openReorderProfilesModal === 'function') {
+            openReorderProfilesModal();
+        } else {
+            console.error('openReorderProfilesModal is not defined');
+        }
     });
 
     // Reorder environments button
@@ -520,11 +524,7 @@ function setupEventListeners() {
         openReorderEnvironmentsModal();
     });
 
-    // Close modals for reorder functions
-    document.getElementById('close-reorder-profiles-modal').addEventListener('click', () => {
-        document.getElementById('reorder-profiles-modal').style.display = 'none';
-    });
-
+    
     document.getElementById('close-reorder-environments-modal').addEventListener('click', () => {
         document.getElementById('reorder-environments-modal').style.display = 'none';
     });
@@ -533,12 +533,7 @@ function setupEventListeners() {
         document.getElementById('reorder-tabs-modal').style.display = 'none';
     });
 
-    // Save reorder actions
-    document.getElementById('save-reorder-profiles-btn').addEventListener('click', () => {
-        saveReorderedProfiles();
-        document.getElementById('reorder-profiles-modal').style.display = 'none';
-    });
-
+    
     document.getElementById('save-reorder-environments-btn').addEventListener('click', () => {
         saveReorderedEnvironments();
         document.getElementById('reorder-environments-modal').style.display = 'none';

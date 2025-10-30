@@ -30,16 +30,16 @@ function updateProfilesCounter() {
 function updateEnvironmentsCounter() {
     let totalEnvironments = 0;
     
-    console.log('=== DEBUG: Counting Environments ===');
+    // console.log('=== DEBUG: Counting Environments ===');
     workbooks.forEach(workbook => {
-        console.log(`Workbook: ${workbook.name}`);
+        // console.log(`Workbook: ${workbook.name}`);
         workbook.profiles.forEach(profile => {
-            console.log(`  Profile: ${profile.name}, Environments: ${profile.environments.length}`);
+            // console.log(`  Profile: ${profile.name}, Environments: ${profile.environments.length}`);
             totalEnvironments += profile.environments.length;
         });
     });  
     
-    console.log('Total environments found:', totalEnvironments);
+    // console.log('Total environments found:', totalEnvironments);
     
     const counterElement = document.getElementById('environments-counter');
     if (counterElement) {

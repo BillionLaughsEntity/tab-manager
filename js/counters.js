@@ -27,14 +27,18 @@ function updateProfilesCounter() {
 }
 
 function updateEnvironmentsCounter() {
-    let totalEnvironments = 0; // FIXED VERSION
+    let totalEnvironments = 0;
     workbooks.forEach(workbook => {
-        workbook.profiles.forEach(profile => { // FIXED VERSION
-            profile.environments.forEach(environment => { // FIXED VERSION
-                totalEnvironments += 1; // FIXED VERSION
-            }); // FIXED VERSION
-        }); // FIXED VERSION
-    }); // FIXED VERSION    
+        workbook.profiles.forEach(profile => {
+            profile.environments.forEach(environment => {
+                totalEnvironments += 1;
+            });
+        });
+    });  
+    const counterElement = document.getElementById('total-environments-counter');
+    if (counterElement) {
+        counterElement.textContent = `${totalEnvironments} Environments${totalEnvironments > 1 ? 's' : ''}`;
+    }
 }
 
 function updateTabsCounter() {

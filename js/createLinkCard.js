@@ -93,10 +93,9 @@ function createLinkCard(link) {
         if (link.isMultiLink) {
             openEditMultiLinkCardModal(link);
         } else {
-            linkToEdit = link;
-            document.getElementById('edit-link-title').value = link.title;
-            document.getElementById('edit-link-url').value = link.url;
-            editLinkModal.style.display = 'flex';
+            if (typeof openEditLinkModal === 'function') {
+                openEditLinkModal(link);
+            }
         }
     });
     

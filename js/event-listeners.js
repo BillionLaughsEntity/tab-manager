@@ -525,25 +525,26 @@ function setupEventListeners() {
     });
 
     // Reorder environments button
-    document.getElementById('reorder-environments-btn').addEventListener('click', () => {
-        openReorderEnvironmentsModal();
+    document.getElementById('reorder-environments-btn').addEventListener('click', function() {
+        const currentProfile = getCurrentProfile();
+        if (!currentProfile) {
+            alert('Please select a profile first');
+            return;
+        }
+        
+        if (typeof openReorderEnvironmentsModal === 'function') {
+            openReorderEnvironmentsModal();
+        } else {
+            console.error('openReorderEnvironmentsModal is not defined');
+        }
     });
 
-    
-    document.getElementById('close-reorder-environments-modal').addEventListener('click', () => {
-        document.getElementById('reorder-environments-modal').style.display = 'none';
-    });
-
+       
     document.getElementById('close-reorder-tabs-modal').addEventListener('click', () => {
         document.getElementById('reorder-tabs-modal').style.display = 'none';
     });
 
     
-    document.getElementById('save-reorder-environments-btn').addEventListener('click', () => {
-        saveReorderedEnvironments();
-        document.getElementById('reorder-environments-modal').style.display = 'none';
-    });
-
     document.getElementById('save-reorder-tabs-btn').addEventListener('click', () => {
         saveReorderedTabs();
         document.getElementById('reorder-tabs-modal').style.display = 'none';

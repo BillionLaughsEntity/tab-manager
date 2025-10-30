@@ -145,9 +145,13 @@
         });
     }
 
+    // To this:
     function saveOrder() {
         saveWorkbooks();
-        renderLinks();
+        // Re-render the current tab to show the updated order immediately
+        if (currentTab) {
+            selectTab(currentTab);
+        }
         hideModal();
     }
 

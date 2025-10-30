@@ -30,6 +30,7 @@ function moveTab(tab, destinationEnvironment) {
         // Update UI
         renderProfileTabs();
         renderEnvironments();
+        updateAllCounters();
         selectTab(destinationEnvironment, movedTab);
     }
     

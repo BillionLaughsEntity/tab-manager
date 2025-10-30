@@ -259,12 +259,7 @@ function setupEventListeners() {
     document.getElementById('close-move-link-modal').addEventListener('click', () => {
         moveLinkModal.style.display = 'none';
     });
-    
-    document.getElementById('close-move-tab-modal').addEventListener('click', () => {
-        moveTabModal.style.display = 'none';
-    });
-    
-        
+           
     document.getElementById('close-profile-modal').addEventListener('click', () => {
         profileModal.style.display = 'none';
     });
@@ -283,15 +278,7 @@ function setupEventListeners() {
         }
     });
 
-    // Save move tab
-    document.getElementById('save-move-tab-btn').addEventListener('click', () => {
-        if (tabToMove && selectedDestinationEnvironment) {
-            moveTab(tabToMove, selectedDestinationEnvironment);
-            moveTabModal.style.display = 'none';
-        }
-    });
-
-    // Reorder links button
+   // Reorder links button
     document.getElementById('reorder-links-btn').addEventListener('click', function() {
         if (!currentTab) {
             alert('Please select a tab first');

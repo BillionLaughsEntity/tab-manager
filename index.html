@@ -82,6 +82,7 @@
     <link rel="stylesheet" href="css/email.css">
     <link rel="stylesheet" href="destination_for_move_profile.css">
     <link rel="stylesheet" href="destination_for_move_environment.css">
+    <link rel="stylesheet" href="destination_for_move_tabs.css">
 
 </head>
 <body>
@@ -378,24 +379,6 @@
             <div class="modal-actions">
                 <button class="modal-btn modal-btn-secondary" id="close-move-link-modal">Cancel</button>
                 <button class="modal-btn modal-btn-primary" id="save-move-link-btn">Move</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Move Tab Modal -->
-    <div class="modal" id="move-tab-modal">
-        <div class="move-tab-modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Move Tab</h3>
-                <span class="close-modal">&times;</span>
-            </div>
-            <p>Select a destination environment for this tab:</p>
-            <div id="move-tab-destinations">
-                <!-- Destinations will be populated here -->
-            </div>
-            <div class="modal-actions">
-                <button class="modal-btn modal-btn-secondary" id="close-move-tab-modal">Cancel</button>
-                <button class="modal-btn modal-btn-primary" id="save-move-tab-btn">Move</button>
             </div>
         </div>
     </div>
@@ -863,7 +846,6 @@
     <script src="js/moveLinkDown.js"></script>
     <script src="js/openReorderLinksModal.js"></script>
     <script src="js/updateSelectedTabDestinationPath.js"></script>
-    <script src="js/moveTab.js"></script>
     <script src="js/moveLink.js"></script>
     <script src="js/deleteTab.js"></script>
     <script src="js/deleteEnvironment.js"></script>
@@ -942,7 +924,8 @@
     <script src="js/move-profile-modal.js"></script>
     <script src="js/moveEnvironment.js"></script>
     <script src="js/move-environment-modal.js"></script>
-
+    <script src="js/moveTab.js"></script>
+    <script src="js/move-tab-modal.js"></script>
     <!--move-block ends-->
 
     <!-- Event listeners LAST -->

@@ -1,0 +1,22 @@
+.destination-badges {
+    display: flex;
+    gap: 4px;
+}
+
+.profile-badge {
+    background: #e3f2fd;
+    color: #1565c0;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: normal;
+}
+
+.workbook-badge {
+    background: #f3e5f5;
+    color: #7b1fa2;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: normal;
+}

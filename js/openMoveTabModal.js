@@ -50,5 +50,7 @@ function openMoveTabModal(tab) {
         });
     });
     
-    moveTabModal.style.display = 'flex';
+    if (typeof openMoveTabModal === 'function') {
+        openMoveTabModal(tab);
+    }
 }

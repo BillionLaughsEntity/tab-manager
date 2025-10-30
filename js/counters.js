@@ -31,7 +31,7 @@ function updateEnvironmentsCounter() {
     workbooks.forEach(workbook => {
         workbook.profiles.forEach(profile => {
             profile.environments.forEach(environment => {
-                totalEnvironments += 1;
+                totalEnvironments += environment.tabs.length;
             });
         });
     });  

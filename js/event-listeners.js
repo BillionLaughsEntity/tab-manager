@@ -66,22 +66,22 @@ function setupEventListeners() {
         setupOutlookEmailListeners();
     }
     
-    document.getElementById('close-workbook-color-modal').addEventListener('click', () => {
-        document.getElementById('workbook-color-modal').style.display = 'none';
-    });
+    // document.getElementById('close-workbook-color-modal').addEventListener('click', () => {
+    //     document.getElementById('workbook-color-modal').style.display = 'none';
+    // });
 
-    document.getElementById('save-workbook-color-btn').addEventListener('click', () => {
-        if (workbookForColor) {
-            updateWorkbookColor(workbookForColor, selectedColor);
-            document.getElementById('workbook-color-modal').style.display = 'none';
-        }
-    });
+    // document.getElementById('save-workbook-color-btn').addEventListener('click', () => {
+    //     if (workbookForColor) {
+    //         updateWorkbookColor(workbookForColor, selectedColor);
+    //         document.getElementById('workbook-color-modal').style.display = 'none';
+    //     }
+    // });
 
-    document.getElementById('workbook-html5-color-picker').addEventListener('input', (e) => {
-        selectedColor = e.target.value;
-        document.getElementById('workbook-selected-color-hex').textContent = selectedColor;
-        document.getElementById('workbook-color-preview-box').style.backgroundColor = selectedColor;
-    });
+    // document.getElementById('workbook-html5-color-picker').addEventListener('input', (e) => {
+    //     selectedColor = e.target.value;
+    //     document.getElementById('workbook-selected-color-hex').textContent = selectedColor;
+    //     document.getElementById('workbook-color-preview-box').style.backgroundColor = selectedColor;
+    // });
 
     // Add to setupEventListeners function
     document.getElementById('close-move-profile-modal').addEventListener('click', () => {

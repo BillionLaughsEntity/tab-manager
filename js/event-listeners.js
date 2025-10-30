@@ -315,10 +315,7 @@ function setupEventListeners() {
         moveTabModal.style.display = 'none';
     });
     
-    document.getElementById('close-reorder-links-modal').addEventListener('click', () => {
-        reorderLinksModal.style.display = 'none';
-    });
-    
+        
     document.getElementById('close-profile-modal').addEventListener('click', () => {
         profileModal.style.display = 'none';
     });
@@ -383,10 +380,18 @@ function setupEventListeners() {
         }
     });
 
-    // Save reorder links
-    document.getElementById('save-reorder-links-btn').addEventListener('click', () => {
-        saveReorderedLinks();
-        reorderLinksModal.style.display = 'none';
+    // Reorder links button
+    document.getElementById('reorder-links-btn').addEventListener('click', function() {
+        if (!currentTab) {
+            alert('Please select a tab first');
+            return;
+        }
+        
+        if (typeof openReorderLinksModal === 'function') {
+            openReorderLinksModal();
+        } else {
+            console.error('openReorderLinksModal is not defined');
+        }
     });
 
     // Copy XML to clipboard

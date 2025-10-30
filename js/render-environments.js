@@ -76,9 +76,9 @@ function renderEnvironments() {
         
         renameBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            environmentToRename = environment;
-            document.getElementById('rename-environment-input').value = environment.name;
-            renameEnvironmentModal.style.display = 'flex';
+            if (typeof openRenameEnvironmentModal === 'function') {
+                openRenameEnvironmentModal(environment);
+            }
         });
         
         deleteBtn.addEventListener('click', (e) => {

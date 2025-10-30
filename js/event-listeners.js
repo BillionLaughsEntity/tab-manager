@@ -282,10 +282,7 @@ function setupEventListeners() {
         tabModal.style.display = 'none';
     });
     
-    document.getElementById('close-rename-environment-modal').addEventListener('click', () => {
-        renameEnvironmentModal.style.display = 'none';
-    });
-    
+      
     document.getElementById('close-rename-tab-modal').addEventListener('click', () => {
         renameTabModal.style.display = 'none';
     });
@@ -308,15 +305,6 @@ function setupEventListeners() {
     });
     
     
-    // Save rename environment
-    document.getElementById('save-rename-environment-btn').addEventListener('click', () => {
-        const newName = document.getElementById('rename-environment-input').value.trim();
-        if (newName && environmentToRename) {
-            renameEnvironment(environmentToRename, newName);
-            renameEnvironmentModal.style.display = 'none';
-        }
-    });
-
     // Save rename tab
     document.getElementById('save-rename-tab-btn').addEventListener('click', () => {
         const newName = document.getElementById('rename-tab-input').value.trim();

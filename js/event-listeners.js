@@ -24,37 +24,6 @@ function setupEventListeners() {
         globalSearch.focus();
     });
 
-    // S3 Sync Event Listeners
-    // document.getElementById('s3-sync-btn')?.addEventListener('click', openS3SyncModal);
-    // document.getElementById('configure-s3-btn')?.addEventListener('click', openS3ConfigModal);
-    // document.getElementById('upload-to-s3-btn')?.addEventListener('click', uploadToS3);
-    // document.getElementById('download-from-s3-btn')?.addEventListener('click', downloadFromS3);
-    // document.getElementById('test-s3-connection-btn')?.addEventListener('click', testS3Connection);
-
-    // S3 Config Modal
-    // document.getElementById('save-s3-config-btn')?.addEventListener('click', function() {
-     //    const config = {
-    //         accessKeyId: document.getElementById('s3-access-key').value,
-    //         secretAccessKey: document.getElementById('s3-secret-key').value,
-    //         bucketName: document.getElementById('s3-bucket-name').value,
-    //         region: document.getElementById('s3-region').value,
-    //         filename: document.getElementById('s3-filename').value
-    //     };
-        
-    //     saveS3Config(config);
-    //     document.getElementById('s3-config-modal').style.display = 'none';
-    //     updateSyncStatus('S3 configuration saved!', 'success');
-    // });
-
-    // Close modals
-    // document.getElementById('close-s3-config-modal')?.addEventListener('click', function() {
-    //     document.getElementById('s3-config-modal').style.display = 'none';
-    // });
-
-    // document.getElementById('close-s3-sync-modal')?.addEventListener('click', function() {
-    //     document.getElementById('s3-sync-modal').style.display = 'none';
-    // });
-
     // In event-listeners.js, make sure you have this:
     document.getElementById('export-btn').addEventListener('click', function() {
         console.log('Export button clicked'); // Debug log
@@ -66,23 +35,6 @@ function setupEventListeners() {
         setupOutlookEmailListeners();
     }
     
-    // document.getElementById('close-workbook-color-modal').addEventListener('click', () => {
-    //     document.getElementById('workbook-color-modal').style.display = 'none';
-    // });
-
-    // document.getElementById('save-workbook-color-btn').addEventListener('click', () => {
-    //     if (workbookForColor) {
-    //         updateWorkbookColor(workbookForColor, selectedColor);
-    //         document.getElementById('workbook-color-modal').style.display = 'none';
-    //     }
-    // });
-
-    // document.getElementById('workbook-html5-color-picker').addEventListener('input', (e) => {
-    //     selectedColor = e.target.value;
-    //     document.getElementById('workbook-selected-color-hex').textContent = selectedColor;
-    //     document.getElementById('workbook-color-preview-box').style.backgroundColor = selectedColor;
-    // });
-
     // Add to setupEventListeners function
     document.getElementById('close-move-profile-modal').addEventListener('click', () => {
         document.getElementById('move-profile-modal').style.display = 'none';
@@ -135,19 +87,19 @@ function setupEventListeners() {
 
     // Reorder workbooks button
     document.getElementById('reorder-workbooks-btn').addEventListener('click', () => {
-        openReorderWorkbooksModal();
+        openReorderWorkbooksModal(); // This now uses the new class
     });
 
     // Close reorder workbooks modal
-    document.getElementById('close-reorder-workbooks-modal').addEventListener('click', () => {
-        document.getElementById('reorder-workbooks-modal').style.display = 'none';
-    });
+    // document.getElementById('close-reorder-workbooks-modal').addEventListener('click', () => {
+    //     document.getElementById('reorder-workbooks-modal').style.display = 'none';
+    // });
 
     // Save reordered workbooks
-    document.getElementById('save-reorder-workbooks-btn').addEventListener('click', () => {
-        saveReorderedWorkbooks();
-        document.getElementById('reorder-workbooks-modal').style.display = 'none';
-    });
+    // document.getElementById('save-reorder-workbooks-btn').addEventListener('click', () => {
+    //     saveReorderedWorkbooks();
+    //     document.getElementById('reorder-workbooks-modal').style.display = 'none';
+    // });
     
     // Add environment button
     addEnvironmentBtn.addEventListener('click', () => {
@@ -624,26 +576,7 @@ function setupEventListeners() {
         document.getElementById('edit-multi-link-card-modal').style.display = 'none';
     });
 
-    // Add to setupEventListeners function
-    // document.getElementById('close-color-modal').addEventListener('click', () => {
-    //     document.getElementById('color-modal').style.display = 'none';
-    // });
-
-    // document.getElementById('save-color-btn').addEventListener('click', () => {
-    //     if (profileForColor) {
-    //         updateProfileColor(profileForColor, selectedColor);
-    //         document.getElementById('color-modal').style.display = 'none';
-    //     }
-    // });
-
-    // Color selection event listeners - use event delegation
-    //document.getElementById('html5-color-picker').addEventListener('input', (e) => {
-    //    selectedColor = e.target.value;
-        // Update the preview
-    //    document.getElementById('selected-color-hex').textContent = selectedColor;
-    //    document.getElementById('color-preview-box').style.backgroundColor = selectedColor;
-    //});
-
+    
     // Create Search Link button
     document.getElementById('create-search-link-btn').addEventListener('click', () => {
         openCreateSearchLinkModal();

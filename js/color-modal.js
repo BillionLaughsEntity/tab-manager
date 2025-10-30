@@ -14,7 +14,7 @@ class ColorModal {
         modal.style.display = 'none';
         
         modal.innerHTML = `
-            <div class="modal-content">
+            <div class="modal-content color-modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title">Choose Profile Color</h3>
                     <span class="close-modal">&times;</span>

@@ -540,18 +540,25 @@ function setupEventListeners() {
     });
         
     // Reorder tabs button
-    document.getElementById('reorder-tabs-btn').addEventListener('click', function() {
-        if (!currentEnvironment) {
-            alert('Please select an environment first');
-            return;
-        }
-        
-        if (typeof openReorderTabsModal === 'function') {
-            openReorderTabsModal();
-        } else {
-            console.error('openReorderTabsModal is not defined');
-        }
-    });  
+    const reorderTabsBtn = document.querySelector('.reorder-tabs-btn');
+    if (reorderTabsBtn) {
+        console.log('Reorder tabs button found');
+        reorderTabsBtn.addEventListener('click', function() {
+            console.log('Reorder tabs button clicked');
+            if (!currentEnvironment) {
+                alert('Please select an environment first');
+                return;
+            }
+            
+            if (typeof openReorderTabsModal === 'function') {
+                openReorderTabsModal();
+            } else {
+                console.error('openReorderTabsModal is not defined');
+            }
+        });
+    } else {
+        console.log('Reorder tabs button NOT found in DOM');
+    } 
 
     // Add Multi-Link Card button
     document.getElementById('add-multi-link-card-btn').addEventListener('click', () => {

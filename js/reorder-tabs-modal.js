@@ -135,8 +135,8 @@
 
     function saveOrder() {
         saveWorkbooks();
-        // Refresh the tabs display
-        renderTabs();
+        // Refresh the tabs display by re-rendering environments
+        renderEnvironments();
         hideModal();
     }
 

@@ -90,17 +90,7 @@ function setupEventListeners() {
         openReorderWorkbooksModal(); // This now uses the new class
     });
 
-    // Close reorder workbooks modal
-    // document.getElementById('close-reorder-workbooks-modal').addEventListener('click', () => {
-    //     document.getElementById('reorder-workbooks-modal').style.display = 'none';
-    // });
-
-    // Save reordered workbooks
-    // document.getElementById('save-reorder-workbooks-btn').addEventListener('click', () => {
-    //     saveReorderedWorkbooks();
-    //     document.getElementById('reorder-workbooks-modal').style.display = 'none';
-    // });
-    
+      
     // Add environment button
     addEnvironmentBtn.addEventListener('click', () => {
         document.getElementById('new-environment-name').value = '';

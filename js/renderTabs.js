@@ -1,14 +1,6 @@
-// Render tabs for an environment - FIXED VERSION
+// Render tabs for an environment - ORIGINAL VERSION
 function renderTabs(environment) {
-    console.log('=== RENDER TABS DEBUG ===');
-    console.log('Rendering tabs for environment:', environment.name);
-    
-    const tabsContainer = document.querySelector(`[data-environment-id="${environment.id}"] .tabs-container`);
-    if (!tabsContainer) {
-        console.error('Tabs container not found for environment:', environment.id);
-        return;
-    }
-    
+    const tabsContainer = document.getElementById(`tabs-${environment.id}`);
     tabsContainer.innerHTML = '';
     
     if (!environment.tabs || environment.tabs.length === 0) {
@@ -16,13 +8,9 @@ function renderTabs(environment) {
         return;
     }
     
-    console.log('Rendering', environment.tabs.length, 'tabs');
-    
     environment.tabs.forEach(tab => {
         const tabElement = document.createElement('div');
         tabElement.className = 'tab-item';
-        tabElement.dataset.tabId = tab.id;
-        
         if (tab === currentTab && environment === currentEnvironment) {
             tabElement.classList.add('active');
         }
@@ -66,22 +54,12 @@ function renderTabs(environment) {
             openMoveTabModal(tab);
         });
 
-        // FIXED DELETE EVENT LISTENER
+        // FIX ONLY THE DELETE BUTTON - add environment parameter
         deleteBtn.addEventListener('click', (e) => {
-            e.preventDefault();
             e.stopPropagation();
-            e.stopImmediatePropagation();
-            
-            console.log('Delete button clicked for tab:', tab.name);
-            console.log('Environment:', environment.name);
-            
             if (confirm(`Are you sure you want to delete the tab "${tab.name}"?`)) {
-                deleteTab(tab, environment); // PASS THE ENVIRONMENT PARAMETER
+                deleteTab(tab, environment); // ADDED environment parameter
             }
         });
-        
-        console.log('Added event listeners for tab:', tab.name);
     });
-    
-    console.log('Tabs rendered successfully for environment:', environment.name);
 }

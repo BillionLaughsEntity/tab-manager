@@ -71,20 +71,7 @@ function setupEventListeners() {
         workbookModal.style.display = 'none';
     });
 
-    // Save rename workbook
-    document.getElementById('save-rename-workbook-btn').addEventListener('click', () => {
-        const newName = document.getElementById('rename-workbook-input').value.trim();
-        if (newName && workbookToRename) {
-            renameWorkbook(workbookToRename, newName);
-            renameWorkbookModal.style.display = 'none';
-        }
-    });
-
-    // Close rename workbook modal
-    document.getElementById('close-rename-workbook-modal').addEventListener('click', () => {
-        renameWorkbookModal.style.display = 'none';
-    });
-
+       
     // Reorder workbooks button
     document.getElementById('reorder-workbooks-btn').addEventListener('click', function() {
         if (typeof openReorderWorkbooksModal === 'function') {

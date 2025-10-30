@@ -42,9 +42,9 @@ function renderWorkbookTabs() {
         const editBtn = workbookTab.querySelector('.workbook-tab-edit');
         editBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            workbookToRename = workbook;
-            document.getElementById('rename-workbook-input').value = workbook.name;
-            renameWorkbookModal.style.display = 'flex';
+            if (typeof openRenameWorkbookModal === 'function') {
+                openRenameWorkbookModal(workbook);
+            }
         });
         
         // Add event listener for color picker - UPDATED

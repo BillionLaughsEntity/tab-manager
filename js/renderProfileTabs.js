@@ -55,9 +55,9 @@ function renderProfileTabs() {
         const editBtn = profileTab.querySelector('.profile-tab-edit');
         editBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            profileToRename = profile;
-            document.getElementById('rename-profile-input').value = profile.name;
-            renameProfileModal.style.display = 'flex';
+            if (typeof openRenameProfileModal === 'function') {
+                openRenameProfileModal(profile);
+            }
         });
         
         // Add event listener for color picker

@@ -307,10 +307,7 @@ function setupEventListeners() {
         profileModal.style.display = 'none';
     });
     
-    document.getElementById('close-rename-profile-modal').addEventListener('click', () => {
-        renameProfileModal.style.display = 'none';
-    });
-
+    
     // Save rename environment
     document.getElementById('save-rename-environment-btn').addEventListener('click', () => {
         const newName = document.getElementById('rename-environment-input').value.trim();
@@ -401,15 +398,6 @@ function setupEventListeners() {
         if (name) {
             addProfile(name, selectedColor);
             profileModal.style.display = 'none';
-        }
-    });
-
-    // Save rename profile
-    document.getElementById('save-rename-profile-btn').addEventListener('click', () => {
-        const newName = document.getElementById('rename-profile-input').value.trim();
-        if (newName && profileToRename) {
-            renameProfile(profileToRename, newName);
-            renameProfileModal.style.display = 'none';
         }
     });
 

@@ -26,6 +26,17 @@ function updateProfilesCounter() {
     }
 }
 
+function updateEnvironmentsCounter() {
+    let totalEnvironments = 0; // FIXED VERSION
+    workbooks.forEach(workbook => {
+        workbook.profiles.forEach(profile => { // FIXED VERSION
+            profile.environments.forEach(environment => { // FIXED VERSION
+                totalEnvironments += 1; // FIXED VERSION
+            }); // FIXED VERSION
+        }); // FIXED VERSION
+    }); // FIXED VERSION    
+}
+
 function updateTabsCounter() {
     let totalTabs = 0;
     workbooks.forEach(workbook => {

@@ -86,8 +86,16 @@ function setupEventListeners() {
     });
 
     // Reorder workbooks button
-    document.getElementById('reorder-workbooks-btn').addEventListener('click', () => {
-        openReorderWorkbooksModal(); // This now uses the new class
+    document.getElementById('reorder-workbooks-btn').addEventListener('click', function() {
+        if (typeof openReorderWorkbooksModal === 'function') {
+            openReorderWorkbooksModal();
+        } else {
+            console.error('openReorderWorkbooksModal is not defined');
+            // Fallback: try to initialize and open
+            if (window.openReorderWorkbooksModal) {
+                window.openReorderWorkbooksModal();
+            }
+        }
     });
 
       

@@ -1,8 +1,11 @@
 // js/move-link-modal.js
+console.log('=== MOVE-LINK-MODAL.JS LOADED ===');
 
 (function() {
     'use strict';
     
+    console.log('MoveLinkModal IIFE executing...');
+
     let isInitialized = false;
     let linkToMove = null;
     let selectedDestinationTab = null;
@@ -238,7 +241,14 @@
             radio.addEventListener('change', () => {
                 if (radio.checked) {
                     selectedDestinationTab = tab;
-                    updateSelectedDestinationPath(workbook, profile, environment, tab);
+                    
+                    // FIX: Find the workbook and profile for this environment
+                    const profileInfo = findProfileByEnvironment(environment.id);
+                    if (profileInfo) {
+                        updateSelectedDestinationPath(profileInfo.workbook, profileInfo.profile, environment, tab);
+                    } else {
+                        console.error('Could not find workbook and profile for environment:', environment.name);
+                    }
                 }
             });
         });
@@ -247,7 +257,15 @@
     // Helper function to update the selected destination path display
     function updateSelectedDestinationPath(workbook, profile, environment, tab) {
         const pathElement = document.getElementById('selected-destination-path');
-        if (!pathElement) return;
+        if (!pathElement) {
+            console.error('selected-destination-path element not found');
+            return;
+        }
+        
+        if (!workbook || !profile || !environment || !tab) {
+            console.error('Missing parameters for destination path:', {workbook, profile, environment, tab});
+            return;
+        }
         
         pathElement.innerHTML = `
             <strong>Selected Destination:</strong> 

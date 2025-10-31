@@ -91,6 +91,8 @@
         
         // Get current environment from the tab's context
         const currentEnvironment = findEnvironmentContainingTab(tab);
+        console.log('Current environment:', currentEnvironment);
+        console.log('All workbooks:', window.workbooks);
         
         let hasDestinations = false;
         
@@ -100,7 +102,10 @@
                 workbook.profiles.forEach(profile => {
                     profile.environments.forEach(environment => {
                         // Skip the current environment (if found)
-                        if (!currentEnvironment || environment.id !== currentEnvironment.id) {
+                        const isCurrentEnvironment = currentEnvironment && environment.id === currentEnvironment.id;
+                        console.log(`Environment: ${environment.name}, IsCurrent: ${isCurrentEnvironment}`);
+                        
+                        if (!isCurrentEnvironment) {
                             hasDestinations = true;
                             
                             const destinationItem = document.createElement('div');
@@ -125,6 +130,7 @@
                             radio.addEventListener('change', () => {
                                 if (radio.checked) {
                                     selectedDestinationEnvironment = environment;
+                                    console.log('Selected destination environment:', environment.name);
                                 }
                             });
                             
@@ -137,28 +143,41 @@
         
         // If no other environments exist, show message
         if (!hasDestinations) {
+            console.log('No destinations found - showing message');
             destinationsContainer.innerHTML = '<p class="no-destinations">No other environments available for moving tabs.</p>';
+        } else {
+            console.log('Destinations populated successfully');
         }
     }
 
     // Helper function to find which environment contains the tab
     function findEnvironmentContainingTab(tab) {
-        if (!window.workbooks || !tab) return null;
+        if (!window.workbooks || !tab) {
+            console.log('No workbooks or tab provided');
+            return null;
+        }
+        
+        console.log('Looking for environment containing tab:', tab.name, tab.id);
         
         for (const workbook of window.workbooks) {
             for (const profile of workbook.profiles) {
                 for (const environment of profile.environments) {
                     if (environment.tabs && environment.tabs.some(t => t.id === tab.id)) {
+                        console.log('Found environment:', environment.name);
                         return environment;
                     }
                 }
             }
         }
+        
+        console.log('Environment not found for tab');
         return null;
     }
 
     function saveMove() {
         if (tabToMove && selectedDestinationEnvironment) {
+            console.log('Moving tab:', tabToMove.name, 'to environment:', selectedDestinationEnvironment.name);
+            
             // Check if moveTab function exists
             if (typeof window.moveTab === 'function') {
                 window.moveTab(tabToMove, selectedDestinationEnvironment);
@@ -169,6 +188,7 @@
             }
         } else {
             alert('Please select a destination environment');
+            console.log('Missing tabToMove or selectedDestinationEnvironment:', {tabToMove, selectedDestinationEnvironment});
         }
     }
 

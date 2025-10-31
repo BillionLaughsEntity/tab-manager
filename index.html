@@ -653,6 +653,9 @@
 
         function init() {
             console.log('Initializing V18 Tab Manager...');
+            console.log('=== MOVE MODAL DEBUG ===');
+            console.log('workbooks available:', workbooks);
+            console.log('openMoveLinkModal function exists:', typeof window.openMoveLinkModal === 'function');
             
             // Migrate to versioned storage first
             migrateToVersionedStorage();

@@ -325,6 +325,6 @@ console.log('=== MOVE-LINK-MODAL.JS LOADED ===');
     }
 
     // FIXED: Export to global scope correctly
-    window.openMoveLinkModal = showModal;
+    window.openMoveLinkModal(linkToMove, workbooks);
 
 })();

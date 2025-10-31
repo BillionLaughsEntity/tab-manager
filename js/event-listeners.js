@@ -507,26 +507,6 @@ function setupEventListeners() {
     document.getElementById('bulk-delete-btn').addEventListener('click', deleteSelectedLinks);
     document.getElementById('bulk-cancel-btn').addEventListener('click', toggleSelectionMode);
 
-    // Modify the existing move link save handler to handle bulk operations - ADD NULL CHECK
-    const saveMoveLinkBtn2 = document.getElementById('save-move-link-btn');
-    if (saveMoveLinkBtn2) {
-        saveMoveLinkBtn2.addEventListener('click', () => {
-            if (window.bulkLinksToMove) {
-                // Bulk move operation
-                if (selectedDestinationTab) {
-                    saveBulkMoveLinks(selectedDestinationTab);
-                    moveLinkModal.style.display = 'none';
-                }
-            } else {
-                // Single move operation (existing code)
-                if (linkToMove && selectedDestinationTab) {
-                    moveLink(linkToMove, selectedDestinationTab);
-                    moveLinkModal.style.display = 'none';
-                }
-            }
-        });
-    }
-
     // Add keyboard shortcut for selection mode (optional)
     // document.addEventListener('keydown', (e) => {
     //     if ((e.ctrlKey || e.metaKey) && e.key === 'a' && currentTab) {

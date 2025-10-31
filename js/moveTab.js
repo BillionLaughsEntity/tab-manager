@@ -48,23 +48,42 @@ function moveTab(tab, destinationEnvironment) {
     // Save and refresh
     saveWorkbooks();
     
-    // Refresh the appropriate UI
-    renderEnvironments();
-    renderProfileTabs();
-    
-    // If we moved away from the current tab, update the display
-    if (currentTab && currentTab.id === tab.id) {
-        // The moved tab was the current tab, so clear the current tab
-        currentTab = null;
-        renderLinks(); // This will show the "no tabs" message
+    // Refresh the appropriate UI based on whether we moved within the same profile or across profiles
+    if (sourceProfile.id === destinationProfile.id) {
+        // Same profile - just refresh environments
+        renderEnvironments();
+    } else {
+        // Different profile - might need to refresh more
+        renderEnvironments();
+        renderProfileTabs();
     }
     
-    alert(`Tab "${tab.name}" moved successfully to "${destinationEnvironment.name}" in "${destinationProfile.name}" (${destinationWorkbook.name})`);
+    // Check if we moved the current tab
+    const wasCurrentTab = currentTab && currentTab.id === tab.id;
+    
+    if (wasCurrentTab) {
+        // The moved tab was the current tab, so clear the current tab
+        console.log('Moved tab was current tab, clearing current tab selection');
+        currentTab = null;
+        currentEnvironment = null;
+        
+        // Clear the links display
+        renderLinks(); // This will now show the "no tabs" message gracefully
+    }
+    
+    // Show success message
+    const successMessage = `Tab "${tab.name}" moved successfully to "${destinationEnvironment.name}" in "${destinationProfile.name}" (${destinationWorkbook.name})`;
+    console.log(successMessage);
+    alert(successMessage);
 }
 
 // Helper function to get workbooks data for move operations
 function getWorkbooksDataForMove() {
     // Try multiple sources
+    if (window.getTabManagerWorkbooks && typeof window.getTabManagerWorkbooks === 'function') {
+        return window.getTabManagerWorkbooks();
+    }
+    
     if (window.workbooks && Array.isArray(window.workbooks)) {
         return window.workbooks;
     }

@@ -40,8 +40,8 @@
                     <!-- Selected path will be shown here -->
                 </div>
                 
-                <div id="move-tab-destinations">
-                    <!-- Destinations will be populated here -->
+                <div class="move-tab-destinations-tree" id="move-tab-destinations">
+                    <!-- Tree structure will be populated here -->
                 </div>
                 <div class="modal-actions">
                     <button class="modal-btn modal-btn-secondary" id="close-move-tab-modal">Cancel</button>
@@ -83,7 +83,7 @@
             tabToMove = tab;
             selectedDestinationEnvironment = null;
             
-            populateDestinations(tab);
+            populateDestinationsTree(tab);
             modal.style.display = 'flex';
         } else {
             console.error('Move tab modal not found when trying to show!');
@@ -106,14 +106,14 @@
         }
     }
 
-    function populateDestinations(tab) {
+    function populateDestinationsTree(tab) {
         const destinationsContainer = document.getElementById('move-tab-destinations');
         if (!destinationsContainer) {
             console.error('Destinations container not found!');
             return;
         }
         
-        console.log('Populating destinations for tab:', tab);
+        console.log('Populating destinations tree for tab:', tab);
         
         // Get workbooks data using global function
         const workbooks = window.getTabManagerWorkbooks ? window.getTabManagerWorkbooks() : [];
@@ -136,59 +136,18 @@
         console.log('Current environment containing tab:', currentEnvironment);
         
         let hasDestinations = false;
-        let totalEnvironments = 0;
         
-        // Show ALL environments from ALL workbooks and profiles
+        // Create tree structure
         workbooks.forEach(workbook => {
-            console.log('Processing workbook:', workbook.name, 'profiles:', workbook.profiles.length);
+            // Skip workbooks with no profiles
+            if (!workbook.profiles || workbook.profiles.length === 0) return;
             
-            workbook.profiles.forEach(profile => {
-                console.log('Processing profile:', profile.name, 'environments:', (profile.environments && profile.environments.length) || 0);
-                
-                if (profile.environments && Array.isArray(profile.environments)) {
-                    profile.environments.forEach(environment => {
-                        totalEnvironments++;
-                        
-                        // Skip the current environment (if found)
-                        const isCurrentEnvironment = currentEnvironment && environment.id === currentEnvironment.id;
-                        
-                        if (!isCurrentEnvironment) {
-                            hasDestinations = true;
-                            
-                            const destinationItem = document.createElement('div');
-                            destinationItem.className = 'destination-item';
-                            destinationItem.innerHTML = `
-                                <input type="radio" name="tab-destination" id="tab-dest-${environment.id}" value="${environment.id}">
-                                <label for="tab-dest-${environment.id}">
-                                    <div class="destination-header">
-                                        <strong>${environment.name}</strong>
-                                        <div class="destination-badges">
-                                            <span class="profile-badge">${profile.name}</span>
-                                            <span class="workbook-badge">${workbook.name}</span>
-                                        </div>
-                                    </div>
-                                    <div class="destination-info">
-                                        ${environment.tabs ? environment.tabs.length : 0} tab${environment.tabs && environment.tabs.length !== 1 ? 's' : ''}
-                                    </div>
-                                </label>
-                            `;
-                            
-                            const radio = destinationItem.querySelector('input[type="radio"]');
-                            radio.addEventListener('change', () => {
-                                if (radio.checked) {
-                                    selectedDestinationEnvironment = environment;
-                                    updateDestinationPathDisplay(workbook, profile, environment);
-                                }
-                            });
-                            
-                            destinationsContainer.appendChild(destinationItem);
-                        }
-                    });
-                }
-            });
+            const workbookItem = createWorkbookTreeItem(workbook, currentEnvironment);
+            if (workbookItem) {
+                destinationsContainer.appendChild(workbookItem);
+                hasDestinations = true;
+            }
         });
-        
-        console.log(`Total environments: ${totalEnvironments}, Has destinations: ${hasDestinations}`);
         
         // If no other environments exist, show message
         if (!hasDestinations) {
@@ -196,10 +155,147 @@
             destinationsContainer.innerHTML = `
                 <div class="no-destinations">
                     <p>No other environments available for moving tabs.</p>
-                    <p><small>Found ${totalEnvironments} environments across ${workbooks.length} workbooks</small></p>
+                    <p><small>All environments are in the same workbook/profile as the current tab.</small></p>
                 </div>
             `;
         }
+    }
+
+    function createWorkbookTreeItem(workbook, currentEnvironment) {
+        // Filter profiles that have environments (excluding current environment)
+        const validProfiles = workbook.profiles.filter(profile => 
+            profile.environments && 
+            profile.environments.some(env => !currentEnvironment || env.id !== currentEnvironment.id)
+        );
+        
+        if (validProfiles.length === 0) return null;
+        
+        const workbookItem = document.createElement('div');
+        workbookItem.className = 'tree-workbook-item';
+        workbookItem.innerHTML = `
+            <div class="tree-workbook-header" data-workbook-id="${workbook.id}">
+                <i class="fas fa-chevron-right tree-arrow"></i>
+                <i class="fas fa-book workbook-icon"></i>
+                <span class="tree-workbook-name">${workbook.name}</span>
+                <span class="tree-badge">${validProfiles.length} profile${validProfiles.length !== 1 ? 's' : ''}</span>
+            </div>
+            <div class="tree-profiles-container" style="display: none;"></div>
+        `;
+        
+        const workbookHeader = workbookItem.querySelector('.tree-workbook-header');
+        const profilesContainer = workbookItem.querySelector('.tree-profiles-container');
+        
+        // Populate profiles
+        validProfiles.forEach(profile => {
+            const profileItem = createProfileTreeItem(workbook, profile, currentEnvironment);
+            if (profileItem) {
+                profilesContainer.appendChild(profileItem);
+            }
+        });
+        
+        // Toggle workbook expansion
+        workbookHeader.addEventListener('click', (e) => {
+            if (!e.target.classList.contains('environment-radio')) {
+                const isExpanded = profilesContainer.style.display === 'block';
+                profilesContainer.style.display = isExpanded ? 'none' : 'block';
+                const arrow = workbookHeader.querySelector('.tree-arrow');
+                arrow.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(90deg)';
+            }
+        });
+        
+        return workbookItem;
+    }
+
+    function createProfileTreeItem(workbook, profile, currentEnvironment) {
+        // Filter environments (excluding current environment)
+        const validEnvironments = profile.environments.filter(env => 
+            !currentEnvironment || env.id !== currentEnvironment.id
+        );
+        
+        if (validEnvironments.length === 0) return null;
+        
+        const profileItem = document.createElement('div');
+        profileItem.className = 'tree-profile-item';
+        profileItem.innerHTML = `
+            <div class="tree-profile-header" data-profile-id="${profile.id}">
+                <i class="fas fa-chevron-right tree-arrow"></i>
+                <i class="fas fa-user profile-icon"></i>
+                <span class="tree-profile-name">${profile.name}</span>
+                <span class="tree-badge">${validEnvironments.length} environment${validEnvironments.length !== 1 ? 's' : ''}</span>
+            </div>
+            <div class="tree-environments-container" style="display: none;"></div>
+        `;
+        
+        const profileHeader = profileItem.querySelector('.tree-profile-header');
+        const environmentsContainer = profileItem.querySelector('.tree-environments-container');
+        
+        // Populate environments
+        validEnvironments.forEach(environment => {
+            const environmentItem = createEnvironmentTreeItem(workbook, profile, environment);
+            environmentsContainer.appendChild(environmentItem);
+        });
+        
+        // Toggle profile expansion
+        profileHeader.addEventListener('click', (e) => {
+            if (!e.target.classList.contains('environment-radio')) {
+                const isExpanded = environmentsContainer.style.display === 'block';
+                environmentsContainer.style.display = isExpanded ? 'none' : 'block';
+                const arrow = profileHeader.querySelector('.tree-arrow');
+                arrow.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(90deg)';
+            }
+        });
+        
+        return profileItem;
+    }
+
+    function createEnvironmentTreeItem(workbook, profile, environment) {
+        const environmentItem = document.createElement('div');
+        environmentItem.className = 'tree-environment-item';
+        
+        const tabCount = environment.tabs ? environment.tabs.length : 0;
+        
+        environmentItem.innerHTML = `
+            <div class="tree-environment-option">
+                <input type="radio" name="tab-destination" id="tab-dest-${environment.id}" value="${environment.id}" class="environment-radio">
+                <label for="tab-dest-${environment.id}" class="tree-environment-label">
+                    <i class="fas fa-folder environment-icon"></i>
+                    <span class="tree-environment-name">${environment.name}</span>
+                    <span class="tree-environment-info">${tabCount} tab${tabCount !== 1 ? 's' : ''}</span>
+                </label>
+            </div>
+        `;
+        
+        const radio = environmentItem.querySelector('.environment-radio');
+        radio.addEventListener('change', () => {
+            if (radio.checked) {
+                selectedDestinationEnvironment = environment;
+                updateDestinationPathDisplay(workbook, profile, environment);
+                
+                // Uncheck other radios
+                document.querySelectorAll('.environment-radio').forEach(otherRadio => {
+                    if (otherRadio !== radio) {
+                        otherRadio.checked = false;
+                    }
+                });
+            }
+        });
+        
+        return environmentItem;
+    }
+
+    function updateDestinationPathDisplay(workbook, profile, environment) {
+        const pathElement = document.getElementById('move-tab-destination-path');
+        if (!pathElement) return;
+        
+        pathElement.innerHTML = `
+            <strong>Destination:</strong> 
+            <span class="path-workbook">${workbook.name}</span> 
+            <i class="fas fa-chevron-right"></i> 
+            <span class="path-profile">${profile.name}</span> 
+            <i class="fas fa-chevron-right"></i> 
+            <span class="path-environment">${environment.name}</span>
+        `;
+        pathElement.style.display = 'block';
     }
 
     // Helper function to find which environment contains the tab
@@ -229,21 +325,6 @@
         
         console.log('No environment found containing tab');
         return null;
-    }
-
-    function updateDestinationPathDisplay(workbook, profile, environment) {
-        const pathElement = document.getElementById('move-tab-destination-path');
-        if (!pathElement) return;
-        
-        pathElement.innerHTML = `
-            <strong>Destination:</strong> 
-            <span class="path-workbook">${workbook.name}</span> 
-            <i class="fas fa-chevron-right"></i> 
-            <span class="path-profile">${profile.name}</span> 
-            <i class="fas fa-chevron-right"></i> 
-            <span class="path-environment">${environment.name}</span>
-        `;
-        pathElement.style.display = 'block';
     }
 
     function saveMove() {

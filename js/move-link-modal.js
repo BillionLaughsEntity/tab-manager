@@ -72,11 +72,16 @@
     function showModal(link) {
         const modal = document.getElementById('move-link-modal');
         if (modal) {
+            console.log('Move link modal found, showing...');
+            console.log('Link to move:', link);
+            
             linkToMove = link;
             selectedDestinationTab = null;
             
             populateDestinations();
             modal.style.display = 'flex';
+        } else {
+            console.error('Move link modal not found!');
         }
     }
 
@@ -98,14 +103,27 @@
 
     function populateDestinations() {
         const destinationsContainer = document.getElementById('move-link-destinations');
-        if (!destinationsContainer) return;
+        if (!destinationsContainer) {
+            console.error('move-link-destinations container not found');
+            return;
+        }
         
         destinationsContainer.innerHTML = '';
         
+        console.log('Populating destinations...');
+        console.log('window.workbooks:', window.workbooks);
+        console.log('Array.isArray(window.workbooks):', Array.isArray(window.workbooks));
+        
         // Create a hierarchical view of workbooks -> profiles -> environments -> tabs
         if (window.workbooks && Array.isArray(window.workbooks)) {
+            console.log('Workbooks found:', window.workbooks.length);
+            
             window.workbooks.forEach(workbook => {
+                console.log('Processing workbook:', workbook.name, workbook.profiles);
+                
                 workbook.profiles.forEach(profile => {
+                    console.log('Processing profile:', profile.name, profile.environments);
+                    
                     const profileElement = document.createElement('div');
                     profileElement.className = 'move-link-profile';
                     profileElement.dataset.profileId = profile.id;
@@ -144,6 +162,9 @@
                     });
                 });
             });
+        } else {
+            console.log('No workbooks found or workbooks is not an array');
+            destinationsContainer.innerHTML = '<p class="no-destinations">No workbooks available</p>';
         }
     }
 

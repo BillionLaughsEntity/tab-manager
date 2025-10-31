@@ -4,17 +4,27 @@
 function moveTab(tab, destinationEnvironment) {
     console.log('Moving tab:', tab.name, 'to environment:', destinationEnvironment.name);
     
+    // Get workbooks data
+    const workbooks = getWorkbooksDataForMove();
+    if (!workbooks) {
+        console.error('No workbooks data found for move operation');
+        alert('Error: Could not access workbooks data');
+        return;
+    }
+    
     // Find the current environment and its parent profile/workbook containing the tab
-    const { currentEnvironment, sourceWorkbook, sourceProfile } = findEnvironmentContainingTab(tab);
+    const { currentEnvironment, sourceWorkbook, sourceProfile } = findEnvironmentContainingTab(tab, workbooks);
     if (!currentEnvironment) {
         console.error('Could not find current environment for tab');
+        alert('Error: Could not find source environment for tab');
         return;
     }
     
     // Find the destination workbook and profile
-    const { destinationWorkbook, destinationProfile } = findWorkbookAndProfileForEnvironment(destinationEnvironment);
+    const { destinationWorkbook, destinationProfile } = findWorkbookAndProfileForEnvironment(destinationEnvironment, workbooks);
     if (!destinationWorkbook || !destinationProfile) {
         console.error('Could not find destination workbook or profile for environment');
+        alert('Error: Could not find destination for environment');
         return;
     }
     
@@ -38,15 +48,9 @@ function moveTab(tab, destinationEnvironment) {
     // Save and refresh
     saveWorkbooks();
     
-    // Refresh the appropriate UI based on whether we moved within the same profile or across profiles
-    if (sourceProfile.id === destinationProfile.id) {
-        // Same profile - just refresh environments
-        renderEnvironments();
-    } else {
-        // Different profile - might need to refresh more
-        renderEnvironments();
-        renderProfileTabs();
-    }
+    // Refresh the appropriate UI
+    renderEnvironments();
+    renderProfileTabs();
     
     // If we moved away from the current tab, update the display
     if (currentTab && currentTab.id === tab.id) {
@@ -58,19 +62,45 @@ function moveTab(tab, destinationEnvironment) {
     alert(`Tab "${tab.name}" moved successfully to "${destinationEnvironment.name}" in "${destinationProfile.name}" (${destinationWorkbook.name})`);
 }
 
-// Enhanced helper function to find environment containing a tab and its parents
-function findEnvironmentContainingTab(tab) {
-    if (!window.workbooks || !tab) return { currentEnvironment: null, sourceWorkbook: null, sourceProfile: null };
+// Helper function to get workbooks data for move operations
+function getWorkbooksDataForMove() {
+    // Try multiple sources
+    if (window.workbooks && Array.isArray(window.workbooks)) {
+        return window.workbooks;
+    }
     
-    for (const workbook of window.workbooks) {
+    // Try localStorage
+    try {
+        const versionedData = localStorage.getItem('tabManagerData_v18-search');
+        if (versionedData) {
+            const parsed = JSON.parse(versionedData);
+            return parsed.workbooks;
+        }
+    } catch (e) {
+        console.error('Error reading workbooks from localStorage:', e);
+    }
+    
+    return null;
+}
+
+// Enhanced helper function to find environment containing a tab and its parents
+function findEnvironmentContainingTab(tab, workbooks) {
+    if (!workbooks || !tab) return { currentEnvironment: null, sourceWorkbook: null, sourceProfile: null };
+    
+    for (const workbook of workbooks) {
         for (const profile of workbook.profiles) {
-            for (const environment of profile.environments) {
-                if (environment.tabs && environment.tabs.some(t => t.id === tab.id)) {
-                    return {
-                        currentEnvironment: environment,
-                        sourceWorkbook: workbook,
-                        sourceProfile: profile
-                    };
+            if (profile.environments && Array.isArray(profile.environments)) {
+                for (const environment of profile.environments) {
+                    if (environment.tabs && Array.isArray(environment.tabs)) {
+                        const foundTab = environment.tabs.find(t => t.id === tab.id);
+                        if (foundTab) {
+                            return {
+                                currentEnvironment: environment,
+                                sourceWorkbook: workbook,
+                                sourceProfile: profile
+                            };
+                        }
+                    }
                 }
             }
         }
@@ -79,17 +109,19 @@ function findEnvironmentContainingTab(tab) {
 }
 
 // Helper function to find the workbook and profile for a given environment
-function findWorkbookAndProfileForEnvironment(targetEnvironment) {
-    if (!window.workbooks || !targetEnvironment) return { destinationWorkbook: null, destinationProfile: null };
+function findWorkbookAndProfileForEnvironment(targetEnvironment, workbooks) {
+    if (!workbooks || !targetEnvironment) return { destinationWorkbook: null, destinationProfile: null };
     
-    for (const workbook of window.workbooks) {
+    for (const workbook of workbooks) {
         for (const profile of workbook.profiles) {
-            for (const environment of profile.environments) {
-                if (environment.id === targetEnvironment.id) {
-                    return {
-                        destinationWorkbook: workbook,
-                        destinationProfile: profile
-                    };
+            if (profile.environments && Array.isArray(profile.environments)) {
+                for (const environment of profile.environments) {
+                    if (environment.id === targetEnvironment.id) {
+                        return {
+                            destinationWorkbook: workbook,
+                            destinationProfile: profile
+                        };
+                    }
                 }
             }
         }

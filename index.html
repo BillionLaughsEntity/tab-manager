@@ -603,8 +603,8 @@
             </div>
         </div>
     </div>
-   
 
+    
     <script>
         // Updated data structure with workbooks
         let workbooks = [];
@@ -667,6 +667,17 @@
         const renameWorkbookModal = document.getElementById('rename-workbook-modal');
         const reorderWorkbooksModal = document.getElementById('reorder-workbooks-modal');  
         const originalSaveWorkbooks = window.saveWorkbooks;
+        // Add a test button to your HTML temporarily (you can remove this later)
+        const testButton = document.createElement('button');
+        testButton.textContent = 'Test Move Tab Modal';
+        testButton.style.position = 'fixed';
+        testButton.style.top = '10px';
+        testButton.style.right = '10px';
+        testButton.style.zIndex = '10000';
+        testButton.onclick = testMoveTabModal;
+        document.body.appendChild(testButton);
+
+
         window.saveWorkbooks = function() {
             console.trace('saveWorkbooks called from:');
             return originalSaveWorkbooks.apply(this, arguments);
@@ -749,6 +760,19 @@
                 
         // Initialize the application when the page loads
         document.addEventListener('DOMContentLoaded', init);
+
+        // Add this temporary test function to your main script
+        function testMoveTabModal() {
+            if (currentTab) {
+                console.log('Testing move tab modal with current tab:', currentTab);
+                window.openMoveTabModal(currentTab);
+            } else {
+                // Create a test tab
+                const testTab = { id: 'test-tab', name: 'Test Tab' };
+                console.log('Testing move tab modal with test tab:', testTab);
+                window.openMoveTabModal(testTab);
+            }
+        }
 
     </script>
 

@@ -72,7 +72,7 @@ console.log('=== MOVE-LINK-MODAL.JS LOADED ===');
         });
     }
 
-    function showModal(link) {
+    function showModal(link, workbooksData) {
         const modal = document.getElementById('move-link-modal');
         if (modal) {
             console.log('Move link modal found, showing...');
@@ -80,6 +80,9 @@ console.log('=== MOVE-LINK-MODAL.JS LOADED ===');
             
             linkToMove = link;
             selectedDestinationTab = null;
+            
+            // Store workbooks data for use in the modal
+            window.workbooks = workbooksData;
             
             populateDestinations();
             modal.style.display = 'flex';
@@ -105,6 +108,9 @@ console.log('=== MOVE-LINK-MODAL.JS LOADED ===');
     }
 
     function populateDestinations() {
+        console.log('=== DEBUGGING WORKBOOKS DATA ===');
+        console.log('window.workbooks:', window.workbooks);
+        
         const destinationsContainer = document.getElementById('move-link-destinations');
         if (!destinationsContainer) {
             console.error('move-link-destinations container not found');
@@ -242,7 +248,7 @@ console.log('=== MOVE-LINK-MODAL.JS LOADED ===');
                 if (radio.checked) {
                     selectedDestinationTab = tab;
                     
-                    // FIX: Find the workbook and profile for this environment
+                    // Find the workbook and profile for this environment
                     const profileInfo = findProfileByEnvironment(environment.id);
                     if (profileInfo) {
                         updateSelectedDestinationPath(profileInfo.workbook, profileInfo.profile, environment, tab);
@@ -298,17 +304,6 @@ console.log('=== MOVE-LINK-MODAL.JS LOADED ===');
         }
     }
 
-    // Helper function to find workbook by profile
-    function findWorkbookByProfile(profileId) {
-        if (!window.workbooks) return null;
-        for (const workbook of window.workbooks) {
-            if (workbook.profiles.some(p => p.id === profileId)) {
-                return workbook;
-            }
-        }
-        return null;
-    }
-
     // Helper function to find profile by environment
     function findProfileByEnvironment(environmentId) {
         if (!window.workbooks) return null;
@@ -329,7 +324,7 @@ console.log('=== MOVE-LINK-MODAL.JS LOADED ===');
         initMoveLinkModal();
     }
 
-    // Export to global scope
+    // FIXED: Export to global scope correctly
     window.openMoveLinkModal = showModal;
 
 })();

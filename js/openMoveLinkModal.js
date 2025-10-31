@@ -50,5 +50,12 @@ function openMoveLinkModal(link) {
         });
     });
     
-    moveLinkModal.style.display = 'flex';
+    // New way:
+    if (typeof openMoveLinkModal === 'function') {
+        openMoveLinkModal(link);
+    } else {
+        // Fallback
+        linkToMove = link;
+        document.getElementById('move-link-modal').style.display = 'flex';
+    }
 }

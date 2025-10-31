@@ -359,30 +359,6 @@
         </div>
     </div>
 
-    <!-- Update the move link modal to include the destination path -->
-    <div class="modal" id="move-link-modal">
-        <div class="move-link-modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Move Link</h3>
-                <span class="close-modal">&times;</span>
-            </div>
-            <p>Select a destination tab for this link:</p>
-            
-            <!-- Add the destination path display here -->
-            <div class="selected-destination-path" id="selected-destination-path" style="display: none;">
-                <!-- Selected path will be shown here -->
-            </div>
-            
-            <div id="move-link-destinations">
-                <!-- Destinations will be populated here -->
-            </div>
-            <div class="modal-actions">
-                <button class="modal-btn modal-btn-secondary" id="close-move-link-modal">Cancel</button>
-                <button class="modal-btn modal-btn-primary" id="save-move-link-btn">Move</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Profile Modal -->
     <div class="modal" id="profile-modal">
         <div class="profile-modal-content">
@@ -527,7 +503,7 @@
 
     <!-- Clone to Tab Modal -->
     <div class="modal" id="clone-to-tab-modal">
-        <div class="move-link-modal-content">
+        <div class="clone-links-modal-content">
             <div class="modal-header">
                 <h3 class="modal-title" id="clone-modal-title">Clone Links to Tab</h3>
                 <span class="close-modal">&times;</span>
@@ -926,6 +902,7 @@
     <script src="js/move-environment-modal.js"></script>
     <script src="js/moveTab.js"></script>
     <script src="js/move-tab-modal.js"></script>
+    <script src="js/move-link-modal.js"></script>
     <!--move-block ends-->
 
     <!-- Event listeners LAST -->

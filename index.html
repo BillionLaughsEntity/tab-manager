@@ -754,9 +754,20 @@
             // setTimeout(testImportExport, 1000);
         }
 
+        // Add this to your main script section after workbooks is defined
+        // Make workbooks globally accessible
+        window.getTabManagerWorkbooks = function() {
+            return workbooks || [];
+        };
         
+        window.getTabManagerCurrentWorkbook = function() {
+            return getCurrentWorkbook();
+        };
         
-                
+        window.getTabManagerCurrentProfile = function() {
+            return getCurrentProfile();
+        };
+                          
                 
         // Initialize the application when the page loads
         document.addEventListener('DOMContentLoaded', init);

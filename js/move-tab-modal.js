@@ -61,8 +61,6 @@
             return;
         }
 
-        console.log('Setting up move tab modal event listeners');
-
         // Close modal events
         modal.querySelector('.close-modal').addEventListener('click', hideModal);
         modal.querySelector('#close-move-tab-modal').addEventListener('click', hideModal);
@@ -117,17 +115,17 @@
         
         console.log('Populating destinations for tab:', tab);
         
-        // Get workbooks data from the main application
-        const workbooks = getWorkbooksFromMainApp();
+        // Get workbooks data using global function
+        const workbooks = window.getTabManagerWorkbooks ? window.getTabManagerWorkbooks() : [];
         console.log('Workbooks data retrieved:', workbooks ? workbooks.length : 0, 'workbooks');
         
         destinationsContainer.innerHTML = '';
         
-        if (!workbooks || !Array.isArray(workbooks)) {
+        if (!workbooks || !Array.isArray(workbooks) || workbooks.length === 0) {
             console.error('No valid workbooks data found');
             destinationsContainer.innerHTML = `
                 <div class="no-destinations">
-                    <p>Error: Could not load workbooks data</p>
+                    <p>No workbooks found. Please create a workbook first.</p>
                 </div>
             `;
             return;
@@ -139,14 +137,13 @@
         
         let hasDestinations = false;
         let totalEnvironments = 0;
-        let skippedEnvironments = 0;
         
         // Show ALL environments from ALL workbooks and profiles
         workbooks.forEach(workbook => {
-            console.log('Processing workbook:', workbook.name, 'with profiles:', workbook.profiles.length);
+            console.log('Processing workbook:', workbook.name, 'profiles:', workbook.profiles.length);
             
             workbook.profiles.forEach(profile => {
-                console.log('Processing profile:', profile.name, 'with environments:', (profile.environments && profile.environments.length) || 0);
+                console.log('Processing profile:', profile.name, 'environments:', (profile.environments && profile.environments.length) || 0);
                 
                 if (profile.environments && Array.isArray(profile.environments)) {
                     profile.environments.forEach(environment => {
@@ -185,15 +182,13 @@
                             });
                             
                             destinationsContainer.appendChild(destinationItem);
-                        } else {
-                            skippedEnvironments++;
                         }
                     });
                 }
             });
         });
         
-        console.log(`Total environments: ${totalEnvironments}, Skipped: ${skippedEnvironments}, Has destinations: ${hasDestinations}`);
+        console.log(`Total environments: ${totalEnvironments}, Has destinations: ${hasDestinations}`);
         
         // If no other environments exist, show message
         if (!hasDestinations) {
@@ -201,77 +196,16 @@
             destinationsContainer.innerHTML = `
                 <div class="no-destinations">
                     <p>No other environments available for moving tabs.</p>
-                    <p><small>Found ${totalEnvironments} total environments in ${workbooks.length} workbooks</small></p>
+                    <p><small>Found ${totalEnvironments} environments across ${workbooks.length} workbooks</small></p>
                 </div>
             `;
-        } else {
-            console.log(`Found destinations - showing ${hasDestinations} environment options`);
         }
-    }
-
-    // Get workbooks data directly from the main application context
-    function getWorkbooksFromMainApp() {
-        console.log('Attempting to get workbooks from main app...');
-        
-        // Method 1: Try to access the main app's workbooks variable directly
-        try {
-            // This assumes the main app attaches workbooks to window
-            if (window.workbooks && Array.isArray(window.workbooks)) {
-                console.log('Found workbooks on window object:', window.workbooks.length);
-                return window.workbooks;
-            }
-        } catch (e) {
-            console.log('Error accessing window.workbooks:', e);
-        }
-        
-        // Method 2: Try to get from the main app's initialization
-        try {
-            // Look for the main app initialization and get workbooks from there
-            const mainAppScript = document.querySelector('script[src*="event-listeners.js"], script:not([src])');
-            if (mainAppScript) {
-                console.log('Found main app script');
-            }
-        } catch (e) {
-            console.log('Error finding main app script:', e);
-        }
-        
-        // Method 3: Try localStorage as last resort
-        try {
-            const versionedData = localStorage.getItem('tabManagerData_v18-search');
-            if (versionedData) {
-                const parsed = JSON.parse(versionedData);
-                if (parsed && parsed.workbooks && Array.isArray(parsed.workbooks)) {
-                    console.log('Found workbooks in localStorage:', parsed.workbooks.length);
-                    return parsed.workbooks;
-                }
-            }
-        } catch (e) {
-            console.log('Error reading from localStorage:', e);
-        }
-        
-        console.error('Could not find workbooks data from any source');
-        return null;
-    }
-
-    function updateDestinationPathDisplay(workbook, profile, environment) {
-        const pathElement = document.getElementById('move-tab-destination-path');
-        if (!pathElement) return;
-        
-        pathElement.innerHTML = `
-            <strong>Destination:</strong> 
-            <span class="path-workbook">${workbook.name}</span> 
-            <i class="fas fa-chevron-right"></i> 
-            <span class="path-profile">${profile.name}</span> 
-            <i class="fas fa-chevron-right"></i> 
-            <span class="path-environment">${environment.name}</span>
-        `;
-        pathElement.style.display = 'block';
     }
 
     // Helper function to find which environment contains the tab
     function findEnvironmentContainingTab(tab, workbooks) {
         if (!workbooks || !tab) {
-            console.error('No workbooks or tab provided to findEnvironmentContainingTab');
+            console.error('No workbooks or tab provided');
             return null;
         }
         
@@ -295,6 +229,21 @@
         
         console.log('No environment found containing tab');
         return null;
+    }
+
+    function updateDestinationPathDisplay(workbook, profile, environment) {
+        const pathElement = document.getElementById('move-tab-destination-path');
+        if (!pathElement) return;
+        
+        pathElement.innerHTML = `
+            <strong>Destination:</strong> 
+            <span class="path-workbook">${workbook.name}</span> 
+            <i class="fas fa-chevron-right"></i> 
+            <span class="path-profile">${profile.name}</span> 
+            <i class="fas fa-chevron-right"></i> 
+            <span class="path-environment">${environment.name}</span>
+        `;
+        pathElement.style.display = 'block';
     }
 
     function saveMove() {

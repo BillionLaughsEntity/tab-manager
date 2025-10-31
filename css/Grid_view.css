@@ -1,25 +1,21 @@
-/* ===== FIXED GRID VIEW - Using your original classes ===== */
-.links-container {
-    flex: 1;
-    padding: 25px;
-    overflow-y: auto;
-    max-height: calc(100vh - 200px); /* Add scroll for many links */
-}
-
+/* ===== GRID VIEW FIX ===== */
 .links-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
+    padding: 20px;
     width: 100%;
     box-sizing: border-box;
+    max-width: 100%;
 }
 
+/* Reset any conflicting styles for link-card */
 .link-card {
     background: white;
     border-radius: 10px;
     padding: 15px;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-    transition: transform 0.2s ease;
+    transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
     min-height: 140px;
@@ -27,6 +23,8 @@
     max-width: 100%;
     box-sizing: border-box;
     border: 1px solid #e0e0e0;
+    width: 100% !important; /* Force fixed width */
+    min-width: 0 !important; /* Prevent stretching */
 }
 
 .link-card:hover {
@@ -42,7 +40,9 @@
     display: flex;
     align-items: center;
     word-break: break-word;
-    padding-right: 25px; /* Space for checkbox */
+    padding-right: 25px;
+    min-width: 0;
+    flex: 1;
 }
 
 .link-title i {
@@ -59,17 +59,20 @@
     font-size: 0.8rem;
     font-weight: 500;
     margin-left: 8px;
+    flex-shrink: 0;
 }
 
 .link-url {
     color: #7f8c8d;
     font-size: 0.9rem;
     text-decoration: none;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     margin-bottom: 15px;
     word-break: break-all;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    flex: 1;
 }
 
 .link-url:hover {
@@ -95,6 +98,7 @@
     border: 1px solid #e0e0e0;
     background: #fff;
     transition: all 0.2s ease;
+    flex-shrink: 0;
 }
 
 .link-action-btn i {
@@ -137,39 +141,69 @@
     border-color: #e74c3c;
 }
 
-/* ===== SELECTION MODE STYLES ===== */
-.link-card.selected {
-    border-color: #3498db;
-    background: #f8fafd;
-    box-shadow: 0 3px 10px rgba(52, 152, 219, 0.2);
-}
-
+/* ===== SELECTION MODE FIXES ===== */
+/* Grid view selection */
 .link-card .link-checkbox {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    margin: 0;
-    transform: scale(1.3);
-    cursor: pointer;
+    position: absolute !important;
+    top: 15px !important;
+    left: 15px !important;
+    margin: 0 !important;
+    transform: scale(1.3) !important;
+    cursor: pointer !important;
+    z-index: 10 !important;
 }
 
-.link-card:has(.link-checkbox) .link-title {
-    padding-left: 25px;
+.link-card.selected {
+    border-color: #3498db !important;
+    background: #f8fafd !important;
+    box-shadow: 0 3px 10px rgba(52, 152, 219, 0.2) !important;
 }
 
-/* Selection mode visual indicator */
 .link-card.selected::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 100%;
-    background: #3498db;
-    border-radius: 10px 0 0 10px;
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 4px !important;
+    height: 100% !important;
+    background: #3498db !important;
+    border-radius: 10px 0 0 10px !important;
 }
 
-/* ===== FIXED LIST VIEW ===== */
+/* List view selection */
+.list-link-item .link-checkbox {
+    margin-right: 12px !important;
+    transform: scale(1.2) !important;
+    flex-shrink: 0 !important;
+    cursor: pointer !important;
+}
+
+.list-link-item.selected {
+    border-color: #3498db !important;
+    background: #f8fafd !important;
+}
+
+.list-link-item.selected::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 4px !important;
+    height: 100% !important;
+    background: #3498db !important;
+    border-radius: 8px 0 0 8px !important;
+}
+
+/* Table view selection */
+.table-link-row.selected {
+    background: #f8fafd !important;
+}
+
+.table-link-row.selected td:first-child {
+    border-left: 3px solid #3498db !important;
+}
+
+/* ===== LIST VIEW FIX ===== */
 .links-list {
     display: flex;
     flex-direction: column;
@@ -190,6 +224,8 @@
     max-width: 100%;
     box-sizing: border-box;
     position: relative;
+    display: flex;
+    align-items: center;
 }
 
 .list-link-item:hover {
@@ -203,12 +239,15 @@
     align-items: center;
     gap: 16px;
     max-width: 100%;
+    flex: 1;
 }
 
 .list-link-main {
     flex: 1;
     min-width: 0;
     max-width: calc(100% - 120px);
+    display: flex;
+    flex-direction: column;
 }
 
 .list-link-header {
@@ -299,154 +338,26 @@
     border-color: #bdc3c7;
 }
 
-/* List view selection */
-.list-link-item .link-checkbox {
-    margin-right: 12px;
-    transform: scale(1.2);
-    flex-shrink: 0;
+/* ===== FORCE FIX FOR STRETCHING ===== */
+/* Add this to prevent any stretching */
+.links-container * {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
 }
 
-.list-link-item.selected {
-    border-color: #3498db;
-    background: #f8fafd;
+.links-grid > * {
+    width: 100% !important;
+    min-width: 0 !important;
 }
 
-.list-link-item.selected::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 100%;
-    background: #3498db;
-    border-radius: 8px 0 0 8px;
+/* Ensure grid items don't stretch */
+.links-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
 }
 
-/* ===== FIXED TABLE VIEW ===== */
-.links-table {
-    width: 100%;
-    padding: 20px;
-    box-sizing: border-box;
-    max-width: 100%;
-    max-height: calc(100vh - 200px);
-    overflow: auto;
-}
-
-.links-table table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    min-width: 800px;
-}
-
-.links-table th {
-    background: #34495e;
-    color: white;
-    padding: 12px 16px;
-    text-align: left;
-    font-weight: 600;
-    font-size: 13px;
-    white-space: nowrap;
-}
-
-.links-table td {
-    padding: 12px 16px;
-    border-bottom: 1px solid #ecf0f1;
-    font-size: 13px;
-    vertical-align: middle;
-}
-
-.table-link-row:hover {
-    background: #f8f9fa;
-}
-
-.table-link-row.selected {
-    background: #f8fafd;
-}
-
-.table-link-row.selected td:first-child {
-    border-left: 3px solid #3498db;
-}
-
-.link-title-cell {
-    font-weight: 500;
-    color: #2c3e50;
-    max-width: 200px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.link-url-cell {
-    max-width: 300px;
-    min-width: 150px;
-}
-
-.table-link-url {
-    color: #3498db;
-    text-decoration: none;
-    word-break: break-all;
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-}
-
-.table-link-url:hover {
-    text-decoration: underline;
-}
-
-.link-type-cell {
-    white-space: nowrap;
-}
-
-.link-type-badge {
-    background: #ecf0f1;
-    color: #7f8c8d;
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-size: 11px;
-    font-weight: 500;
-    white-space: nowrap;
-}
-
-.link-actions-cell {
-    white-space: nowrap;
-    width: 140px;
-}
-
-.table-action-btn {
-    background: none;
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
-    padding: 6px 8px;
-    cursor: pointer;
-    color: #7f8c8d;
-    transition: all 0.2s ease;
-    font-size: 12px;
-    margin-right: 4px;
-    flex-shrink: 0;
-}
-
-.table-action-btn:hover {
-    background: #f8f9fa;
-    color: #2c3e50;
-    border-color: #bdc3c7;
-}
-
-.selection-cell {
-    width: 40px;
-    text-align: center;
-}
-
-.link-checkbox {
-    margin: 0;
-    transform: scale(1.1);
-    cursor: pointer;
+.link-card {
+    grid-column: auto !important;
+    grid-row: auto !important;
 }
 
 /* ===== RESPONSIVE DESIGN ===== */

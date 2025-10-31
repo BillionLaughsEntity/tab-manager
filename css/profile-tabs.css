@@ -1,0 +1,166 @@
+/* ===== PROFILE TABS COMPONENTS ===== */
+/* Profile tabs container with horizontal scrolling */
+.profile-tabs-container {
+    background: #2c3e50;
+    padding: 8px 15px;
+    display: flex;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+    min-height: 48px;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    white-space: nowrap;
+    scroll-behavior: smooth;
+    z-index: 150;
+}
+
+/* Profile tabs scrollbar styling */
+.profile-tabs-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.profile-tabs-container::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.profile-tabs-container::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+.profile-tabs-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* Individual profile tab */
+.profile-tab {
+    padding: 4px 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: none;
+    border-radius: 8px 8px 0 0;
+    margin-right: 5px;
+    cursor: pointer;
+    white-space: nowrap;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 32px;
+    border-left: 4px solid var(--profile-color, #3498db);
+    flex-shrink: 0;
+}
+
+.profile-tab.active {
+    background: #2c3e50;
+    font-weight: 600;
+}
+
+/* Profile tab content layout */
+.profile-tab-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: flex-start;
+    position: relative;
+    min-width: 0;
+}
+
+/* Profile color indicator */
+.profile-tab-color {
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    margin-right: 6px;
+}
+
+.profile-tab.active .profile-tab-color {
+    border-color: rgba(255, 255, 255, 0.7);
+}
+
+/* Profile tab name */
+.profile-tab-name {
+    flex: 1;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: calc(100% - 60px);
+    margin-top: 0;
+    font-size: 0.9rem;
+}
+
+/* Profile tab actions */
+.profile-tab-actions {
+    display: flex;
+    justify-content: flex-end;
+    width: auto;
+    margin-top: 0;
+    padding: 0 2px;
+    margin-left: auto;
+}
+
+.profile-tab-action {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    font-size: 0.7rem;
+    padding: 2px 4px;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+    flex: none;
+    margin: 0 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+}
+
+.profile-tab-action:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Specific profile action colors */
+.profile-tab-edit:hover {
+    color: #33e90e;
+}
+
+.profile-tab-color-picker:hover {
+    color: #3498db;
+}
+
+.profile-tab-close:hover {
+    color: #ff4800;
+}
+
+/* Add profile tab button */
+.add-profile-tab {
+    padding: 6px 8px;
+    background: transparent;
+    color: #3498db;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Hide old profile selector */
+.profiles-container {
+    display: none;
+}

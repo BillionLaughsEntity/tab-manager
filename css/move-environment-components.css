@@ -1,0 +1,85 @@
+/* ===== MOVE ENVIRONMENT COMPONENTS ===== */
+/* Environment movement components */
+.move-link-environment {
+    margin: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.move-link-environment-header {
+    background: #f0f0f0;
+    padding: 10px 12px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.2s ease;
+}
+
+.move-link-environment-header:hover {
+    background: #e8e8e8;
+}
+
+.move-link-environment.expanded .move-link-environment-header {
+    background: #e0e0e0;
+}
+
+.move-link-environment-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding: 8px;
+    background: #f0f0f0;
+}
+
+.move-link-environment.expanded .move-link-environment-content {
+    max-height: 300px !important;
+    overflow-y: auto;
+}
+
+/* Move tab environment items */
+.move-tab-environment {
+    padding: 10px 15px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.move-tab-environment:hover {
+    background: #f8f9fa;
+}
+
+.move-tab-environment.selected {
+    background: #e3f2fd;
+    font-weight: 600;
+    border-left: 3px solid #3498db;
+}
+
+.move-tab-environment:last-child {
+    border-bottom: none;
+}
+
+/* Move link tab items */
+.move-link-tab {
+    padding: 10px 15px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.move-link-tab:hover {
+    background: #f8f9fa;
+}
+
+.move-link-tab.selected {
+    background: #e3f2fd;
+    font-weight: 600;
+    border-left: 3px solid #3498db;
+}
+
+.move-link-tab:last-child {
+    border-bottom: none;
+}

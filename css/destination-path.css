@@ -1,0 +1,39 @@
+/* ===== DESTINATION PATH DISPLAY ===== */
+/* Selected destination path indicator */
+.selected-destination-path {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 4px;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.selected-destination-path .path-workbook {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+.selected-destination-path .path-profile {
+    color: #3498db;
+    font-weight: bold;
+}
+
+.selected-destination-path .path-environment {
+    color: #27ae60;
+    font-weight: bold;
+}
+
+.selected-destination-path i {
+    color: #6c757d;
+    margin: 0 5px;
+    font-size: 12px;
+}
+
+/* No destinations message */
+.no-destinations {
+    text-align: center;
+    color: #6c757d;
+    font-style: italic;
+    padding: 20px;
+}

@@ -1,0 +1,88 @@
+/* ===== SPECIFIC MODAL STYLES ===== */
+/* Profile modal */
+.profile-modal-content {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+}
+
+/* Color preview in modals */
+.color-preview {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 10px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Rename modal */
+.rename-modal-content {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+}
+
+.rename-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+/* Environment modal */
+.environment-modal-content {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+}
+
+/* Workbook modal */
+.workbook-modal-content {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+}
+
+/* Search link modal */
+.search-link-modal-content {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+}
+
+.search-link-description {
+    margin-bottom: 15px;
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}
+
+.search-link-preview {
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 6px;
+    margin: 15px 0;
+    word-break: break-all;
+    font-family: monospace;
+    font-size: 0.9rem;
+    border: 1px solid #e0e0e0;
+}
+
+.search-value-highlight {
+    background-color: #fff3cd;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-weight: bold;
+}

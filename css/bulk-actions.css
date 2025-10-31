@@ -1,0 +1,95 @@
+/* ===== BULK ACTION COMPONENTS ===== */
+/* Bulk action bar - fixed at bottom */
+.bulk-action-bar {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary-dark);
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    display: none;
+    align-items: center;
+    gap: 15px;
+    z-index: 1000;
+    border: 1px solid var(--secondary-dark);
+}
+
+.bulk-action-bar.visible {
+    display: flex;
+}
+
+.bulk-selection-count {
+    color: var(--text-light);
+    font-weight: 600;
+    margin-right: 15px;
+}
+
+/* Bulk action buttons */
+.bulk-action-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.bulk-move-btn {
+    background: var(--primary-blue);
+    color: var(--text-light);
+}
+
+.bulk-move-btn:hover {
+    background: var(--primary-blue-hover);
+}
+
+.bulk-delete-btn {
+    background: var(--danger);
+    color: var(--text-light);
+}
+
+.bulk-delete-btn:hover {
+    background: var(--danger-hover);
+}
+
+.bulk-clone-btn {
+    background: var(--purple);
+    color: var(--text-light);
+}
+
+.bulk-clone-btn:hover {
+    background: var(--purple-hover);
+}
+
+.bulk-cancel-btn {
+    background: var(--medium-gray);
+    color: var(--text-light);
+}
+
+.bulk-cancel-btn:hover {
+    background: #7f8c8d;
+}
+
+/* Selection mode toggle */
+#toggle-selection-mode-btn {
+    background: var(--warning) !important;
+    color: var(--text-light);
+    border: none;
+    border-radius: 6px;
+    font-weight: 300;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+}
+
+#toggle-selection-mode-btn:hover {
+    background: var(--warning-hover) !important;
+}

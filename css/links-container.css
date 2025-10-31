@@ -1,0 +1,15 @@
+/* ===== LINKS CONTAINER & MAIN CONTENT ===== */
+/* Main links container with scrolling */
+.links-container {
+    flex: 1;
+    padding: 25px;
+    overflow-y: auto;
+}
+
+/* No links message styling */
+.no-links-message {
+    text-align: center;
+    color: #7f8c8d;
+    padding: 40px;
+    grid-column: 1 / -1;
+}

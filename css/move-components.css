@@ -1,0 +1,134 @@
+/* ===== MOVE/LINK MANAGEMENT COMPONENTS ===== */
+/* Cross-profile movement styles */
+.move-link-profile.current-profile {
+    border-left: 4px solid var(--primary-blue);
+}
+
+.move-link-profile-header {
+    background: #f8f9fa;
+    padding: 12px 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.move-link-profile-header .profile-badge {
+    font-size: 0.7em;
+    background: var(--primary-blue);
+    color: var(--text-light);
+    padding: 2px 6px;
+    border-radius: 10px;
+    margin-left: 8px;
+}
+
+.move-link-environment-header {
+    background: #f0f0f0;
+    padding: 10px 12px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.move-link-tab {
+    padding: 12px 15px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.move-link-tab:hover {
+    background: #f8f9fa;
+}
+
+.move-link-tab.selected {
+    background: #e3f2fd;
+    font-weight: 600;
+    border-left: 3px solid var(--primary-blue);
+}
+
+/* Destination selection styles */
+.destination-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    background: var(--text-light);
+    transition: all 0.2s ease;
+}
+
+.destination-item:hover {
+    background: #f8f9fa;
+    border-color: var(--primary-blue);
+}
+
+.destination-item input[type="radio"] {
+    margin-right: 10px;
+}
+
+.destination-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+
+.destination-badges {
+    display: flex;
+    gap: 4px;
+}
+
+/* Badge styles */
+.profile-badge {
+    background: #e3f2fd;
+    color: #1565c0;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: normal;
+}
+
+.workbook-badge {
+    background: #f3e5f5;
+    color: #7b1fa2;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: normal;
+}
+
+.destination-info {
+    font-size: 12px;
+    color: #6c757d;
+}
+
+/* Selected destination path indicator */
+.selected-destination-path {
+    background: #e8f5e8;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 6px;
+    border-left: 4px solid var(--success);
+    font-size: 0.9em;
+}
+
+.selected-destination-path strong {
+    color: #27ae60;
+}
+
+.no-destinations {
+    text-align: center;
+    color: #6c757d;
+    font-style: italic;
+    padding: 20px;
+}

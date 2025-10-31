@@ -7,43 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" href="images/favicon.png" type="image/png">
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.163.0.min.js"></script>
-    <style>
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background: #2c3e50;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        
-        .header {
-            background: #34495e;
-            color: white;
-            padding: 15px 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            position: relative;
-            z-index: 200;
-        }       
-                
-        .main-container {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-        }
-                                     
-        
-    </style>
+    <!-- <style>
     <link rel="stylesheet" href="css/Responsive_design.css">
     <link rel="stylesheet" href="css/search-suggestion.css">
     <link rel="stylesheet" href="css/Move_shevron_rotation.css">
@@ -82,7 +46,147 @@
     <link rel="stylesheet" href="css/destination_for_move_environment.css">
     <link rel="stylesheet" href="css/destination_for_move_tabs.css">
     <link rel="stylesheet" href="css/Move_Tab_Modal_Tree_View_Styles.css">
-    <link rel="stylesheet" href="css/selection_instructions.css">
+    <link rel="stylesheet" href="css/selection_instructions.css">-->
+
+
+    <!-- Base Styles -->
+    <link rel="stylesheet" href="css/base.css">
+    <!-- What is inside base.css : Reset and global box-sizing; Root variables for consistent theming; Base body styles -->
+
+    <!-- Layout -->
+    <link rel="stylesheet" href="css/layout.css">
+    <!-- Main header styling; Logo and counters area; Main container for side panel and content; Side panel navigation; Main content area -->
+
+    <!-- Reusable components -->
+    <link rel="stylesheet" href="css/components.css">
+    <!-- Environment component styles; Tab component styles; Link card grid layout; Button components; Action buttons -->
+
+    <!-- Bulk actions -->
+    <link rel="stylesheet" href="css/bulk-actions.css">
+    <!-- Bulk action bar - fixed at bottom; Bulk action buttons; Selection mode toggle -->
+
+    <!-- Modal & dropdown components -->
+    <link rel="stylesheet" href="css/modal-components.css">
+    <!-- Color picker components; Enhanced color picker; View type dropdown -->
+
+    <!-- Move components -->
+    <link rel="stylesheet" href="css/move-components.css">
+    <!-- Cross-profile movement styles; Destination selection styles; Selected destination path indicator -->
+
+    <!-- Email components -->
+    <link rel="stylesheet" href="css/email-components.css">
+    <!-- Outlook email modal styles; Form group styles -->
+
+    <!-- Environment components -->
+    <link rel="stylesheet" href="css/environment-components.css">
+    <!-- Environment container with scroll; Environment item styling; Environment actions; Specific environment button colors; Environment expand/collapse animation; Chevron rotation with smooth animation; Add environment button -->
+
+    <!-- Link components -->
+    <link rel="stylesheet" href="css/link-components.css">
+    <!-- Link card grid layout; Grid link card; Grid link content; Grid link actions; Grid action button variants; List view; List link item; List link content; List link main; List link header; List link icon; List link title; List link type; List link url; List link url text; List link actions; List action button; Table view; Table action buttons; Table action button variants; Table content styling -->
+
+    <!-- Selection modes -->
+    <link rel="stylesheet" href="css/selection-modes.css">
+    <!-- Grid view selection; List view selection; Table view selection -->
+
+    <!-- Responsive design -->
+    <link rel="stylesheet" href="css/responsive.css">
+    <!-- Tablet devices (768px and below); Mobile devices (480px and below) -->
+
+    <!-- Header actions -->
+    <link rel="stylesheet" href="css/header-actions-new.css">
+    <!-- Header actions; Specific header button variants -->
+
+    <!-- Links container & main content -->
+    <link rel="stylesheet" href="css/links-container.css">
+    <!-- Main links container with scrolling; No links message styling -->
+
+    <!-- Enhanced grid view styles -->
+    <link rel="stylesheet" href="css/grid-view-enhanced.css">
+    <!-- Grid layout with forced constraints; Grid card with strict sizing; Grid card content; URL styling with proper text handling; Grid action buttons; Grid action button variants -->
+
+    <!-- Add link form components -->
+    <link rel="stylesheet" href="css/add-link-form.css">
+    <!-- Sticky add link section at bottom; Add link form; Form group; Form group label; Form group input; Add link button -->
+
+    <!-- Modal base styles -->
+    <link rel="stylesheet" href="css/modal-base.css">
+    <!-- Modal overlay; Modal content container; Modal header; Modal title; Modal close button; Modal form elements; Modal action buttons; Modal button variants -->
+
+    <!-- Move modal components -->
+    <link rel="stylesheet" href="css/move-modals.css">
+    <!-- Move link modal specific styles; Move profile container; Move profile content with expand/collapse; Chevron rotation for expanded state; Move profile header; Move tab profile header; Move environment workbook header -->
+
+    <!-- Move tree view components -->
+    <link rel="stylesheet" href="css/move-tree-view.css">
+    <!-- Tree view container; Tree structure - Workbook level; Tree structure - Profile level; Tree structure - Environment level; Tree icons and styling; Tree badges and info; Radio buttons in tree; Tree container indentation -->
+
+    <!-- Move environment components -->
+    <link rel="stylesheet" href="css/move-environment-components.css">
+    <!-- Environment movement components; Move tab environment items; Move link tab items -->
+
+    <!-- Multi-link components -->
+    <link rel="stylesheet" href="css/multi-link-components.css">
+    <!-- Multi-link form fields; Multi-link action buttons; Multi-link count badge -->
+
+    <!-- Destination path display -->
+    <link rel="stylesheet" href="css/destination-path.css">
+    <!-- Selected destination path indicator; No destinations message -->
+
+    <!-- Panel titles & headers -->
+    <link rel="stylesheet" href="css/panel-titles.css">
+    <!-- Side panel section titles -->
+
+    <!-- Profile tabs -->
+    <link rel="stylesheet" href="css/profile-tabs.css">
+    <!-- Profile tabs container with horizontal scrolling; Individual profile tab; Profile color indicator; Profile tab name; Profile tab actions; Specific profile action colors; Add profile tab button; Hide old profile selector -->
+
+    <!-- Workbook tabs -->
+    <link rel="stylesheet" href="css/workbook-tabs.css">
+    <!-- Workbook tabs container; Individual workbook tab; Workbook color indicator (right side); Workbook tab name; Workbook tab actions; Specific workbook action colors; Add workbook tab button -->
+
+    <!-- Side panel tabs -->
+    <link rel="stylesheet" href="css/side-panel-tabs.css">
+    <!-- Enhanced side panel with proper dimensions; Tabs list with scrolling; Individual tab items; Tab action buttons; Tab action button variants; Add tab container -->
+
+    <!-- Content panel -->
+    <link rel="stylesheet" href="css/content-panel.css">
+    <!-- Main content panel; Tab header in content panel -->
+
+    <!-- Search & filter components -->
+    <link rel="stylesheet" href="css/search-components.css">
+    <!-- Search container; Search clear button; Search count badge -->
+
+    <!-- Search highlights -->
+    <link rel="stylesheet" href="css/search-highlights.css">
+    <!-- Search highlight for text content; Search result highlighting for different element types; Active state with search highlights; Hover states with search highlights; Search highlight animation -->
+
+    <!-- Search suggestions -->
+    <link rel="stylesheet" href="css/search-suggestions.css">
+    <!-- Search suggestions container; Search suggestion items; Search suggestion icons; Search suggestion content; Search suggestion title; Search suggestion type; Search suggestion path; Search suggestion highlight -->
+
+    <!-- Trash bin -->
+    <link rel="stylesheet" href="css/trash-bin.css">
+    <!-- Trash bin button in header; Trash bin modal; Trash bin items; Trash bin actions; Trash bin restore button; Trash bin permanently delete button; Trash bin clear all button; Empty trash bin state -->
+
+    <!-- Modal specific styles -->
+    <link rel="stylesheet" href="css/modal-specific.css">
+    <!-- Profile modal; Color preview in modals; Rename modal; Environment modal; Workbook modal; Search link modal -->
+
+    <!-- Reorder components -->
+    <link rel="stylesheet" href="css/reorder-components.css">
+    <!-- Reorder links modal; Reorder link items -->
+
+    <!-- S3 sync components -->
+    <link rel="stylesheet" href="css/s3-sync-new.css">
+    <!-- S3 sync button; Sync status messages -->
+
+    <!-- Selection components -->
+    <link rel="stylesheet" href="css/selection-components.css">
+    <!-- Link selection checkboxes; Selection instructions -->
+
+
+
 
 </head>
 <body>

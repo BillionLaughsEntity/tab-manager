@@ -1,0 +1,48 @@
+/* ===== CONTENT PANEL STYLES ===== */
+/* Main content panel */
+.content-panel {
+    flex: 1;
+    background: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Tab header in content panel */
+.tab-header {
+    padding: 15px 25px;
+    background: white;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tab-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+/* Content panel tab actions */
+.content-panel .tab-actions button {
+    background: #9b59b6 !important;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 300;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+}
+
+.content-panel .tab-actions button:hover {
+    background: #8e44ad !important;
+}
+
+.content-panel .tab-actions button i {
+    margin-right: 8px;
+}

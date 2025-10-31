@@ -1,0 +1,80 @@
+/* ===== MOVE MODAL COMPONENTS ===== */
+/* Move link modal specific styles */
+.move-link-modal-content {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.move-tab-modal-content {
+    background: white;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 700px;
+    max-height: 80vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Move profile container */
+.move-link-profile,
+.move-tab-profile {
+    margin-bottom: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.move-link-profile-header,
+.move-tab-profile-header,
+.move-environment-workbook-header {
+    background: #f8f9fa;
+    padding: 12px 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+    transition: background-color 0.2s ease;
+}
+
+.move-link-profile-header:hover,
+.move-tab-profile-header:hover,
+.move-environment-workbook-header:hover {
+    background: #e8e8e8;
+}
+
+/* Move profile content with expand/collapse */
+.move-link-profile-content,
+.move-tab-profile-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding: 10px;
+    background: #f8f9fa;
+}
+
+.move-link-profile.expanded .move-link-profile-content,
+.move-tab-profile.expanded .move-tab-profile-content {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+/* Chevron rotation for expanded state */
+.move-link-profile.expanded .move-link-profile-header i,
+.move-tab-profile.expanded .move-tab-profile-header i,
+.move-link-environment.expanded .move-link-environment-header i {
+    transform: rotate(180deg);
+}
+
+.move-link-profile-header i,
+.move-tab-profile-header i,
+.move-link-environment-header i {
+    transition: transform 0.3s ease;
+}

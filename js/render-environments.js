@@ -11,7 +11,9 @@ function renderEnvironments() {
     currentProfile.environments.forEach(environment => {
         const environmentElement = document.createElement('div');
         environmentElement.className = 'environment';
-        if (environment === currentEnvironment) {
+        
+        // Use the collapsed property instead of comparing to currentEnvironment
+        if (!environment.collapsed) {
             environmentElement.classList.add('expanded');
         }
         
@@ -45,28 +47,28 @@ function renderEnvironments() {
         
         environmentsContainer.appendChild(environmentElement);
 
-        // Add event listener for reorder tabs button (add this with the other environment action buttons)
+        // Add event listener for reorder tabs button
         const reorderTabsBtn = environmentElement.querySelector('.reorder-tabs-btn');
         reorderTabsBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             openReorderTabsModal(environment);
         });
         
-        // Add event listeners for environment header
+        // Add event listeners for environment header - UPDATED LOGIC
         const environmentHeader = environmentElement.querySelector('.environment-header');
         environmentHeader.addEventListener('click', () => {
-            // Toggle expanded class
-            const wasExpanded = environmentElement.classList.contains('expanded');
+            // Toggle the collapsed state
+            environment.collapsed = !environment.collapsed;
             
-            // Close all environments first
-            document.querySelectorAll('.environment.expanded').forEach(env => {
-                env.classList.remove('expanded');
-            });
-            
-            // If it wasn't expanded, expand it
-            if (!wasExpanded) {
+            // Update UI
+            if (environment.collapsed) {
+                environmentElement.classList.remove('expanded');
+            } else {
                 environmentElement.classList.add('expanded');
             }
+            
+            // Save the state
+            saveWorkbooks();
         });
         
         // Add event listeners for environment actions
@@ -90,7 +92,7 @@ function renderEnvironments() {
 
         moveBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            openMoveEnvironmentModal(environment); // This is correct for environments
+            openMoveEnvironmentModal(environment);
         });
         
         // Render tabs for this environment

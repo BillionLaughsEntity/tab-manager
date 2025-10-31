@@ -32,7 +32,8 @@ function addEnvironment(name) {
     const newEnvironment = {
         id: 'env-' + Date.now(),
         name: name,
-        tabs: [defaultTab] // Add the default tab
+        tabs: [defaultTab], // Add the default tab
+        collapsed: true // Add this line to start collapsed
     };
     
     currentProfile.environments.push(newEnvironment);

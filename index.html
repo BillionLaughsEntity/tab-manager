@@ -7,48 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" href="images/favicon.png" type="image/png">
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.163.0.min.js"></script>
-    <!-- <style>
-    <link rel="stylesheet" href="css/Responsive_design.css">
-    <link rel="stylesheet" href="css/search-suggestion.css">
-    <link rel="stylesheet" href="css/Move_shevron_rotation.css">
-    <link rel="stylesheet" href="css/multylink_styles.css">
-    <link rel="stylesheet" href="css/Color_Palette_Styles.css">
-    <link rel="stylesheet" href="css/Search_count_badge.css">
-    <link rel="stylesheet" href="css/Environments.css">
-    <link rel="stylesheet" href="css/Links.css">
-    <link rel="stylesheet" href="css/Reorder_links.css">
-    <link rel="stylesheet" href="css/Tabs.css">
-    <link rel="stylesheet" href="css/Profiles.css">
-    <link rel="stylesheet" href="css/Modal_styles.css">
-    <link rel="stylesheet" href="css/Rename_modal.css">
-    <link rel="stylesheet" href="css/Move_link_modal.css">
-    <link rel="stylesheet" href="css/Move_link_environment.css">
-    <link rel="stylesheet" href="css/Move_tab_modal.css">
-    <link rel="stylesheet" href="css/Search_container_styles.css">
-    <link rel="stylesheet" href="css/Profile_tab_color_styling.css">
-    <link rel="stylesheet" href="css/Color_picker.css">
-    <link rel="stylesheet" href="css/Bulk_action.css">
-    <link rel="stylesheet" href="css/Cross_profile_movement.css">
-    <link rel="stylesheet" href="css/Selection_checkboxes.css">
-    <link rel="stylesheet" href="css/Workbooks.css">
-    <link rel="stylesheet" href="css/Trash_bin.css">
-    <link rel="stylesheet" href="css/Header-actions.css">
-    <link rel="stylesheet" href="css/Grid_view.css">
-    <link rel="stylesheet" href="css/Search_highlights.css">
-    <link rel="stylesheet" href="css/logo.css">
-    <link rel="stylesheet" href="css/panel-title.css">
-    <link rel="stylesheet" href="css/side-panel.css">
-    <link rel="stylesheet" href="css/profiles-container.css">
-    <link rel="stylesheet" href="css/counters.css">
-    <link rel="stylesheet" href="css/s3-sync.css">
-    <link rel="stylesheet" href="css/email.css">
-    <link rel="stylesheet" href="css/destination_for_move_profile.css">
-    <link rel="stylesheet" href="css/destination_for_move_environment.css">
-    <link rel="stylesheet" href="css/destination_for_move_tabs.css">
-    <link rel="stylesheet" href="css/Move_Tab_Modal_Tree_View_Styles.css">
-    <link rel="stylesheet" href="css/selection_instructions.css">-->
-
-
+    
     <!-- Base Styles -->
     <link rel="stylesheet" href="css/base.css">
     <!-- What is inside base.css : Reset and global box-sizing; Root variables for consistent theming; Base body styles -->
@@ -911,178 +870,334 @@
 
     <!-- 1. Core utilities first -->
     <script src="js/getCurrentProfile.js"></script>
+    <!-- what function is inside: getCurrentProfile -->
     <script src="js/getCurrentWorkbook.js"></script>
+    <!-- what function is inside: getCurrentWorkbook -->
 
     <!-- 2. Rendering functions that renderEnvironments depends on -->
     <script src="js/renderTabs.js"></script>
+    <!-- what function is inside: renderTabs -->
 
     <!-- 3. renderEnvironments itself -->
     <script src="js/render-environments.js"></script>
+    <!-- what function is inside: renderEnvironments -->
    
     <script src="js/importSearchLink.js"></script>
+    <!-- what function is inside: importSearchLink -->
     <script src="js/openMoveLinkModal.js"></script>
+    <!-- what function is inside: openMoveLinkModal -->
     <script src="js/exportToXML.js"></script>
+    <!-- what function is inside: exportToXML; openExportModal; downloadXMLFile; escapeXml -->
     <script src="js/addCheckboxesToAllViews.js"></script>
+    <!-- what function is inside: addCheckboxesToAllViews; addCheckboxToElement; removeCheckboxesFromLinks -->
     <script src="js/addCheckboxesToGridView.js"></script>
+    <!-- what function is inside: addCheckboxesToGridView -->
     <script src="js/addCheckboxesToListView.js"></script>
+    <!-- what function is inside: addCheckboxesToListView -->
     <script src="js/addCheckboxesToTableView.js"></script>
+    <!-- what function is inside: addCheckboxesToTableView -->
     <script src="js/addCheckboxToElement.js"></script>
+    <!-- what function is inside: addCheckboxToElement -->
     <script src="js/removeCheckboxesFromLinks.js"></script>
+    <!-- what function is inside: removeCheckboxesFromLinks -->
     <script src="js/checkProfileScroll.js"></script>
+    <!-- what function is inside: checkProfileScroll -->
     <script src="js/permanentlyDeleteFromTrash.js"></script>
+    <!-- what function is inside: permanentlyDeleteFromTrash -->
     <script src="js/restoreFromTrash.js"></script>
+    <!-- what function is inside: restoreFromTrash -->
     <script src="js/moveWorkbookUp.js"></script>
+    <!-- what function is inside: moveWorkbookUp -->
     <script src="js/moveWorkbookDown.js"></script>
+    <!-- what function is inside: moveWorkbookDown -->
     <script src="js/deleteWorkbook.js"></script>
+    <!-- what function is inside: deleteWorkbook -->
     <script src="js/moveTabUp.js"></script>
+    <!-- what function is inside: moveTabUp -->
     <script src="js/moveTabDown.js"></script>
+    <!-- what function is inside: moveTabDown -->
     <script src="js/updateProfileScroll.js"></script>
+    <!-- what function is inside: updateProfileScroll; setupProfileTabsScrolling -->
     <script src="js/forceMigrateOldData.js"></script>
+    <!-- what function is inside: forceMigrateOldData -->
     <script src="js/openMoveProfileModal.js"></script>
+    <!-- what function is inside: openMoveProfileModal -->
     <script src="js/permanentlyDeleteLink.js"></script>
+    <!-- what function is inside: permanentlyDeleteLink -->
     <script src="js/restoreLink.js"></script>
+    <!-- what function is inside: restoreLink -->
     <script src="js/addCheckboxesToLinks.js"></script>
+    <!-- what function is inside: addCheckboxesToLinks -->
     <script src="js/removeCheckboxesFromAllViews.js"></script>
+    <!-- what function is inside: removeCheckboxesFromAllViews -->
     <script src="js/toggleSelectionMode.js"></script>
+    <!-- what function is inside: toggleSelectionMode; showSelectionInstructions; hideSelectionInstructions -->
     <script src="js/openSearchLink.js"></script>
+    <!-- what function is inside: openSearchLink -->
     <script src="js/openSearchLinkModal.js"></script>
+    <!-- what function is inside: openSearchLinkModal -->
     <script src="js/saveSearchLink.js"></script>
+    <!-- what function is inside: saveSearchLink -->
     <script src="js/updateSearchLinkPreview.js"></script>
+    <!-- what function is inside: updateSearchLinkPreview -->
     <script src="js/openCreateSearchLinkModal.js"></script>
+    <!-- what function is inside: openCreateSearchLinkModal -->
     <script src="js/workbook-color-modal.js"></script>
+    <!-- what function is inside: workbook-color-modal -->
     <script src="js/updateProfileColor.js"></script>
+    <!-- what function is inside: updateProfileColor -->
     <script src="js/openMultiLinkCardLinks.js"></script>
+    <!-- what function is inside: openMultiLinkCardLinks -->
     <script src="js/saveEditMultiLinkCard.js"></script>
+    <!-- what function is inside: saveEditMultiLinkCard -->
     <script src="js/updateFieldLabelsEdit.js"></script>
+    <!-- what function is inside: updateFieldLabelsEdit -->
     <script src="js/addLinkFieldEdit.js"></script>
+    <!-- what function is inside: addLinkFieldEdit -->
     <script src="js/openEditMultiLinkCardModal.js"></script>
+    <!-- what function is inside: openEditMultiLinkCardModal -->
     <script src="js/saveMultiLinkCard.js"></script>
+    <!-- what function is inside: saveMultiLinkCard -->
     <script src="js/updateFieldLabels.js"></script>
+    <!-- what function is inside: updateFieldLabels -->
     <script src="js/addLinkField.js"></script>
+    <!-- what function is inside: addLinkField -->
     <script src="js/openMultiLinkCardModal.js"></script>
+    <!-- what function is inside: openMultiLinkCardModal -->
     <script src="js/openReorderTabsModal.js"></script>
+    <!-- what function is inside: openReorderTabsModal -->
     <script src="js/moveEnvironmentUp.js"></script>
+    <!-- what function is inside: moveEnvironmentUp -->
     <script src="js/moveEnvironmentDown.js"></script>
+    <!-- what function is inside: moveEnvironmentDown -->
     <script src="js/openReorderEnvironmentsModal.js"></script>
+    <!-- what function is inside: openReorderEnvironmentsModal -->
     <script src="js/moveProfileDown.js"></script>
+    <!-- what function is inside: moveProfileDown -->
     <script src="js/moveProfileUp.js"></script>
+    <!-- what function is inside: moveProfileUp -->
     <script src="js/highlightTab.js"></script>
+    <!-- what function is inside: highlightTab -->
     <script src="js/highlightEnvironment.js"></script>
+    <!-- what function is inside: highlightEnvironment -->
     <script src="js/highlightProfileTab.js"></script>
+    <!-- what function is inside: highlightProfileTab -->
     <script src="js/isProfileInCurrentWorkbook.js"></script>
+    <!-- what function is inside: isProfileInCurrentWorkbook -->
     <script src="js/isProfileCurrent.js"></script>
+    <!-- what function is inside: isProfileCurrent -->
     <script src="js/renderProfileTabs.js"></script>
+    <!-- what function is inside: renderProfileTabs -->
     <script src="js/populateWorkbookProfiles.js"></script>
+    <!-- what function is inside: populateWorkbookProfiles -->
     <script src="js/openMoveEnvironmentModal.js"></script>
+    <!-- what function is inside: openMoveEnvironmentModal -->
     <script src="js/switchProfile.js"></script>
+    <!-- what function is inside: switchProfile -->
     <script src="js/deleteProfile.js"></script>
+    <!-- what function is inside: deleteProfile -->
     <script src="js/addProfile.js"></script>
+    <!-- what function is inside: addProfile -->
     <script src="js/escapeXml.js"></script>
+    <!-- what function is inside: escapeXml -->
     <script src="js/validateMultiLinkCard.js"></script>
+    <!-- what function is inside: validateMultiLinkCard -->
     <script src="js/processMultiLinkUrls.js"></script>
+    <!-- what function is inside: processMultiLinkUrls -->
     <script src="js/createTrashItem.js"></script>
+    <!-- what function is inside: createTrashItem -->
     <script src="js/importRegularLink.js"></script>
+    <!-- what function is inside: importRegularLink -->
     <script src="js/importMultiLink.js"></script>
+    <!-- what function is inside: importMultiLink -->
     <script src="js/importLinks.js"></script>
+    <!-- what function is inside: importLinks -->
     <script src="js/importTabs.js"></script>
+    <!-- what function is inside: importTabs -->
     <script src="js/importEnvironments.js"></script>
+    <!-- what function is inside: importEnvironments -->
     <script src="js/importProfiles.js"></script>
+    <!-- what function is inside: importProfiles -->
     <script src="js/importFromXML.js"></script>
+    <!-- what function is inside: importFromXML; getElementText; generateId -->
     <script src="js/updateSelectedDestinationPath.js"></script>
+    <!-- what function is inside: updateSelectedDestinationPath -->
     <script src="js/populateEnvironmentTabs.js"></script>
+    <!-- what function is inside: populateEnvironmentTabs -->
     <script src="js/populateProfileEnvironments.js"></script>
+    <!-- what function is inside: populateProfileEnvironments -->
     <script src="js/openMoveTabModal.js"></script>
+    <!-- what function is inside: openMoveTabModal -->
     <script src="js/attachLinkEventListeners.js"></script>
+    <!-- what function is inside: attachLinkEventListeners -->
     <script src="js/createListViewLink.js"></script>
+    <!-- what function is inside: createListViewLink -->
     <script src="js/createTableViewLink.js"></script>
+    <!-- what function is inside: createTableViewLink; truncateUrl -->
     <script src="js/renderLinks.js"></script>
+    <!-- what function is inside: renderLinks; renderGridView; renderListView; renderTableView -->
     <script src="js/selectTab.js"></script>
+    <!-- what function is inside: selectTab -->
     <script src="js/saveReorderedWorkbooks.js"></script>
+    <!-- what function is inside: saveReorderedWorkbooks -->
     <script src="js/renderWorkbookTabs.js"></script>
+    <!-- what function is inside: renderWorkbookTabs -->
     <script src="js/moveLinkUp.js"></script>
+    <!-- what function is inside: moveLinkUp -->
     <script src="js/moveLinkDown.js"></script>
+    <!-- what function is inside: moveLinkDown -->
     <script src="js/openReorderLinksModal.js"></script>
+    <!-- what function is inside: openReorderLinksModal -->
     <script src="js/updateSelectedTabDestinationPath.js"></script>
+    <!-- what function is inside: updateSelectedTabDestinationPath -->
     <script src="js/moveLink.js"></script>
+    <!-- what function is inside: moveLink -->
     <script src="js/deleteTab.js"></script>
+    <!-- what function is inside: deleteTab -->
     <script src="js/deleteEnvironment.js"></script>
+    <!-- what function is inside: deleteEnvironment -->
     <script src="js/addLink.js"></script>
+    <!-- what function is inside: addLink -->
     <script src="js/addTab.js"></script>
+    <!-- what function is inside: addTab -->
     <script src="js/addEnvironment.js"></script>
+    <!-- what function is inside: addEnvironment -->
     <script src="js/switchWorkbook.js"></script>
+    <!-- what function is inside: switchWorkbook -->
     <script src="js/addWorkbook.js"></script>
+    <!-- what function is inside: addWorkbook -->
     <script src="js/createDefaultProfile.js"></script>
+    <!-- what function is inside: createDefaultProfile -->
     <script src="js/createDefaultWorkbook.js"></script>
+    <!-- what function is inside: createDefaultWorkbook -->
     <script src="js/switchViewType.js"></script>
+    <!-- what function is inside: switchViewType -->
     <script src="js/saveWorkbooks.js"></script>
+    <!-- what function is inside: saveWorkbooks -->
     <script src="js/loadWorkbooks.js"></script>
+    <!-- what function is inside: loadWorkbooks -->
     <script src="js/migrateOldData.js"></script>
+    <!-- what function is inside: migrateOldData -->
     <script src="js/updateWorkbookColor.js"></script>
+    <!-- what function is inside: updateWorkbookColor; event listeners for workbook color modal; workbook color picker event listener -->
     <script src="js/positionSearchSuggestions.js"></script>
+    <!-- what function is inside: positionSearchSuggestions -->
     <script src="js/hideSearchSuggestions.js"></script>
+    <!-- what function is inside: hideSearchSuggestions -->
     <script src="js/navigateToSearchResult.js"></script>
+    <!-- what function is inside: navigateToSearchResult -->
     <script src="js/getTypeAbbreviation.js"></script>
+    <!-- what function is inside: getTypeAbbreviation -->
     <script src="js/escapeRegex.js"></script>
+    <!-- what function is inside: escapeRegex -->
     <script src="js/highlightText.js"></script>
+    <!-- what function is inside: highlightText -->
     <script src="js/showSearchSuggestions.js"></script>
+    <!-- what function is inside: showSearchSuggestions -->
     <script src="js/updateSearchResultsCount.js"></script>
+    <!-- what function is inside: updateSearchResultsCount -->
     <script src="js/trash-bin-functions.js"></script>
     <!-- openTrashBinModal, clearTrashBin, restoreFromTrash, permanentlyDeleteFromTrash, deleteLink, 
      renderTrashBinModal, saveTrashBin, loadTrashBin, createTrashItem, importTrashBin-->
     <script src="js/createTabForClone.js"></script>
+    <!-- what function is inside: createTabForClone -->
     <script src="js/createEnvironmentForClone.js"></script>
+    <!-- what function is inside: createEnvironmentForClone -->
     <script src="js/saveCloneToTab.js"></script>
+    <!-- what function is inside: saveCloneToTab -->
     <script src="js/updateCloneDestinationDisplay.js"></script>
+    <!-- what function is inside: updateCloneDestinationDisplay -->
     <script src="js/findProfileById.js"></script>
+    <!-- what function is inside: findProfileById -->
     <script src="js/populateEnvironmentTabsForClone.js"></script>
+    <!-- what function is inside: populateEnvironmentTabsForClone -->
     <script src="js/populateProfileEnvironmentsForClone.js"></script>
+    <!-- what function is inside: populateProfileEnvironmentsForClone -->
     <script src="js/openCloneToTabModal.js"></script>
+    <!-- what function is inside: openCloneToTabModal -->
     <script src="js/cloneSelectedLinks.js"></script>
+    <!-- what function is inside: cloneSelectedLinks -->
     <script src="js/updateSelectedDestinationDisplay.js"></script>
+    <!-- what function is inside: updateSelectedDestinationDisplay -->
     <script src="js/BulkOperations.js"></script>
     <!-- updateBulkSelectionCount, moveSelectedLinks, deleteSelectedLinks, openBulkMoveLinkModal, cloneSelectedLinks, saveBulkMoveLinks
     populateProfileEnvironmentsForBulkMove, populateEnvironmentTabsForBulkMove, createEnvironmentForBulkMove, createTabForBulkMove-->
     <script src="js/SearchFunctions.js"></script>
     <!-- performSearch, clearSearch, applySearchHighlights -->
     <script src="js/counters.js"></script>
+    <!-- what function is inside: updateAllCounters; updateWorkbooksCounter; updateProfilesCounter; updateEnvironmentsCounter; updateTabsCounter; updateLinksCounter
+    updateWorkbooksCounter; updateProfilesCounter; updateEnvironmentsCounter; updateTabsCounter; updateLinksCounter; refreshCounters -->
     <script src="js/migrateToVersionedStorage.js"></script>
+    <!-- what function is inside: migrateToVersionedStorage -->
     <script src="js/testStorageIsolation.js"></script>
+    <!-- what function is inside: testStorageIsolation -->
     <script src="js/debugCurrentState.js"></script>
+    <!-- what function is inside: debugCurrentState -->
     <script src="js/findDuplicateElements.js"></script>
+    <!-- what function is inside: findDuplicateElements -->
     <script src="js/verifyAllFixes.js"></script>
+    <!-- what function is inside: verifyAllFixes -->
     <script src="js/outlook-email.js"></script>
+    <!-- what function is inside: debugCurrentTabState; debugEnvironmentState; debugTabState; debugLinkState; 
+     openOutlookEmailModal; updateEmailPreview; saveOutlookEmailLink; closeOutlookEmailModal; setupOutlookEmailListeners -->
     <script src="js/color-modal.js"></script>
     <!--reorder-block-->
     <script src="js/reorder-workbooks-modal.js"></script>
+    <!-- what function is inside: initReorderWorkbooksModal; createModal; setupEventListeners; showModal; hideModal; populateWorkbooksList; saveOrder -->
     <script src="js/reorder-profiles-modal.js"></script>
+    <!-- what function is inside: initReorderProfilesModal; createModal; setupEventListeners; showModal; hideModal; populateProfilesList; saveOrder -->
     <script src="js/reorder-environments-modal.js"></script>
+    <!-- what function is inside: initReorderEnvironmentsModal; createModal; setupEventListeners; showModal; hideModal; populateEnvironmentsList; saveOrder -->
     <script src="js/reorder-tabs-modal.js"></script>
+    <!-- what function is inside: initReorderTabsModal; createModal; setupEventListeners; showModal; hideModal; populateTabsList; saveOrder -->
     <script src="js/reorder-links-modal.js"></script>
+    <!-- what function is inside: initReorderLinksModal; createModal; setupEventListeners; showModal; hideModal; populateLinksList; saveOrder -->
     <!--reorder-block ends-->
     <!--rename-block-->
     <script src="js/renameWorkbook.js"></script>
+    <!-- what function is inside: renameWorkbook -->
     <script src="js/rename-workbook-modal.js"></script>
+    <!-- what function is inside: initRenameWorkbookModal; createModal; setupEventListeners; showModal; hideModal; saveRename -->
     <script src="js/renameProfile.js"></script>
+    <!-- what function is inside: renameProfile -->
     <script src="js/rename-profile-modal.js"></script>
+    <!-- what function is inside: initRenameProfileModal; createModal; setupEventListeners; showModal; hideModal; saveRename -->
     <script src="js/renameEnvironment.js"></script>
+    <!-- what function is inside: renameEnvironment -->
     <script src="js/rename-environment-modal.js"></script>
+    <!-- what function is inside: initRenameEnvironmentModal; createModal; setupEventListeners; showModal; hideModal; saveRename -->
     <script src="js/renameTab.js"></script>
+    <!-- what function is inside: renameTab -->
     <script src="js/rename-tab-modal.js"></script>
+    <!-- what function is inside: initRenameTabModal; createModal; setupEventListeners; showModal; hideModal; saveRename -->
     <script src="js/editLink.js"></script>
+    <!-- what function is inside: editLink -->
     <script src="js/isValidUrl.js"></script>
+    <!-- what function is inside: isValidUrl -->
     <script src="js/edit-link-modal.js"></script>
+    <!-- what function is inside: initEditLinkModal; createModal; setupEventListeners; showModal; hideModal; saveEdit -->
     <script src="js/createLinkCard.js"></script>
+    <!-- what function is inside: createLinkCard -->
     <!--rename-block ends-->
     <script src="js/debugXMLImport.js"></script>
+    <!-- what function is inside: debugXMLImport -->
     <script src="js/importWorkbooks.js"></script>
+    <!-- what function is inside: importWorkbooks -->
     <script src="js/debugExportModal.js"></script>
+    <!-- what function is inside: debugExportModal -->
     <!--move-block-->
     <script src="js/moveProfile.js"></script>
+    <!-- what function is inside: moveProfile -->
     <script src="js/move-profile-modal.js"></script>
+    <!-- what function is inside: initMoveProfileModal; createModal; setupEventListeners; showModal; hideModal; saveMove -->
     <script src="js/moveEnvironment.js"></script>
+    <!-- what function is inside: moveEnvironment -->
     <script src="js/move-environment-modal.js"></script>
+    <!-- what function is inside: initMoveEnvironmentModal; createModal; setupEventListeners; showModal; hideModal; saveMove -->
     <script src="js/moveTab.js"></script>
+    <!-- what function is inside: moveTab -->
     <script src="js/move-tab-modal.js"></script>
+    <!-- what function is inside: initMoveTabModal; createModal; setupEventListeners; showModal; hideModal; saveMove -->
     <!--move-block ends-->
 
     <!-- Tree view move tab modal
@@ -1091,6 +1206,7 @@
 
     <!-- Event listeners LAST -->
     <script src="js/event-listeners.js"></script>
+    <!-- what function is inside: attachLinkEventListeners -->
     <!-- Event listeners LAST -->
 
     

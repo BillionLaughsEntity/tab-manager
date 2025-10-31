@@ -1,0 +1,143 @@
+/* ===== ENVIRONMENT & TAB COMPONENTS ===== */
+/* Environment container with scroll */
+.environments-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    max-height: 1115px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+/* Custom scrollbar for environments */
+.environments-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.environments-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.environments-container::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+.environments-container::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Environment item styling */
+.environment {
+    margin-bottom: 5px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+}
+
+.environment-header {
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    border-left: 4px solid var(--profile-color, #3498db); /* Color inheritance */
+}
+
+.environment-name {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.environment-name i {
+    margin-right: 8px;
+    transition: transform 0.3s ease;
+}
+
+/* Environment actions */
+.environment-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.environment-action-btn {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 4px;
+    transition: color 0.3s ease;
+}
+
+.environment-action-btn:hover {
+    color: white;
+}
+
+/* Specific environment button colors */
+.environment-action-btn.rename-environment-btn {
+    color: #3498db;
+}
+
+.environment-action-btn.rename-environment-btn:hover {
+    color: #2980b9;
+}
+
+.environment-action-btn.move-environment-btn {
+    color: #9b59b6;
+}
+
+.environment-action-btn.move-environment-btn:hover {
+    color: #8e44ad;
+}
+
+/* Environment expand/collapse animation */
+.environment-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.environment.expanded .environment-content {
+    max-height: 1000px; /* Fixed maximum height */
+}
+
+/* Chevron rotation with smooth animation */
+.environment-header i.fa-chevron-down {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center;
+    margin-right: 8px;
+    font-size: 0.8rem;
+}
+
+.environment.expanded .environment-header i.fa-chevron-down {
+    transform: rotate(180deg);
+}
+
+.environment-header:hover i.fa-chevron-down {
+    color: #3498db;
+}
+
+/* Rotate chevron icon */
+.environment-header .fa-chevron-down {
+    transition: transform 0.3s ease;
+}
+
+.environment.expanded .environment-header .fa-chevron-down {
+    transform: rotate(0deg);
+}
+
+.environment:not(.expanded) .environment-header .fa-chevron-down {
+    transform: rotate(-90deg);
+}
+
+/* Add environment button */
+.add-environment-btn {
+    background: transparent;
+    border: none;
+    color: #3498db;
+    cursor: pointer;
+    font-size: 1.2rem;
+}

@@ -1,0 +1,149 @@
+/* ===== ENHANCED GRID VIEW STYLES ===== */
+/* Grid layout with forced constraints */
+.links-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
+    gap: 20px !important;
+    padding: 20px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* Grid card with strict sizing */
+.link-card {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    grid-column: auto !important;
+    grid-row: auto !important;
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    min-height: 140px;
+    position: relative;
+    border: 1px solid #e0e0e0;
+}
+
+.link-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Grid card content */
+.link-title {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    word-break: break-word;
+    padding-right: 25px;
+}
+
+.link-title i {
+    margin-right: 10px;
+    color: #3498db;
+    flex-shrink: 0;
+}
+
+/* URL styling with proper text handling */
+.link-url {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    text-decoration: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 15px;
+    word-break: break-all !important;
+    overflow-wrap: break-word !important;
+    max-width: 100% !important;
+    display: block !important;
+    overflow: hidden !important;
+}
+
+.link-url:hover {
+    color: #3498db;
+}
+
+/* Grid action buttons */
+.link-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: auto;
+    flex-wrap: wrap;
+    max-width: 100%;
+}
+
+.link-action-btn {
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    border: 1px solid #e0e0e0;
+    background: #fff;
+    transition: all 0.2s ease;
+}
+
+.link-action-btn i {
+    margin-right: 5px;
+}
+
+/* Grid action button variants */
+.open-link {
+    background: #3498db;
+    color: white;
+    border: none;
+}
+
+.open-link:hover {
+    background: #2980b9;
+}
+
+.edit-link {
+    background: #fff;
+    color: #3498db;
+    border: 1px solid #e0e0e0;
+}
+
+.edit-link:hover {
+    background: #e8f4fd;
+}
+
+.delete-link {
+    background: #fff;
+    color: #e74c3c;
+    border: 1px solid #e0e0e0;
+}
+
+.delete-link:hover {
+    background: #ffece8;
+}
+
+.move-link {
+    background: #fff;
+    color: #9b59b6;
+    border: 1px solid #e0e0e0;
+}
+
+.move-link:hover {
+    background: #f3e8fd;
+}
+
+.reorder-link {
+    background: #fff;
+    color: #f39c12;
+    border: 1px solid #e0e0e0;
+}
+
+.reorder-link:hover {
+    background: #fef5e7;
+}

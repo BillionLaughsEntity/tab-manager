@@ -117,11 +117,21 @@
         
         console.log('Populating destinations for tab:', tab);
         
-        // Get workbooks data - try multiple ways to access it
-        const workbooks = getWorkbooksData();
-        console.log('Workbooks data found:', workbooks);
+        // Get workbooks data from the main application
+        const workbooks = getWorkbooksFromMainApp();
+        console.log('Workbooks data retrieved:', workbooks ? workbooks.length : 0, 'workbooks');
         
         destinationsContainer.innerHTML = '';
+        
+        if (!workbooks || !Array.isArray(workbooks)) {
+            console.error('No valid workbooks data found');
+            destinationsContainer.innerHTML = `
+                <div class="no-destinations">
+                    <p>Error: Could not load workbooks data</p>
+                </div>
+            `;
+            return;
+        }
         
         // Get current environment from the tab's context
         const currentEnvironment = findEnvironmentContainingTab(tab, workbooks);
@@ -132,67 +142,56 @@
         let skippedEnvironments = 0;
         
         // Show ALL environments from ALL workbooks and profiles
-        if (workbooks && Array.isArray(workbooks)) {
-            console.log('Found workbooks:', workbooks.length);
+        workbooks.forEach(workbook => {
+            console.log('Processing workbook:', workbook.name, 'with profiles:', workbook.profiles.length);
             
-            workbooks.forEach(workbook => {
-                console.log('Processing workbook:', workbook.name, 'with profiles:', workbook.profiles.length);
+            workbook.profiles.forEach(profile => {
+                console.log('Processing profile:', profile.name, 'with environments:', (profile.environments && profile.environments.length) || 0);
                 
-                workbook.profiles.forEach(profile => {
-                    console.log('Processing profile:', profile.name, 'with environments:', profile.environments.length);
-                    
-                    if (profile.environments && Array.isArray(profile.environments)) {
-                        profile.environments.forEach(environment => {
-                            totalEnvironments++;
-                            console.log('Processing environment:', environment.name, 'ID:', environment.id);
+                if (profile.environments && Array.isArray(profile.environments)) {
+                    profile.environments.forEach(environment => {
+                        totalEnvironments++;
+                        
+                        // Skip the current environment (if found)
+                        const isCurrentEnvironment = currentEnvironment && environment.id === currentEnvironment.id;
+                        
+                        if (!isCurrentEnvironment) {
+                            hasDestinations = true;
                             
-                            // Skip the current environment (if found)
-                            const isCurrentEnvironment = currentEnvironment && environment.id === currentEnvironment.id;
+                            const destinationItem = document.createElement('div');
+                            destinationItem.className = 'destination-item';
+                            destinationItem.innerHTML = `
+                                <input type="radio" name="tab-destination" id="tab-dest-${environment.id}" value="${environment.id}">
+                                <label for="tab-dest-${environment.id}">
+                                    <div class="destination-header">
+                                        <strong>${environment.name}</strong>
+                                        <div class="destination-badges">
+                                            <span class="profile-badge">${profile.name}</span>
+                                            <span class="workbook-badge">${workbook.name}</span>
+                                        </div>
+                                    </div>
+                                    <div class="destination-info">
+                                        ${environment.tabs ? environment.tabs.length : 0} tab${environment.tabs && environment.tabs.length !== 1 ? 's' : ''}
+                                    </div>
+                                </label>
+                            `;
                             
-                            if (!isCurrentEnvironment) {
-                                hasDestinations = true;
-                                console.log('Adding environment as destination:', environment.name);
-                                
-                                const destinationItem = document.createElement('div');
-                                destinationItem.className = 'destination-item';
-                                destinationItem.innerHTML = `
-                                    <input type="radio" name="tab-destination" id="tab-dest-${environment.id}" value="${environment.id}">
-                                    <label for="tab-dest-${environment.id}">
-                                        <div class="destination-header">
-                                            <strong>${environment.name}</strong>
-                                            <div class="destination-badges">
-                                                <span class="profile-badge">${profile.name}</span>
-                                                <span class="workbook-badge">${workbook.name}</span>
-                                            </div>
-                                        </div>
-                                        <div class="destination-info">
-                                            ${environment.tabs ? environment.tabs.length : 0} tab${environment.tabs && environment.tabs.length !== 1 ? 's' : ''}
-                                        </div>
-                                    </label>
-                                `;
-                                
-                                const radio = destinationItem.querySelector('input[type="radio"]');
-                                radio.addEventListener('change', () => {
-                                    if (radio.checked) {
-                                        selectedDestinationEnvironment = environment;
-                                        updateDestinationPathDisplay(workbook, profile, environment);
-                                    }
-                                });
-                                
-                                destinationsContainer.appendChild(destinationItem);
-                            } else {
-                                skippedEnvironments++;
-                                console.log('Skipping current environment:', environment.name);
-                            }
-                        });
-                    } else {
-                        console.log('Profile has no environments array:', profile.name);
-                    }
-                });
+                            const radio = destinationItem.querySelector('input[type="radio"]');
+                            radio.addEventListener('change', () => {
+                                if (radio.checked) {
+                                    selectedDestinationEnvironment = environment;
+                                    updateDestinationPathDisplay(workbook, profile, environment);
+                                }
+                            });
+                            
+                            destinationsContainer.appendChild(destinationItem);
+                        } else {
+                            skippedEnvironments++;
+                        }
+                    });
+                }
             });
-        } else {
-            console.error('No workbooks found or workbooks is not an array!');
-        }
+        });
         
         console.log(`Total environments: ${totalEnvironments}, Skipped: ${skippedEnvironments}, Has destinations: ${hasDestinations}`);
         
@@ -202,43 +201,47 @@
             destinationsContainer.innerHTML = `
                 <div class="no-destinations">
                     <p>No other environments available for moving tabs.</p>
-                    <p><small>Debug info: Found ${totalEnvironments} total environments, skipped ${skippedEnvironments} as current environment</small></p>
-                    <p><small>Workbooks count: ${workbooks ? workbooks.length : 0}</small></p>
+                    <p><small>Found ${totalEnvironments} total environments in ${workbooks.length} workbooks</small></p>
                 </div>
             `;
         } else {
-            console.log(`Found ${hasDestinations} destination environments`);
+            console.log(`Found destinations - showing ${hasDestinations} environment options`);
         }
     }
 
-    // Helper function to get workbooks data from various sources
-    function getWorkbooksData() {
-        // Try multiple ways to access the workbooks data
-        if (window.workbooks && Array.isArray(window.workbooks)) {
-            console.log('Found workbooks in window.workbooks');
-            return window.workbooks;
-        }
+    // Get workbooks data directly from the main application context
+    function getWorkbooksFromMainApp() {
+        console.log('Attempting to get workbooks from main app...');
         
-        // Try to get it from the main app context
+        // Method 1: Try to access the main app's workbooks variable directly
         try {
-            if (typeof getCurrentWorkbook === 'function') {
-                const currentWorkbook = getCurrentWorkbook();
-                if (currentWorkbook) {
-                    console.log('Found current workbook, but need all workbooks');
-                    // We need all workbooks, not just current
-                }
+            // This assumes the main app attaches workbooks to window
+            if (window.workbooks && Array.isArray(window.workbooks)) {
+                console.log('Found workbooks on window object:', window.workbooks.length);
+                return window.workbooks;
             }
         } catch (e) {
-            console.log('Error getting current workbook:', e);
+            console.log('Error accessing window.workbooks:', e);
         }
         
-        // Try localStorage as last resort
+        // Method 2: Try to get from the main app's initialization
+        try {
+            // Look for the main app initialization and get workbooks from there
+            const mainAppScript = document.querySelector('script[src*="event-listeners.js"], script:not([src])');
+            if (mainAppScript) {
+                console.log('Found main app script');
+            }
+        } catch (e) {
+            console.log('Error finding main app script:', e);
+        }
+        
+        // Method 3: Try localStorage as last resort
         try {
             const versionedData = localStorage.getItem('tabManagerData_v18-search');
             if (versionedData) {
                 const parsed = JSON.parse(versionedData);
-                if (parsed && parsed.workbooks) {
-                    console.log('Found workbooks in localStorage');
+                if (parsed && parsed.workbooks && Array.isArray(parsed.workbooks)) {
+                    console.log('Found workbooks in localStorage:', parsed.workbooks.length);
                     return parsed.workbooks;
                 }
             }
@@ -273,7 +276,6 @@
         }
         
         console.log('Searching for environment containing tab:', tab.id, tab.name);
-        console.log('Searching in workbooks:', workbooks.length);
         
         for (const workbook of workbooks) {
             for (const profile of workbook.profiles) {
@@ -282,7 +284,7 @@
                         if (environment.tabs && Array.isArray(environment.tabs)) {
                             const foundTab = environment.tabs.find(t => t.id === tab.id);
                             if (foundTab) {
-                                console.log('Found environment containing tab:', environment.name, 'in profile:', profile.name, 'workbook:', workbook.name);
+                                console.log('Found environment containing tab:', environment.name);
                                 return environment;
                             }
                         }
@@ -291,7 +293,7 @@
             }
         }
         
-        console.log('No environment found containing tab:', tab.id, tab.name);
+        console.log('No environment found containing tab');
         return null;
     }
 

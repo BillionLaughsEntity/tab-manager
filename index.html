@@ -774,6 +774,24 @@
             }
         }
 
+        // Temporary fix to ensure workbooks is globally accessible
+        (function() {
+            // Wait for the main app to initialize
+            setTimeout(() => {
+                console.log('Making workbooks globally accessible...');
+                
+                // Ensure workbooks is available on window
+                if (typeof workbooks !== 'undefined' && !window.workbooks) {
+                    window.workbooks = workbooks;
+                    console.log('Workbooks attached to window:', window.workbooks.length);
+                }
+                
+                // Also create a global function to get workbooks
+                window.getGlobalWorkbooks = function() {
+                    return workbooks || window.workbooks || [];
+                };
+            }, 1000);
+        })();
     </script>
 
     <!-- 1. Core utilities first -->
@@ -956,5 +974,6 @@
     <script src="js/event-listeners.js"></script>
     <!-- Event listeners LAST -->
 
+    
 </body>
 </html> 

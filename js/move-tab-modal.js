@@ -66,6 +66,10 @@
     function showModal(tab) {
         const modal = document.getElementById('move-tab-modal');
         if (modal) {
+            console.log('=== MOVE TAB MODAL OPENED ===');
+            console.log('Tab to move:', tab);
+            console.log('Available workbooks:', getWorkbooks());
+            
             tabToMove = tab;
             selectedDestinationEnvironment = null;
             
@@ -83,6 +87,22 @@
         }
     }
 
+    // Helper function to safely access workbooks
+    function getWorkbooks() {
+        // Try multiple ways to access workbooks
+        if (window.workbooks) return window.workbooks;
+        if (typeof workbooks !== 'undefined') return workbooks;
+        console.error('Workbooks not found in global scope');
+        return [];
+    }
+
+    // Helper function to safely access current environment
+    function getCurrentEnvironment() {
+        if (window.currentEnvironment) return window.currentEnvironment;
+        if (typeof currentEnvironment !== 'undefined') return currentEnvironment;
+        return null;
+    }
+
     function populateDestinations(tab) {
         const destinationsContainer = document.getElementById('move-tab-destinations');
         if (!destinationsContainer) return;
@@ -91,14 +111,16 @@
         
         // Get current environment from the tab's context
         const currentEnvironment = findEnvironmentContainingTab(tab);
+        const workbooks = getWorkbooks();
+        
         console.log('Current environment:', currentEnvironment);
-        console.log('All workbooks:', window.workbooks);
+        console.log('All workbooks:', workbooks);
         
         let hasDestinations = false;
         
         // Show all environments from ALL profiles and workbooks except the current environment
-        if (window.workbooks && Array.isArray(window.workbooks)) {
-            window.workbooks.forEach(workbook => {
+        if (workbooks && Array.isArray(workbooks)) {
+            workbooks.forEach(workbook => {
                 workbook.profiles.forEach(profile => {
                     profile.environments.forEach(environment => {
                         // Skip the current environment (if found)
@@ -152,17 +174,19 @@
 
     // Helper function to find which environment contains the tab
     function findEnvironmentContainingTab(tab) {
-        if (!window.workbooks || !tab) {
-            console.log('No workbooks or tab provided');
+        const workbooks = getWorkbooks();
+        
+        if (!workbooks || !tab || !Array.isArray(workbooks)) {
+            console.log('No workbooks or tab provided:', { workbooks, tab });
             return null;
         }
         
         console.log('Looking for environment containing tab:', tab.name, tab.id);
         
-        for (const workbook of window.workbooks) {
+        for (const workbook of workbooks) {
             for (const profile of workbook.profiles) {
                 for (const environment of profile.environments) {
-                    if (environment.tabs && environment.tabs.some(t => t.id === tab.id)) {
+                    if (environment.tabs && environment.tabs.some(t => t && t.id === tab.id)) {
                         console.log('Found environment:', environment.name);
                         return environment;
                     }

@@ -1,5 +1,3 @@
-// js/moveLink.js - UPDATED VERSION (core function only)
-
 // Fix moveLink to properly move (not duplicate) the link
 function moveLink(link, destinationTab) {
     console.log('Moving link:', link.title, 'to tab:', destinationTab.name);
@@ -32,5 +30,23 @@ function moveLink(link, destinationTab) {
     alert(`Link "${movedLink.title}" moved successfully to "${destinationTab.name}"`);
 }
 
-// REMOVED: All event listener code from this file
-// The event listeners will be handled by move-link-modal.js
+// Also update the save move link button handler
+document.getElementById('save-move-link-btn').addEventListener('click', () => {
+    if (window.bulkLinksToMove) {
+        // Bulk move operation
+        if (selectedDestinationTab) {
+            saveBulkMoveLinks(selectedDestinationTab);
+            moveLinkModal.style.display = 'none';
+        } else {
+            alert('Please select a destination tab');
+        }
+    } else {
+        // Single move operation
+        if (linkToMove && selectedDestinationTab) {
+            moveLink(linkToMove, selectedDestinationTab);
+            moveLinkModal.style.display = 'none';
+        } else {
+            alert('Please select a destination tab');
+        }
+    }
+});

@@ -256,12 +256,28 @@ function setupEventListeners() {
         tabModal.style.display = 'none';
     });
            
-               
+    document.getElementById('close-move-link-modal').addEventListener('click', () => {
+        moveLinkModal.style.display = 'none';
+    });
+           
     document.getElementById('close-profile-modal').addEventListener('click', () => {
         profileModal.style.display = 'none';
     });
     
-    
+    // Update the save move button handler
+    document.getElementById('save-move-link-btn').addEventListener('click', () => {
+        if (window.bulkLinksToMove) {
+            // Bulk move operation
+            saveBulkMoveLinks();
+        } else {
+            // Single move operation (existing code)
+            if (linkToMove && selectedDestinationTab) {
+                moveLink(linkToMove, selectedDestinationTab);
+                moveLinkModal.style.display = 'none';
+            }
+        }
+    });
+
    // Reorder links button
     document.getElementById('reorder-links-btn').addEventListener('click', function() {
         if (!currentTab) {
@@ -488,24 +504,26 @@ function setupEventListeners() {
     document.getElementById('search-link-url').addEventListener('input', updateSearchLinkPreview);
 
 
-    // Bulk move button - UPDATE THIS SECTION
-    const bulkMoveBtn = document.getElementById('bulk-move-btn');
-    if (bulkMoveBtn) {
-        bulkMoveBtn.addEventListener('click', function() {
-            // Use the modular approach for bulk move
-            if (typeof openMoveLinkModal === 'function') {
-                // Set bulk mode flag and open modal
-                window.bulkLinksToMove = Array.from(selectedLinks);
-                openMoveLinkModal(null); // Pass null since it's bulk move
-            } else {
-                // Fallback to old approach
-                moveSelectedLinks();
-            }
-        });
-    }
-
+    document.getElementById('bulk-move-btn').addEventListener('click', moveSelectedLinks);
     document.getElementById('bulk-delete-btn').addEventListener('click', deleteSelectedLinks);
     document.getElementById('bulk-cancel-btn').addEventListener('click', toggleSelectionMode);
+
+    // Modify the existing move link save handler to handle bulk operations
+    document.getElementById('save-move-link-btn').addEventListener('click', () => {
+        if (window.bulkLinksToMove) {
+            // Bulk move operation
+            if (selectedDestinationTab) {
+                saveBulkMoveLinks(selectedDestinationTab);
+                moveLinkModal.style.display = 'none';
+            }
+        } else {
+            // Single move operation (existing code)
+            if (linkToMove && selectedDestinationTab) {
+                moveLink(linkToMove, selectedDestinationTab);
+                moveLinkModal.style.display = 'none';
+            }
+        }
+    });
 
     // Add keyboard shortcut for selection mode (optional)
     // document.addEventListener('keydown', (e) => {

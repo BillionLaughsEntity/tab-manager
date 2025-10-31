@@ -236,8 +236,17 @@
     }
 
     function saveMove() {
-        if (linkToMove && selectedDestinationTab) {
-            // Check if moveLink function exists
+        if (window.bulkLinksToMove && selectedDestinationTab) {
+            // Bulk move operation
+            if (typeof window.saveBulkMoveLinks === 'function') {
+                window.saveBulkMoveLinks(selectedDestinationTab);
+                window.bulkLinksToMove = null; // Clear bulk mode
+                hideModal();
+            } else {
+                console.error('saveBulkMoveLinks function not found');
+            }
+        } else if (linkToMove && selectedDestinationTab) {
+            // Single move operation
             if (typeof window.moveLink === 'function') {
                 window.moveLink(linkToMove, selectedDestinationTab);
                 hideModal();

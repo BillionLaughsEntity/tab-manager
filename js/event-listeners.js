@@ -256,37 +256,12 @@ function setupEventListeners() {
         tabModal.style.display = 'none';
     });
            
-    // Close move link modal - ADD NULL CHECK
-    const closeMoveLinkBtn = document.getElementById('close-move-link-modal');
-    if (closeMoveLinkBtn) {
-        closeMoveLinkBtn.addEventListener('click', () => {
-            moveLinkModal.style.display = 'none';
-        });
-    }
-           
+               
     document.getElementById('close-profile-modal').addEventListener('click', () => {
         profileModal.style.display = 'none';
     });
     
-    // Update the save move button handler - ADD NULL CHECK
-    const saveMoveLinkBtn = document.getElementById('save-move-link-btn');
-    if (saveMoveLinkBtn) {
-        saveMoveLinkBtn.addEventListener('click', () => {
-            if (window.bulkLinksToMove) {
-                // Bulk move operation
-                saveBulkMoveLinks();
-            } else {
-                // Single move operation (existing code)
-                if (linkToMove && selectedDestinationTab) {
-                    moveLink(linkToMove, selectedDestinationTab);
-                    moveLinkModal.style.display = 'none';
-                }
-            }
-        });
-    } else {
-        console.warn('save-move-link-btn not found, might be handled by modular modal');
-    }
-
+    
    // Reorder links button
     document.getElementById('reorder-links-btn').addEventListener('click', function() {
         if (!currentTab) {
@@ -513,10 +488,20 @@ function setupEventListeners() {
     document.getElementById('search-link-url').addEventListener('input', updateSearchLinkPreview);
 
 
-    // Bulk move button - ADD NULL CHECK  
+    // Bulk move button - UPDATE THIS SECTION
     const bulkMoveBtn = document.getElementById('bulk-move-btn');
     if (bulkMoveBtn) {
-        bulkMoveBtn.addEventListener('click', moveSelectedLinks);
+        bulkMoveBtn.addEventListener('click', function() {
+            // Use the modular approach for bulk move
+            if (typeof openMoveLinkModal === 'function') {
+                // Set bulk mode flag and open modal
+                window.bulkLinksToMove = Array.from(selectedLinks);
+                openMoveLinkModal(null); // Pass null since it's bulk move
+            } else {
+                // Fallback to old approach
+                moveSelectedLinks();
+            }
+        });
     }
 
     document.getElementById('bulk-delete-btn').addEventListener('click', deleteSelectedLinks);

@@ -31,12 +31,18 @@
                     <span class="close-modal">&times;</span>
                 </div>
                 <p>Select a destination environment for this tab:</p>
+                
+                <!-- Destination path display -->
+                <div class="selected-destination-path" id="move-tab-destination-path" style="display: none;">
+                    <!-- Selected path will be shown here -->
+                </div>
+                
                 <div id="move-tab-destinations">
                     <!-- Destinations will be populated here -->
                 </div>
                 <div class="modal-actions">
                     <button class="modal-btn modal-btn-secondary" id="close-move-tab-modal">Cancel</button>
-                    <button class="modal-btn modal-btn-primary" id="save-move-tab-btn">Move</button>
+                    <button class="modal-btn modal-btn-primary" id="save-move-tab-btn">Move Tab</button>
                 </div>
             </div>
         `;
@@ -80,6 +86,13 @@
             modal.style.display = 'none';
             tabToMove = null;
             selectedDestinationEnvironment = null;
+            
+            // Clear destination path
+            const pathElement = document.getElementById('move-tab-destination-path');
+            if (pathElement) {
+                pathElement.style.display = 'none';
+                pathElement.innerHTML = '';
+            }
         }
     }
 
@@ -94,7 +107,7 @@
         
         let hasDestinations = false;
         
-        // Show all environments from ALL profiles and workbooks except the current environment
+        // Show ALL environments from ALL workbooks and profiles
         if (window.workbooks && Array.isArray(window.workbooks)) {
             window.workbooks.forEach(workbook => {
                 workbook.profiles.forEach(profile => {
@@ -125,6 +138,7 @@
                             radio.addEventListener('change', () => {
                                 if (radio.checked) {
                                     selectedDestinationEnvironment = environment;
+                                    updateDestinationPathDisplay(workbook, profile, environment);
                                 }
                             });
                             
@@ -139,6 +153,21 @@
         if (!hasDestinations) {
             destinationsContainer.innerHTML = '<p class="no-destinations">No other environments available for moving tabs.</p>';
         }
+    }
+
+    function updateDestinationPathDisplay(workbook, profile, environment) {
+        const pathElement = document.getElementById('move-tab-destination-path');
+        if (!pathElement) return;
+        
+        pathElement.innerHTML = `
+            <strong>Destination:</strong> 
+            <span class="path-workbook">${workbook.name}</span> 
+            <i class="fas fa-chevron-right"></i> 
+            <span class="path-profile">${profile.name}</span> 
+            <i class="fas fa-chevron-right"></i> 
+            <span class="path-environment">${environment.name}</span>
+        `;
+        pathElement.style.display = 'block';
     }
 
     // Helper function to find which environment contains the tab

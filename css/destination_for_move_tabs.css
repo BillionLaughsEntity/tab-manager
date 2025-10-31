@@ -20,3 +20,92 @@
     font-size: 11px;
     font-weight: normal;
 }
+
+/* Add to your existing CSS */
+.selected-destination-path {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 4px;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.selected-destination-path .path-workbook {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+.selected-destination-path .path-profile {
+    color: #3498db;
+    font-weight: bold;
+}
+
+.selected-destination-path .path-environment {
+    color: #27ae60;
+    font-weight: bold;
+}
+
+.selected-destination-path i {
+    color: #6c757d;
+    margin: 0 5px;
+    font-size: 12px;
+}
+
+.destination-item {
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    padding: 12px;
+    transition: all 0.2s ease;
+}
+
+.destination-item:hover {
+    background-color: #f8f9fa;
+    border-color: #007bff;
+}
+
+.destination-item input[type="radio"] {
+    margin-right: 10px;
+}
+
+.destination-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 5px;
+}
+
+.destination-badges {
+    display: flex;
+    gap: 5px;
+}
+
+.profile-badge, .workbook-badge {
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: #6c757d;
+    color: white;
+}
+
+.profile-badge {
+    background: #3498db;
+}
+
+.workbook-badge {
+    background: #e74c3c;
+}
+
+.destination-info {
+    font-size: 12px;
+    color: #6c757d;
+    margin-top: 5px;
+}
+
+.no-destinations {
+    text-align: center;
+    color: #6c757d;
+    font-style: italic;
+    padding: 20px;
+}

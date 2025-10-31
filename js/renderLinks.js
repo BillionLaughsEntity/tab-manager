@@ -138,24 +138,34 @@ function renderListView(links, container) {
     });
 }
 
-// Helper function to render table view
+// Helper function to render table view - FIXED VERSION
 function renderTableView(links, container) {
     container.className = 'links-table';
     
     const table = document.createElement('table');
-    table.innerHTML = `
-        <thead>
-            <tr>
-                ${isSelectionMode ? '<th></th>' : ''}
-                <th>Title</th>
-                <th>URL</th>
-                <th>Type</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            ${links.map((link, index) => createTableViewLink(link, index)).join('')}
-        </tbody>
+    const thead = document.createElement('thead');
+    const tbody = document.createElement('tbody');
+    
+    // Create table header
+    thead.innerHTML = `
+        <tr>
+            ${isSelectionMode ? '<th></th>' : ''}
+            <th>Title</th>
+            <th>URL</th>
+            <th>Type</th>
+            <th>Actions</th>
+        </tr>
     `;
+    
+    // Create table rows
+    links.forEach((link, index) => {
+        const tableRow = createTableViewLink(link, index);
+        if (tableRow) {
+            tbody.appendChild(tableRow);
+        }
+    });
+    
+    table.appendChild(thead);
+    table.appendChild(tbody);
     container.appendChild(table);
 }

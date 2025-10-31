@@ -1,82 +1,228 @@
-/* Grid view specific styles */
+/* Fix Grid View Layout */
 .links-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 20px;
+    padding: 20px;
     width: 100%;
+    box-sizing: border-box;
 }
 
-/* Make sure grid items display properly */
-.link-card {
+.grid-link-card {
     background: white;
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-    transition: transform 0.2s ease;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
-    min-height: 140px;
+    height: auto;
+    min-height: 120px;
+    position: relative;
 }
 
+.grid-link-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
 
-/* Checkbox styles for all view types */
-.link-checkbox {
+/* List View Styles */
+.links-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.list-link-item {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 12px 16px;
+    transition: all 0.2s ease;
+}
+
+.list-link-item:hover {
+    background: #f8f9fa;
+    border-color: #007bff;
+}
+
+.list-link-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.list-link-main {
+    flex: 1;
+    min-width: 0;
+}
+
+.list-link-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.list-link-icon {
+    font-size: 14px;
+    width: 16px;
+    text-align: center;
+}
+
+.list-link-icon.regular-link { color: #3498db; }
+.list-link-icon.multi-link { color: #9b59b6; }
+.list-link-icon.search-link { color: #e67e22; }
+.list-link-icon.email-link { color: #e74c3c; }
+
+.list-link-title {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 14px;
+}
+
+.list-link-type {
+    background: #ecf0f1;
+    color: #7f8c8d;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.list-link-url {
+    margin-top: 4px;
+}
+
+.list-link-url-text {
+    color: #7f8c8d;
+    font-size: 12px;
+    text-decoration: none;
+    word-break: break-all;
+}
+
+.list-link-url-text:hover {
+    color: #3498db;
+    text-decoration: underline;
+}
+
+.list-link-actions {
+    display: flex;
+    gap: 4px;
+}
+
+.list-action-btn {
+    background: none;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 6px 8px;
     cursor: pointer;
-    width: 18px;
-    height: 18px;
+    color: #7f8c8d;
+    transition: all 0.2s ease;
+    font-size: 12px;
+}
+
+.list-action-btn:hover {
+    background: #f8f9fa;
+    color: #2c3e50;
+    border-color: #bdc3c7;
+}
+
+/* Table View Styles */
+.links-table {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.links-table table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.links-table th {
+    background: #34495e;
+    color: white;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.links-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #ecf0f1;
+    font-size: 13px;
+}
+
+.table-link-row:hover {
+    background: #f8f9fa;
+}
+
+.link-title-cell {
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.link-url-cell {
+    max-width: 300px;
+}
+
+.table-link-url {
+    color: #3498db;
+    text-decoration: none;
+    word-break: break-all;
+}
+
+.table-link-url:hover {
+    text-decoration: underline;
+}
+
+.link-type-badge {
+    background: #ecf0f1;
+    color: #7f8c8d;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.link-actions-cell {
+    white-space: nowrap;
+}
+
+.table-action-btn {
+    background: none;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 6px 8px;
+    cursor: pointer;
+    color: #7f8c8d;
+    transition: all 0.2s ease;
+    font-size: 12px;
+    margin-right: 4px;
+}
+
+.table-action-btn:hover {
+    background: #f8f9fa;
+    color: #2c3e50;
+    border-color: #bdc3c7;
+}
+
+.selection-cell {
+    width: 40px;
+    text-align: center;
+}
+
+.link-checkbox {
     margin: 0;
-}
-
-/* Grid view checkbox positioning */
-.link-card .link-checkbox {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 2;
-    transform: translateY(-50%);
-    right: 10px;
-}
-
-/* List view checkbox positioning */
-.link-list-item .link-checkbox {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: -5px; /* Отступ от правого края */
-}
-
-.links-table .link-checkbox {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 0;
-    right: 0;
-    margin: auto;
-}
-
-/* Для карточек */
-.links-table .link-card .link-checkbox {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 10px;
-}
-
-/* Selected state for all view types */
-.link-card.selected,
-.link-list-item.selected,
-.table-row.selected {
-    background-color: rgba(52, 152, 219, 0.1) !important;
-    border: 2px solid #3498db;
-}
-
-/* Ensure list items and table rows have proper positioning for checkboxes */
-.link-list-item {
-    position: relative;
-    width: 1400px;
-}
-
-.table-row {
-    position: relative;
-    width: 30px;
 }

@@ -256,27 +256,36 @@ function setupEventListeners() {
         tabModal.style.display = 'none';
     });
            
-    document.getElementById('close-move-link-modal').addEventListener('click', () => {
-        moveLinkModal.style.display = 'none';
-    });
+    // Close move link modal - ADD NULL CHECK
+    const closeMoveLinkBtn = document.getElementById('close-move-link-modal');
+    if (closeMoveLinkBtn) {
+        closeMoveLinkBtn.addEventListener('click', () => {
+            moveLinkModal.style.display = 'none';
+        });
+    }
            
     document.getElementById('close-profile-modal').addEventListener('click', () => {
         profileModal.style.display = 'none';
     });
     
-    // Update the save move button handler
-    document.getElementById('save-move-link-btn').addEventListener('click', () => {
-        if (window.bulkLinksToMove) {
-            // Bulk move operation
-            saveBulkMoveLinks();
-        } else {
-            // Single move operation (existing code)
-            if (linkToMove && selectedDestinationTab) {
-                moveLink(linkToMove, selectedDestinationTab);
-                moveLinkModal.style.display = 'none';
+    // Update the save move button handler - ADD NULL CHECK
+    const saveMoveLinkBtn = document.getElementById('save-move-link-btn');
+    if (saveMoveLinkBtn) {
+        saveMoveLinkBtn.addEventListener('click', () => {
+            if (window.bulkLinksToMove) {
+                // Bulk move operation
+                saveBulkMoveLinks();
+            } else {
+                // Single move operation (existing code)
+                if (linkToMove && selectedDestinationTab) {
+                    moveLink(linkToMove, selectedDestinationTab);
+                    moveLinkModal.style.display = 'none';
+                }
             }
-        }
-    });
+        });
+    } else {
+        console.warn('save-move-link-btn not found, might be handled by modular modal');
+    }
 
    // Reorder links button
     document.getElementById('reorder-links-btn').addEventListener('click', function() {
@@ -504,26 +513,34 @@ function setupEventListeners() {
     document.getElementById('search-link-url').addEventListener('input', updateSearchLinkPreview);
 
 
-    document.getElementById('bulk-move-btn').addEventListener('click', moveSelectedLinks);
+    // Bulk move button - ADD NULL CHECK  
+    const bulkMoveBtn = document.getElementById('bulk-move-btn');
+    if (bulkMoveBtn) {
+        bulkMoveBtn.addEventListener('click', moveSelectedLinks);
+    }
+
     document.getElementById('bulk-delete-btn').addEventListener('click', deleteSelectedLinks);
     document.getElementById('bulk-cancel-btn').addEventListener('click', toggleSelectionMode);
 
-    // Modify the existing move link save handler to handle bulk operations
-    document.getElementById('save-move-link-btn').addEventListener('click', () => {
-        if (window.bulkLinksToMove) {
-            // Bulk move operation
-            if (selectedDestinationTab) {
-                saveBulkMoveLinks(selectedDestinationTab);
-                moveLinkModal.style.display = 'none';
+    // Modify the existing move link save handler to handle bulk operations - ADD NULL CHECK
+    const saveMoveLinkBtn2 = document.getElementById('save-move-link-btn');
+    if (saveMoveLinkBtn2) {
+        saveMoveLinkBtn2.addEventListener('click', () => {
+            if (window.bulkLinksToMove) {
+                // Bulk move operation
+                if (selectedDestinationTab) {
+                    saveBulkMoveLinks(selectedDestinationTab);
+                    moveLinkModal.style.display = 'none';
+                }
+            } else {
+                // Single move operation (existing code)
+                if (linkToMove && selectedDestinationTab) {
+                    moveLink(linkToMove, selectedDestinationTab);
+                    moveLinkModal.style.display = 'none';
+                }
             }
-        } else {
-            // Single move operation (existing code)
-            if (linkToMove && selectedDestinationTab) {
-                moveLink(linkToMove, selectedDestinationTab);
-                moveLinkModal.style.display = 'none';
-            }
-        }
-    });
+        });
+    }
 
     // Add keyboard shortcut for selection mode (optional)
     // document.addEventListener('keydown', (e) => {

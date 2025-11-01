@@ -32,6 +32,9 @@ function renderProfileTabs() {
         profileTab.innerHTML = `
             <span class="profile-tab-name">${profile.name}</span>
             <div class="profile-tab-actions">
+                <button class="profile-tab-action-btn profile-move-btn" title="Move Profile">
+                    <i class="fas fa-arrows-alt"></i>
+                </button>
                 <button class="profile-tab-action-btn profile-rename-btn" title="Rename Profile">
                     <i class="fas fa-edit"></i>
                 </button>
@@ -47,6 +50,15 @@ function renderProfileTabs() {
         profileTab.addEventListener('click', (e) => {
             if (!e.target.closest('.profile-tab-action-btn')) {
                 switchProfile(profile.id);
+            }
+        });
+        
+        // Add move event
+        const moveBtn = profileTab.querySelector('.profile-move-btn');
+        moveBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (typeof openMoveProfileModal === 'function') {
+                openMoveProfileModal(profile);
             }
         });
         

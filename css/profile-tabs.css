@@ -166,6 +166,11 @@
     color: #ff4800;
 }
 
+/* Move button hover effect */
+.profile-move-btn:hover {
+    background-color: #3498db !important;
+}
+
 /* Add profile tab button */
 .add-profile-tab {
     background: var(--item-bg);

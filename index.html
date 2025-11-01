@@ -759,6 +759,9 @@
             loadWorkbooks();
             loadTrashBin();
 
+            // Ensure environments are collapsed by default
+            ensureEnvironmentsCollapsed();
+
             debugCurrentState();
             const duplicates = findDuplicateElements();
             

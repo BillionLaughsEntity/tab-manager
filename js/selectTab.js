@@ -1,5 +1,10 @@
 // Select a tab and display its links
 function selectTab(environment, tab) {
+    // Clear any existing selection mode first
+    if (isSelectionMode) {
+        toggleSelectionMode();
+    }
+    
     currentEnvironment = environment;
     currentTab = tab;
     
@@ -11,8 +16,6 @@ function selectTab(environment, tab) {
     reorderLinksBtn.style.display = 'block';
     document.getElementById('add-multi-link-card-btn').style.display = 'block';
     document.getElementById('create-search-link-btn').style.display = 'block';
-
-        // Add this line to show the selection button
     document.getElementById('toggle-selection-mode-btn').style.display = 'block';
     
     // Highlight the selected tab
@@ -26,6 +29,10 @@ function selectTab(environment, tab) {
         }
     });
     
-    // Render the links
+    // Clear and render the links
     renderLinks(tab);
+    
+    // Update counters
+    updateAllCounters();
+    saveWorkbooks();
 }

@@ -1,31 +1,56 @@
-// Switch to a different workbook
+// In switchWorkbook.js - ensure this function is accessible globally
 function switchWorkbook(workbookId) {
     currentWorkbookId = workbookId;
     currentProfileId = null;
     currentEnvironment = null;
     currentTab = null;
     
-    // Update UI
-    renderProfileTabs(); // This now shows only current workbook's profiles
+    // Clear the links display
+    clearLinksDisplay();
+    
+    renderProfileTabs();
     renderEnvironments();
-    noTabsMessage.style.display = 'block';
-    linksGrid.style.display = 'none';
-    addLinkSection.style.display = 'none';
-    reorderLinksBtn.style.display = 'none';
-    currentTabName.textContent = 'Select a tab to get started';
-    
-    // Update active workbook tab
-    document.querySelectorAll('.workbook-tab').forEach(tab => {
-        tab.classList.remove('active');
-        if (tab.dataset.workbookId === workbookId) {
-            tab.classList.add('active');
-        }
-    });
-    
-    // Set the current profile to the first one in the NEW workbook
-    const currentWorkbook = getCurrentWorkbook();
-    if (currentWorkbook.profiles.length > 0) {
-        currentProfileId = currentWorkbook.profiles[0].id;
-        renderEnvironments();
-    }
+    updateAllCounters();
+    saveWorkbooks();
 }
+
+// Make this function globally accessible
+window.clearLinksDisplay = function() {
+    const linksGrid = document.getElementById('links-grid');
+    const noTabsMessage = document.getElementById('no-tabs-message');
+    const currentTabName = document.getElementById('current-tab-name');
+    const addLinkSection = document.getElementById('add-link-section');
+    
+    if (linksGrid) {
+        linksGrid.innerHTML = '';
+        linksGrid.style.display = 'none';
+    }
+    
+    if (noTabsMessage) {
+        noTabsMessage.style.display = 'block';
+    }
+    
+    if (currentTabName) {
+        currentTabName.textContent = 'Select a tab to get started';
+    }
+    
+    if (addLinkSection) {
+        addLinkSection.style.display = 'none';
+    }
+    
+    // Also hide any selection mode and bulk actions
+    if (isSelectionMode && typeof toggleSelectionMode === 'function') {
+        toggleSelectionMode();
+    }
+    
+    // Hide bulk action bar if visible
+    const bulkActionBar = document.getElementById('bulk-action-bar');
+    if (bulkActionBar) {
+        bulkActionBar.style.display = 'none';
+    }
+    
+    // Clear any selected links
+    if (selectedLinks) {
+        selectedLinks.clear();
+    }
+};

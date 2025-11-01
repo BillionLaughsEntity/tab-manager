@@ -1,21 +1,17 @@
 /* ===== PROFILE TABS COMPONENTS ===== */
 /* Profile tabs container with horizontal scrolling */
 .profile-tabs-container {
-    background: #2c3e50;
-    padding: 8px 15px;
     display: flex;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    overflow-x: auto;
-    overflow-y: hidden;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
-    min-height: 48px;
     align-items: center;
     gap: 8px;
-    position: relative;
+    padding: 8px 12px;
+    background: var(--panel-bg);
+    border-bottom: 1px solid var(--border-color);
+    overflow-x: auto;
+    overflow-y: hidden;
     white-space: nowrap;
-    scroll-behavior: smooth;
-    z-index: 150;
+    min-height: 50px;
+    scrollbar-width: thin;
 }
 
 /* Profile tabs scrollbar styling */
@@ -39,26 +35,33 @@
 
 /* Individual profile tab */
 .profile-tab {
-    padding: 4px 8px;
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    border: none;
-    border-radius: 8px 8px 0 0;
-    margin-right: 5px;
-    cursor: pointer;
-    white-space: nowrap;
-    position: relative;
     display: flex;
-    flex-direction: row;
     align-items: center;
-    height: 32px;
-    border-left: 4px solid var(--profile-color, #3498db);
+    gap: 8px;
+    padding: 6px 12px;
+    background: var(--item-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
     flex-shrink: 0;
+    max-width: 200px;
+    min-width: 0;
+    position: relative;
 }
 
 .profile-tab.active {
-    background: #2c3e50;
-    font-weight: 600;
+    background: var(--active-color);
+    border-color: var(--primary-color);
+}
+
+/* Profile color indicator - fixed size and positioning */
+.profile-color-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 /* Profile tab content layout */
@@ -88,26 +91,44 @@
     border-color: rgba(255, 255, 255, 0.7);
 }
 
-/* Profile tab name */
+/* Profile tab name with text overflow */
 .profile-tab-name {
-    flex: 1;
-    text-align: left;
+    font-weight: 500;
+    color: var(--text-color);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    max-width: calc(100% - 60px);
-    margin-top: 0;
-    font-size: 0.9rem;
+    flex: 1;
+    min-width: 0;
 }
 
 /* Profile tab actions */
 .profile-tab-actions {
     display: flex;
-    justify-content: flex-end;
-    width: auto;
-    margin-top: 0;
-    padding: 0 2px;
+    gap: 2px;
+    flex-shrink: 0;
     margin-left: auto;
+}
+
+.profile-tab:hover .profile-tab-action-btn {
+    opacity: 1;
+}
+
+.profile-tab-action-btn:hover {
+    background-color: var(--hover-color);
+    color: var(--text-color);
+}
+
+.profile-tab-action-btn {
+    background: none;
+    border: none;
+    color: var(--text-light);
+    cursor: pointer;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-size: 10px;
+    transition: all 0.2s ease;
+    opacity: 0;
 }
 
 .profile-tab-action {
@@ -148,16 +169,20 @@
 
 /* Add profile tab button */
 .add-profile-tab {
-    padding: 6px 8px;
-    background: transparent;
-    color: #3498db;
-    border: none;
+    background: var(--item-bg);
+    border: 1px dashed var(--border-color);
+    color: var(--text-light);
     cursor: pointer;
-    font-size: 1rem;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.add-profile-tab:hover {
+    background: var(--hover-color);
+    border-color: var(--primary-color);
+    color: var(--text-color);
 }
 
 /* Hide old profile selector */

@@ -98,10 +98,13 @@
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease;
+    opacity: 0;
 }
 
 .environment.expanded .environment-content {
-    max-height: 1000px; /* Fixed maximum height */
+    max-height: 1000px;
+    opacity: 1;
+    transition: max-height 0.4s ease, opacity 0.3s ease 0.1s;
 }
 
 /* Chevron rotation with smooth animation */
@@ -123,7 +126,12 @@
 /* Rotate chevron icon */
 .environment-header .fa-chevron-down {
     transition: transform 0.3s ease;
+    transform: rotate(-90deg);
+    font-size: 12px;
+    width: 16px;
+    text-align: center;
 }
+
 
 .environment.expanded .environment-header .fa-chevron-down {
     transform: rotate(0deg);
@@ -131,6 +139,17 @@
 
 .environment:not(.expanded) .environment-header .fa-chevron-down {
     transform: rotate(-90deg);
+}
+
+/* Environment header hover effects */
+.environment-header {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    padding: 10px 12px;
+}
+
+.environment-header:hover {
+    background-color: rgba(255, 255, 255, 0.05);
 }
 
 /* Add environment button */

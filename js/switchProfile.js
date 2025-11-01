@@ -4,16 +4,11 @@ function switchProfile(profileId) {
     currentEnvironment = null;
     currentTab = null;
     
+    // Clear the links display using the centralized function
+    clearLinksDisplay();
+    
     // Update UI
     renderEnvironments();
-    noTabsMessage.style.display = 'block';
-    linksGrid.style.display = 'none';
-    addLinkSection.style.display = 'none';
-    reorderLinksBtn.style.display = 'none';
-    document.getElementById('add-multi-link-card-btn').style.display = 'none';
-    document.getElementById('create-search-link-btn').style.display = 'none';
-    document.getElementById('toggle-selection-mode-btn').style.display = 'none';
-    currentTabName.textContent = 'Select a tab to get started';
     
     // Update active profile tab
     document.querySelectorAll('.profile-tab').forEach(tab => {
@@ -22,4 +17,8 @@ function switchProfile(profileId) {
             tab.classList.add('active');
         }
     });
+    
+    // Update counters
+    updateAllCounters();
+    saveWorkbooks();
 }

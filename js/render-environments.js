@@ -8,11 +8,19 @@ function renderEnvironments() {
         return;
     }
     
+    // Ensure all environments have collapsed property and default to true
+    currentProfile.environments.forEach(environment => {
+        if (environment.collapsed === undefined) {
+            environment.collapsed = true;
+        }
+    });
+    
     currentProfile.environments.forEach(environment => {
         const environmentElement = document.createElement('div');
         environmentElement.className = 'environment';
+        environmentElement.dataset.environmentId = environment.id;
         
-        // Use the collapsed property instead of comparing to currentEnvironment
+        // Only expand if not collapsed
         if (!environment.collapsed) {
             environmentElement.classList.add('expanded');
         }
@@ -54,21 +62,35 @@ function renderEnvironments() {
             openReorderTabsModal(environment);
         });
         
-        // Add event listeners for environment header - UPDATED LOGIC
+        // Updated: Single expand behavior with smooth transitions
         const environmentHeader = environmentElement.querySelector('.environment-header');
         environmentHeader.addEventListener('click', () => {
-            // Toggle the collapsed state
-            environment.collapsed = !environment.collapsed;
+            const wasExpanded = !environment.collapsed;
             
-            // Update UI
-            if (environment.collapsed) {
-                environmentElement.classList.remove('expanded');
+            if (!wasExpanded) {
+                // Close all other environments first with smooth transition
+                currentProfile.environments.forEach(env => {
+                    if (env.id !== environment.id && !env.collapsed) {
+                        env.collapsed = true;
+                        const otherEnvElement = document.querySelector(`.environment[data-environment-id="${env.id}"]`);
+                        if (otherEnvElement) {
+                            otherEnvElement.classList.remove('expanded');
+                        }
+                    }
+                });
+                
+                // Small delay before expanding the clicked one
+                setTimeout(() => {
+                    environment.collapsed = false;
+                    environmentElement.classList.add('expanded');
+                    saveWorkbooks();
+                }, 50);
             } else {
-                environmentElement.classList.add('expanded');
+                // Collapse the currently expanded one
+                environment.collapsed = true;
+                environmentElement.classList.remove('expanded');
+                saveWorkbooks();
             }
-            
-            // Save the state
-            saveWorkbooks();
         });
         
         // Add event listeners for environment actions
@@ -98,4 +120,7 @@ function renderEnvironments() {
         // Render tabs for this environment
         renderTabs(environment);
     });
+    
+    // Save the initial state
+    saveWorkbooks();
 }

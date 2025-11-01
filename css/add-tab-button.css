@@ -1,0 +1,45 @@
+/* Add Tab Button Styling - matching view type dropdown */
+.add-tab-container {
+    position: relative;
+    display: inline-block;
+}
+
+.add-tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: var(--item-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.add-tab:hover {
+    background: var(--hover-color);
+    border-color: var(--primary-color);
+    transform: translateY(-1px);
+}
+
+.add-tab .plus-icon {
+    font-size: 12px;
+    color: var(--primary-color);
+}
+
+/* Ensure it matches the view-type-dropdown style */
+.view-type-dropdown,
+.add-tab-container {
+    margin-right: 8px;
+}
+
+.tab-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}

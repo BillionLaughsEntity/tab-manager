@@ -144,6 +144,10 @@
     <link rel="stylesheet" href="css/selection-components.css">
     <!-- Link selection checkboxes; Selection instructions -->
 
+    <!-- Add Tab Button Styling - matching view type dropdown -->
+    <link rel="stylesheet" href="css/add-tab-button.css">
+    <!-- Add Tab Button Styling - matching view type dropdown -->
+
 
 
 
@@ -152,7 +156,7 @@
     <!-- Header -->
     <div class="header">
         <div class="logo">
-            <img src="images/28pxX30px.png" alt="Tab Manager" class="logo-image">
+            <img src="images/50pxX55px.png" alt="Tab Manager" class="logo-image">
             <span>Tab Manager</span>
                 <div class="counters">
                 <span class="counter-item" id="workbooks-counter">0 Workbooks</span>
@@ -255,11 +259,7 @@
             <div class="environments-container" id="environments-container">
                 <!-- Environments will be added here dynamically -->
             </div>
-            <div class="add-tab-container">
-                <button class="add-tab" id="add-tab-btn">
-                    <i class="fas fa-plus plus-icon"></i> New Tab
-                </button>
-            </div>
+            
         </div>
         
         
@@ -288,6 +288,13 @@
                                 <span>Table View</span>
                             </button>
                         </div>
+                    </div>
+
+                    <!-- MOVED: Add Tab Button -->
+                    <div class="add-tab-container">
+                        <button class="add-tab" id="add-tab-btn">
+                            <i class="fas fa-plus plus-icon"></i> New Tab
+                        </button>
                     </div>
                     <button id="toggle-selection-mode-btn" style="display: none;">
                         <i class="fas fa-check-square"></i>Select Links
@@ -790,6 +797,8 @@
                 renderProfileTabs();
                 renderEnvironments();
             }
+
+            setupSearchFunctionality();
             
             // Initialize counters
             if (typeof updateAllCounters === 'function') {

@@ -161,3 +161,35 @@
     border-color: var(--primary-color);
     color: var(--text-color);
 }
+
+/* Enable horizontal scrolling with mouse wheel */
+.profile-tabs-container,
+.workbook-tabs-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Enable horizontal wheel scrolling */
+.profile-tabs-container::-webkit-scrollbar,
+.workbook-tabs-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.profile-tabs-container::-webkit-scrollbar-track,
+.workbook-tabs-container::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.profile-tabs-container::-webkit-scrollbar-thumb,
+.workbook-tabs-container::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+.profile-tabs-container::-webkit-scrollbar-thumb:hover,
+.workbook-tabs-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}

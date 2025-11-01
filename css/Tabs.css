@@ -99,7 +99,7 @@
 .tab-action-btn.move-tab:hover {
     background: rgba(155, 89, 182, 0.2);
 }
-
+/*
 .add-tab-container {
     padding: 15px;
     position: sticky;
@@ -108,7 +108,7 @@
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     z-index: 5;
 }
-
+*/
 .add-tab {
     width: 100%;
     padding: 12px;

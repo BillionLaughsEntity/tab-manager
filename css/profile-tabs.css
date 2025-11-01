@@ -199,22 +199,27 @@
     display: none;
 }
 
-/* Scrollbar styling for webkit browsers */
-.profile-tabs-container::-webkit-scrollbar {
-    height: 6px;
+/* Force scrollbars to be always visible when content overflows */
+.profile-tabs-container::-webkit-scrollbar,
+.workbook-tabs-container::-webkit-scrollbar {
+    height: 8px !important;
 }
 
-.profile-tabs-container::-webkit-scrollbar-track {
-    background: transparent;
+.profile-tabs-container::-webkit-scrollbar-track,
+.workbook-tabs-container::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 4px !important;
 }
 
-.profile-tabs-container::-webkit-scrollbar-thumb {
-    background: var(--border-color);
-    border-radius: 3px;
+.profile-tabs-container::-webkit-scrollbar-thumb,
+.workbook-tabs-container::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3) !important;
+    border-radius: 4px !important;
 }
 
-.profile-tabs-container::-webkit-scrollbar-thumb:hover {
-    background: var(--text-light);
+.profile-tabs-container::-webkit-scrollbar-thumb:hover,
+.workbook-tabs-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5) !important;
 }
 
 
@@ -264,4 +269,35 @@
 .profile-tabs-container::-webkit-scrollbar-thumb:hover,
 .workbook-tabs-container::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.5);
+}
+
+/* Add to your CSS */
+.profile-color-picker-btn {
+    color: #666;
+    transition: color 0.2s;
+}
+
+.profile-color-picker-btn:hover {
+    color: var(--profile-color, #3498db);
+}
+
+.profile-tab-actions {
+    display: flex;
+    gap: 4px;
+}
+
+.profile-tab-action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 3px;
+    font-size: 12px;
+    opacity: 0.7;
+    transition: opacity 0.2s, background-color 0.2s;
+}
+
+.profile-tab-action-btn:hover {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.1);
 }

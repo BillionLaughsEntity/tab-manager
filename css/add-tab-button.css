@@ -9,7 +9,7 @@
     align-items: center;
     gap: 8px;
     padding: 8px 16px;
-    background: var(--item-bg);
+    background: var(--item-bg) !important; /* Force background to match */
     border: 1px solid var(--border-color);
     border-radius: 6px;
     color: var(--text-color);
@@ -21,7 +21,7 @@
 }
 
 .add-tab:hover {
-    background: var(--hover-color);
+    background: var(--hover-color) !important;
     border-color: var(--primary-color);
     transform: translateY(-1px);
 }

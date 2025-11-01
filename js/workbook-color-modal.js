@@ -85,7 +85,7 @@ class WorkbookColorModal {
         colorPicker.value = currentColor;
         this.updateColorPreview();
 
-        this.modal.style.display = 'flex';
+        this.modal.style.display = 'block'; // Change to 'block' for consistency
     }
 
     hide() {

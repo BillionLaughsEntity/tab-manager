@@ -751,7 +751,22 @@
         window.saveWorkbooks = function() {
             console.trace('saveWorkbooks called from:');
             return originalSaveWorkbooks.apply(this, arguments);
-        };    
+        };
+        
+        // Add this to your main script section for debugging
+        function debugAvailableFunctions() {
+            console.log('=== Available Functions Debug ===');
+            console.log('openTrashBinModal:', typeof openTrashBinModal);
+            console.log('initReorderWorkbooksModal:', typeof initReorderWorkbooksModal);
+            console.log('initReorderProfilesModal:', typeof initReorderProfilesModal);
+            console.log('openExportModal:', typeof openExportModal);
+            console.log('importFromXML:', typeof importFromXML);
+            console.log('forceMigrateOldData:', typeof forceMigrateOldData);
+            console.log('migrateOldData:', typeof migrateOldData);
+            console.log('addWorkbook:', typeof addWorkbook);
+            console.log('addProfile:', typeof addProfile);
+            console.log('=== End Debug ===');
+        }
 
         // ===== VERSION-AWARE STORAGE MANAGER =====
         const APP_VERSION = 'v18-search'; // UNIQUE FOR V18
@@ -799,7 +814,9 @@
             }
 
             setupSearchFunctionality();
-            
+            // Debug: Check available functions
+            setTimeout(debugAvailableFunctions, 1000);
+
             // Initialize counters
             if (typeof updateAllCounters === 'function') {
                 updateAllCounters();
@@ -914,6 +931,8 @@
     <!-- what function is inside: removeCheckboxesFromLinks -->
     <script src="js/checkProfileScroll.js"></script>
     <!-- what function is inside: checkProfileScroll -->
+     <script src="js/updateProfileScroll.js"></script>
+    <!-- what function is inside: updateProfileScroll; setupProfileTabsScrolling -->
     <script src="js/permanentlyDeleteFromTrash.js"></script>
     <!-- what function is inside: permanentlyDeleteFromTrash -->
     <script src="js/restoreFromTrash.js"></script>
@@ -928,8 +947,6 @@
     <!-- what function is inside: moveTabUp -->
     <script src="js/moveTabDown.js"></script>
     <!-- what function is inside: moveTabDown -->
-    <script src="js/updateProfileScroll.js"></script>
-    <!-- what function is inside: updateProfileScroll; setupProfileTabsScrolling -->
     <script src="js/forceMigrateOldData.js"></script>
     <!-- what function is inside: forceMigrateOldData -->
     <script src="js/openMoveProfileModal.js"></script>
@@ -1213,6 +1230,9 @@
     <script src="js/move-tab-modal.js"></script>
     <!-- what function is inside: initMoveTabModal; createModal; setupEventListeners; showModal; hideModal; saveMove -->
     <!--move-block ends-->
+    <!-- Color picker modal for profiles -->
+    <script src="js/openProfileColorModal.js"></script>
+    <!-- what function is inside: openColorModal -->
 
     <!-- Tree view move tab modal
     <script src="js/move-tab-modal-tree-view.js"></script>

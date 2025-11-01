@@ -32,6 +32,9 @@ function renderProfileTabs() {
         profileTab.innerHTML = `
             <span class="profile-tab-name">${profile.name}</span>
             <div class="profile-tab-actions">
+                <button class="profile-tab-action-btn profile-color-picker-btn" title="Change Color">
+                    <i class="fas fa-palette"></i>
+                </button>
                 <button class="profile-tab-action-btn profile-move-btn" title="Move Profile">
                     <i class="fas fa-arrows-alt"></i>
                 </button>
@@ -60,6 +63,13 @@ function renderProfileTabs() {
             if (typeof openMoveProfileModal === 'function') {
                 openMoveProfileModal(profile);
             }
+        });
+
+        // Add color picker event
+        const colorBtn = profileTab.querySelector('.profile-color-picker-btn');
+        colorBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openProfileColorModal(profile);
         });
         
         // Add rename event

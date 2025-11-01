@@ -1,28 +1,54 @@
 // Call this when profiles change
 function updateProfileScroll() {
-    setTimeout(checkProfileScroll, 100); // Small delay to ensure DOM is updated
+    // Just update the scroll state without calling checkProfileScroll
+    const profileTabsContainer = document.getElementById('profile-tabs-container');
+    if (profileTabsContainer) {
+        const needsScroll = profileTabsContainer.scrollWidth > profileTabsContainer.clientWidth;
+        if (needsScroll) {
+            profileTabsContainer.classList.add('needs-scroll');
+        } else {
+            profileTabsContainer.classList.remove('needs-scroll');
+        }
+    }
 }
-
-// Call updateProfileScroll after these operations:
-// - Adding a new profile
-// - Deleting a profile  
-// - Renaming a profile
-// - Any other operation that changes profile tabs
 
 // Add mouse wheel scrolling for profile tabs
 function setupProfileTabsScrolling() {
     const profileTabsContainer = document.getElementById('profile-tabs-container');
+    const workbookTabsContainer = document.getElementById('workbook-tabs-container');
     
-    profileTabsContainer.addEventListener('wheel', (e) => {
-        // Only handle horizontal scrolling
-        if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
-            return; // Let the browser handle horizontal scrolling
-        }
-        
-        // Prevent vertical page scrolling
-        e.preventDefault();
-        
-        // Scroll horizontally based on vertical wheel movement
-        profileTabsContainer.scrollLeft += e.deltaY;
-    });
+    if (profileTabsContainer) {
+        profileTabsContainer.addEventListener('wheel', (e) => {
+            // Only handle horizontal scrolling
+            if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+                return; // Let the browser handle horizontal scrolling
+            }
+            
+            // Prevent vertical page scrolling
+            e.preventDefault();
+            
+            // Scroll horizontally based on vertical wheel movement
+            profileTabsContainer.scrollLeft += e.deltaY;
+        });
+    }
+    
+    if (workbookTabsContainer) {
+        workbookTabsContainer.addEventListener('wheel', (e) => {
+            // Only handle horizontal scrolling
+            if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+                return;
+            }
+            
+            // Prevent vertical page scrolling
+            e.preventDefault();
+            
+            // Scroll horizontally based on vertical wheel movement
+            workbookTabsContainer.scrollLeft += e.deltaY;
+        });
+    }
+}
+
+// Simple scroll check function
+function checkProfileScroll() {
+    updateProfileScroll();
 }

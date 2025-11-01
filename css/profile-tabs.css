@@ -12,25 +12,7 @@
     white-space: nowrap;
     min-height: 50px;
     scrollbar-width: thin;
-}
-
-/* Profile tabs scrollbar styling */
-.profile-tabs-container::-webkit-scrollbar {
-    height: 8px;
-}
-
-.profile-tabs-container::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-}
-
-.profile-tabs-container::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 4px;
-}
-
-.profile-tabs-container::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.5);
+    scrollbar-color: var(--border-color) transparent;
 }
 
 /* Individual profile tab */
@@ -38,7 +20,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 6px 12px;
+    padding: 8px 12px;
     background: var(--item-bg);
     border: 1px solid var(--border-color);
     border-radius: 6px;
@@ -46,22 +28,20 @@
     transition: all 0.2s ease;
     flex-shrink: 0;
     max-width: 200px;
-    min-width: 0;
+    min-width: 120px;
     position: relative;
+    border-left: 4px solid var(--profile-color, #3498db);
 }
 
 .profile-tab.active {
     background: var(--active-color);
     border-color: var(--primary-color);
+    border-left-color: var(--profile-color, #3498db);
 }
 
 /* Profile color indicator - fixed size and positioning */
 .profile-color-indicator {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    display: none; /* We're using border-left for color now */
 }
 
 /* Profile tab content layout */
@@ -100,7 +80,9 @@
     white-space: nowrap;
     flex: 1;
     min-width: 0;
+    font-size: 14px;
 }
+
 
 /* Profile tab actions */
 .profile-tab-actions {
@@ -108,6 +90,8 @@
     gap: 2px;
     flex-shrink: 0;
     margin-left: auto;
+    opacity: 0;
+    transition: opacity 0.2s ease;
 }
 
 .profile-tab:hover .profile-tab-action-btn {
@@ -124,11 +108,15 @@
     border: none;
     color: var(--text-light);
     cursor: pointer;
-    padding: 2px 4px;
+    padding: 4px;
     border-radius: 3px;
-    font-size: 10px;
+    font-size: 11px;
     transition: all 0.2s ease;
-    opacity: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .profile-tab-action {
@@ -154,6 +142,16 @@
     background: rgba(255, 255, 255, 0.15);
 }
 
+.profile-delete-btn:hover {
+    background-color: #e74c3c !important;
+    color: white !important;
+}
+
+.profile-rename-btn:hover {
+    background-color: #f39c12 !important;
+    color: white !important;
+}
+
 /* Specific profile action colors */
 .profile-tab-edit:hover {
     color: #33e90e;
@@ -173,10 +171,14 @@
     border: 1px dashed var(--border-color);
     color: var(--text-light);
     cursor: pointer;
-    padding: 6px 10px;
+    padding: 8px 12px;
     border-radius: 6px;
     transition: all 0.2s ease;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
 }
 
 .add-profile-tab:hover {
@@ -188,4 +190,39 @@
 /* Hide old profile selector */
 .profiles-container {
     display: none;
+}
+
+/* Scrollbar styling for webkit browsers */
+.profile-tabs-container::-webkit-scrollbar {
+    height: 6px;
+}
+
+.profile-tabs-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.profile-tabs-container::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 3px;
+}
+
+.profile-tabs-container::-webkit-scrollbar-thumb:hover {
+    background: var(--text-light);
+}
+
+
+/* Visual indicator when scrolling is available */
+.profile-tabs-container.needs-scroll {
+    padding-bottom: 4px;
+}
+
+/* Ensure the container is always visible and properly sized */
+.profile-tabs-container {
+    min-height: 52px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Make sure tabs have proper spacing when many are present */
+.profile-tab:not(:last-child) {
+    margin-right: 0;
 }

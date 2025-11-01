@@ -4,6 +4,17 @@ function switchWorkbook(workbookId) {
     currentProfileId = null;
     currentEnvironment = null;
     currentTab = null;
+
+    // Auto-select the first profile in the workbook
+    if (currentWorkbook.profiles && currentWorkbook.profiles.length > 0) {
+        currentProfileId = currentWorkbook.profiles[0].id;
+        currentEnvironment = null;
+        currentTab = null;
+    } else {
+        currentProfileId = null;
+        currentEnvironment = null;
+        currentTab = null;
+    }
     
     // Clear the links display
     clearLinksDisplay();

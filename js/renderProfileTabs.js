@@ -13,6 +13,9 @@ function renderProfileTabs() {
         }
         profileTab.dataset.profileId = profile.id;
         profileTab.style.setProperty('--profile-color', profile.color);
+
+        // Apply the profile color as a CSS variable for the left border
+        profileTab.style.setProperty('--profile-color', profile.color || '#3498db');
         
         profileTab.innerHTML = `
             <div class="profile-tab-color" style="background-color: ${profile.color}"></div>

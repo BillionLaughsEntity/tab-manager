@@ -1,20 +1,17 @@
 /* ===== WORKBOOK TABS COMPONENTS ===== */
 /* Workbook tabs container */
 .workbook-tabs-container {
-    background: #1a252f;
-    padding: 8px 15px;
     display: flex;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    overflow-x: auto;
-    overflow-y: hidden;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
-    min-height: 48px;
     align-items: center;
     gap: 8px;
-    position: relative;
+    padding: 8px 12px;
+    background: var(--panel-bg);
+    border-bottom: 1px solid var(--border-color);
+    overflow-x: auto;
+    overflow-y: hidden;
     white-space: nowrap;
-    scroll-behavior: smooth;
+    min-height: 50px;
+    scrollbar-width: thin;
 }
 
 /* Workbook tabs scrollbar */
@@ -38,28 +35,26 @@
 
 /* Individual workbook tab */
 .workbook-tab {
-    padding: 4px 8px;
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    border: none;
-    border-radius: 8px 8px 0 0;
-    margin-right: 5px;
-    cursor: pointer;
-    white-space: nowrap;
-    position: relative;
     display: flex;
-    flex-direction: row;
     align-items: center;
-    min-width: 170px;
-    max-width: 300px;
-    height: 32px;
-    border-right: 4px solid var(--workbook-color, #9b59b6);
-    padding-right: 30px;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--item-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    max-width: 200px;
+    min-width: 120px;
+    position: relative;
+    border-right: 4px solid var(--workbook-color, #3498db); /* Right side for workbooks */
 }
 
 .workbook-tab.active {
-    background: #2c3e50;
-    font-weight: 600;
+    background: var(--active-color);
+    border-color: var(--primary-color);
+    border-right-color: var(--workbook-color, #3498db);
 }
 
 /* Workbook tab content */

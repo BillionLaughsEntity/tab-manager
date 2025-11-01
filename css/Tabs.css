@@ -110,25 +110,27 @@
 }
 */
 .add-tab {
-    width: calc(100% - 30px); /* Account for margin */
-    padding: 12px;
-    background: #3498db;
+    width: 100%;
+    padding: 10px 15px;
+    background: #9b59b6 !important;
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
     color: white;
-    font-weight: 600;
+    font-weight: 300;
     cursor: pointer;
     transition: background 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 15px;
-    position: sticky;
-    bottom: 15px; /* Position from bottom */
 }
 
 .add-tab:hover {
-    background: #2980b9;
+    background: #8e44ad !important;
+}
+
+.add-tab i {
+    margin-right: 8px;
 }
 
 .content-panel {

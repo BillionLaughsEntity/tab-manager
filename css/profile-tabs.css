@@ -3,14 +3,14 @@
 .profile-tabs-container {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
+    gap: 12px; /* Increased gap */
+    padding: 12px 16px; /* Increased padding */
     background: var(--panel-bg);
     border-bottom: 1px solid var(--border-color);
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
-    min-height: 50px;
+    min-height: 60px; /* Increased height */
     scrollbar-width: thin;
     scrollbar-color: var(--border-color) transparent;
 }
@@ -19,24 +19,26 @@
 .profile-tab {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
+    gap: 10px; /* Increased gap */
+    padding: 10px 16px; /* Increased padding */
     background: var(--item-bg);
     border: 1px solid var(--border-color);
-    border-radius: 6px;
+    border-radius: 8px; /* Slightly larger radius */
     cursor: pointer;
     transition: all 0.2s ease;
     flex-shrink: 0;
-    max-width: 200px;
-    min-width: 120px;
+    max-width: 220px;
+    min-width: 140px;
     position: relative;
     border-left: 4px solid var(--profile-color, #3498db);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Added subtle shadow */
 }
 
 .profile-tab.active {
     background: var(--active-color);
     border-color: var(--primary-color);
     border-left-color: var(--profile-color, #3498db);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Enhanced shadow for active */
 }
 
 /* Profile color indicator - fixed size and positioning */
@@ -73,25 +75,25 @@
 
 /* Profile tab name with text overflow */
 .profile-tab-name {
-    font-weight: 500;
-    color: var(--text-color);
+    font-weight: 600;
+    color: #ffffff !important; /* Force white text */
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     flex: 1;
     min-width: 0;
     font-size: 14px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); /* Add text shadow for better readability */
 }
 
 
 /* Profile tab actions */
 .profile-tab-actions {
     display: flex;
-    gap: 2px;
+    gap: 4px;
     flex-shrink: 0;
     margin-left: auto;
-    opacity: 0;
-    transition: opacity 0.2s ease;
+    opacity: 1; /* Always visible */
 }
 
 .profile-tab:hover .profile-tab-action-btn {
@@ -99,24 +101,25 @@
 }
 
 .profile-tab-action-btn:hover {
-    background-color: var(--hover-color);
-    color: var(--text-color);
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
 }
 
 .profile-tab-action-btn {
-    background: none;
+    background: rgba(255, 255, 255, 0.1);
     border: none;
-    color: var(--text-light);
+    color: #ffffff !important; /* White icons */
     cursor: pointer;
-    padding: 4px;
-    border-radius: 3px;
+    padding: 6px;
+    border-radius: 4px;
     font-size: 11px;
     transition: all 0.2s ease;
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
+    backdrop-filter: blur(10px);
 }
 
 .profile-tab-action {
@@ -144,12 +147,10 @@
 
 .profile-delete-btn:hover {
     background-color: #e74c3c !important;
-    color: white !important;
 }
 
 .profile-rename-btn:hover {
     background-color: #f39c12 !important;
-    color: white !important;
 }
 
 /* Specific profile action colors */
@@ -168,17 +169,18 @@
 /* Add profile tab button */
 .add-profile-tab {
     background: var(--item-bg);
-    border: 1px dashed var(--border-color);
+    border: 2px dashed var(--border-color);
     color: var(--text-light);
     cursor: pointer;
-    padding: 8px 12px;
-    border-radius: 6px;
+    padding: 10px 14px;
+    border-radius: 8px;
     transition: all 0.2s ease;
     flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 40px;
+    min-width: 50px;
+    font-size: 16px;
 }
 
 .add-profile-tab:hover {

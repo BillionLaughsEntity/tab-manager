@@ -1,83 +1,72 @@
-// Render profile tabs - ONLY for current workbook
 function renderProfileTabs() {
-    profileTabsContainer.innerHTML = '';
-    
+    const profileTabsContainer = document.getElementById('profile-tabs-container');
     const currentWorkbook = getCurrentWorkbook();
-    if (!currentWorkbook || !currentWorkbook.profiles) return;
+    
+    if (!currentWorkbook) return;
+    
+    // Clear existing tabs except the add button
+    const addButton = profileTabsContainer.querySelector('.add-profile-tab');
+    profileTabsContainer.innerHTML = '';
+    if (addButton) {
+        profileTabsContainer.appendChild(addButton);
+    } else {
+        profileTabsContainer.innerHTML = `
+            <button class="add-profile-tab" id="add-profile-tab-btn" title="Add New Profile">
+                <i class="fas fa-plus"></i>
+            </button>
+        `;
+    }
+    
+    if (!currentWorkbook.profiles || currentWorkbook.profiles.length === 0) {
+        return;
+    }
     
     currentWorkbook.profiles.forEach(profile => {
-        const profileTab = document.createElement('button');
-        profileTab.className = 'profile-tab';
-        if (profile.id === currentProfileId) {
-            profileTab.classList.add('active');
-        }
+        const profileTab = document.createElement('div');
+        profileTab.className = `profile-tab ${profile.id === currentProfileId ? 'active' : ''}`;
         profileTab.dataset.profileId = profile.id;
-        profileTab.style.setProperty('--profile-color', profile.color);
-
+        
         // Apply the profile color as a CSS variable for the left border
         profileTab.style.setProperty('--profile-color', profile.color || '#3498db');
         
         profileTab.innerHTML = `
-            <div class="profile-tab-color" style="background-color: ${profile.color}"></div>
-            <div class="profile-tab-name">${profile.name}</div>
+            <span class="profile-tab-name">${profile.name}</span>
             <div class="profile-tab-actions">
-                <button class="profile-tab-action profile-tab-edit" title="Rename Profile">
+                <button class="profile-tab-action-btn profile-rename-btn" title="Rename Profile">
                     <i class="fas fa-edit"></i>
                 </button>
-                <button class="profile-tab-action profile-tab-move" title="Move Profile">
-                    <i class="fas fa-arrows-alt"></i>
-                </button>
-                <button class="profile-tab-action profile-tab-color-picker" title="Change Color">
-                    <i class="fas fa-palette"></i>
-                </button>
-                <button class="profile-tab-action profile-tab-close" title="Delete Profile">
-                    <i class="fas fa-times"></i>
+                <button class="profile-tab-action-btn profile-delete-btn" title="Delete Profile">
+                    <i class="fas fa-trash"></i>
                 </button>
             </div>
         `;
         
-        profileTabsContainer.appendChild(profileTab);
-
-        // Add event listeners...
-        const moveBtn = profileTab.querySelector('.profile-tab-move');
-        moveBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            openMoveProfileModal(profile);
-        });
+        profileTabsContainer.insertBefore(profileTab, profileTabsContainer.querySelector('.add-profile-tab'));
         
-        // Add event listener for switching profiles
+        // Add click event
         profileTab.addEventListener('click', (e) => {
-            if (!e.target.closest('.profile-tab-edit') && 
-                !e.target.closest('.profile-tab-close') &&
-                !e.target.closest('.profile-tab-color-picker')) {
+            if (!e.target.closest('.profile-tab-action-btn')) {
                 switchProfile(profile.id);
             }
         });
         
-        // Add event listener for renaming profile
-        const editBtn = profileTab.querySelector('.profile-tab-edit');
-        editBtn.addEventListener('click', (e) => {
+        // Add rename event
+        const renameBtn = profileTab.querySelector('.profile-rename-btn');
+        renameBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            if (typeof openRenameProfileModal === 'function') {
-                openRenameProfileModal(profile);
+            openRenameProfileModal(profile);
+        });
+        
+        // Add delete event
+        const deleteBtn = profileTab.querySelector('.profile-delete-btn');
+        deleteBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (confirm(`Are you sure you want to delete the profile "${profile.name}"?`)) {
+                deleteProfile(profile.id);
             }
-        });
-        
-        // Add event listener for color picker
-        const colorBtn = profileTab.querySelector('.profile-tab-color-picker');
-        colorBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            openColorModal(profile);
-        });
-        
-        // Add event listener for deleting profile
-        const closeBtn = profileTab.querySelector('.profile-tab-close');
-        closeBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            deleteProfile(profile.id);
         });
     });
     
-    // Add the "+" button at the end
-    profileTabsContainer.appendChild(addProfileTabBtn);
+    // Update scrolling
+    updateProfileScroll();
 }

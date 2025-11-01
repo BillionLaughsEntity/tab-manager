@@ -6,6 +6,14 @@
 }
 
 .logo i {
-    margin-right: 10px;
+    /* Customize the existing icon */
     color: #3498db;
-} 
+    font-size: 24px;
+}
+
+/* Or if using an image */
+.logo-image {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+}

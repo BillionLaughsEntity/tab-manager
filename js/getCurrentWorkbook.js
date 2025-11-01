@@ -1,4 +1,5 @@
-// Get the current workbook
+// Get the current workbook based on currentWorkbookId
 function getCurrentWorkbook() {
-    return workbooks.find(workbook => workbook.id === currentWorkbookId);
+    if (!workbooks || workbooks.length === 0) return null;
+    return workbooks.find(workbook => workbook.id === currentWorkbookId) || workbooks[0];
 }

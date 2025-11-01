@@ -1,10 +1,11 @@
 // In switchWorkbook.js - ensure this function is accessible globally
 function switchWorkbook(workbookId) {
     currentWorkbookId = workbookId;
-    currentProfileId = null;
-    currentEnvironment = null;
-    currentTab = null;
-
+    
+    // Use getCurrentWorkbook() instead of currentWorkbook variable
+    const currentWorkbook = getCurrentWorkbook();
+    if (!currentWorkbook) return;
+    
     // Auto-select the first profile in the workbook
     if (currentWorkbook.profiles && currentWorkbook.profiles.length > 0) {
         currentProfileId = currentWorkbook.profiles[0].id;

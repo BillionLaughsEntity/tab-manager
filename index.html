@@ -761,18 +761,36 @@
 
             // Ensure environments are collapsed by default
             ensureEnvironmentsCollapsed();
-
+            
             debugCurrentState();
             const duplicates = findDuplicateElements();
             
             // Continue with existing initialization
             migrateOldData();
             
-            // Render UI components
-            renderWorkbookTabs();
-            renderProfileTabs();
-            renderEnvironments();
-            // initializeS3Config();
+            // Create default workbook if none exist
+            if (workbooks.length === 0) {
+                createDefaultWorkbook();
+            }
+            
+            // Set initial selections - FIXED: Ensure profile is selected
+            if (workbooks.length > 0) {
+                currentWorkbookId = workbooks[0].id;
+                
+                const currentWorkbook = getCurrentWorkbook();
+                // Auto-select first profile
+                if (currentWorkbook && currentWorkbook.profiles && currentWorkbook.profiles.length > 0) {
+                    currentProfileId = currentWorkbook.profiles[0].id;
+                } else {
+                    // If no profiles, create a default one
+                    createDefaultProfile();
+                }
+                
+                renderWorkbookTabs();
+                renderProfileTabs();
+                renderEnvironments();
+            }
+            
             // Initialize counters
             if (typeof updateAllCounters === 'function') {
                 updateAllCounters();
@@ -790,26 +808,6 @@
             setupProfileTabsScrolling();
             positionSearchSuggestions();
             
-            // Create default workbook if none exist
-            if (workbooks.length === 0) {
-                createDefaultWorkbook();
-            }
-            
-            // Set initial selections
-            if (workbooks.length > 0) {
-                currentWorkbookId = workbooks[0].id;
-                
-                const currentWorkbook = getCurrentWorkbook();
-                // Auto-select first profile
-                if (currentWorkbook.profiles && currentWorkbook.profiles.length > 0) {
-                    currentProfileId = currentWorkbook.profiles[0].id;
-                }
-                
-                renderWorkbookTabs();
-                renderProfileTabs();
-                renderEnvironments();
-            }
-            
             // Optional: Auto-refresh counters every 3 seconds as backup
             setInterval(() => {
                 if (typeof updateAllCounters === 'function') {
@@ -820,7 +818,6 @@
             console.log(`V18 Tab Manager initialized successfully with version: ${APP_VERSION}`);
 
             setTimeout(verifyAllFixes, 500);
-            // setTimeout(testImportExport, 1000);
         }
 
         // Add this to your main script section after workbooks is defined
@@ -1046,6 +1043,8 @@
     <!-- what function is inside: selectTab -->
     <script src="js/saveReorderedWorkbooks.js"></script>
     <!-- what function is inside: saveReorderedWorkbooks -->
+    <script src="js/switchWorkbook.js"></script>
+    <!-- what function is inside: switchWorkbook -->
     <script src="js/renderWorkbookTabs.js"></script>
     <!-- what function is inside: renderWorkbookTabs -->
     <script src="js/moveLinkUp.js"></script>
@@ -1067,9 +1066,7 @@
     <script src="js/addTab.js"></script>
     <!-- what function is inside: addTab -->
     <script src="js/addEnvironment.js"></script>
-    <!-- what function is inside: addEnvironment -->
-    <script src="js/switchWorkbook.js"></script>
-    <!-- what function is inside: switchWorkbook -->
+    <!-- what function is inside: addEnvironment --> 
     <script src="js/addWorkbook.js"></script>
     <!-- what function is inside: addWorkbook -->
     <script src="js/createDefaultProfile.js"></script>

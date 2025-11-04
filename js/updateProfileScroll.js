@@ -5,9 +5,9 @@ function updateProfileScroll() {
     if (profileTabsContainer) {
         const needsScroll = profileTabsContainer.scrollWidth > profileTabsContainer.clientWidth;
         if (needsScroll) {
-            profileTabsContainer.classList.add('needs-scroll');
+            profileTabsContainer.classList.add('scrollable');
         } else {
-            profileTabsContainer.classList.remove('needs-scroll');
+            profileTabsContainer.classList.remove('scrollable');
         }
     }
 }

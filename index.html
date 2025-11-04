@@ -766,6 +766,33 @@
             console.log('=== End Debug ===');
         }
 
+        function debugProfileTabsScrolling() {
+            const profileTabsContainer = document.querySelector('.profile-tabs-container');
+            
+            console.log('=== Profile Tabs Scrolling Debug ===');
+            console.log('Container:', profileTabsContainer);
+            console.log('Scroll width:', profileTabsContainer.scrollWidth);
+            console.log('Client width:', profileTabsContainer.clientWidth);
+            console.log('Can scroll horizontally:', profileTabsContainer.scrollWidth > profileTabsContainer.clientWidth);
+            console.log('CSS overflow-x:', getComputedStyle(profileTabsContainer).overflowX);
+            console.log('CSS overflow-y:', getComputedStyle(profileTabsContainer).overflowY);
+            
+            // Check if any parent has overflow hidden
+            let parent = profileTabsContainer.parentElement;
+            while (parent) {
+                const overflow = getComputedStyle(parent).overflow;
+                if (overflow === 'hidden') {
+                    console.log('Parent with overflow hidden:', parent);
+                }
+                parent = parent.parentElement;
+            }
+            
+            // Test if wheel events are being captured
+            profileTabsContainer.addEventListener('wheel', (e) => {
+                console.log('Wheel event on profile tabs:', e);
+            }, { passive: false });
+        }
+
         // ===== VERSION-AWARE STORAGE MANAGER =====
         const APP_VERSION = 'v18-search'; // UNIQUE FOR V18
 
@@ -815,6 +842,8 @@
             // Debug: Check available functions
             setTimeout(debugAvailableFunctions, 1000);
 
+            setTimeout(debugProfileTabsScrolling, 1000);
+
             // Initialize counters
             if (typeof updateAllCounters === 'function') {
                 updateAllCounters();
@@ -842,6 +871,7 @@
             console.log(`V18 Tab Manager initialized successfully with version: ${APP_VERSION}`);
 
             setTimeout(verifyAllFixes, 500);
+            
         }
 
         // Add this to your main script section after workbooks is defined

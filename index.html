@@ -793,6 +793,25 @@
             }, { passive: false });
         }
 
+        function debugProfileClicks() {
+            const container = document.querySelector('.profile-tabs-container');
+            
+            container.addEventListener('click', function(e) {
+                console.log('=== PROFILE CLICK DEBUG ===');
+                console.log('Click target:', e.target);
+                console.log('Current target:', e.currentTarget);
+                
+                const profileTab = e.target.closest('.profile-tab');
+                if (profileTab) {
+                    console.log('Profile tab found:', profileTab);
+                    console.log('Profile ID:', profileTab.dataset.profileId);
+                } else {
+                    console.log('No profile tab found for click');
+                }
+            }, true); // Use capture phase to catch all clicks
+        }
+
+
         // ===== VERSION-AWARE STORAGE MANAGER =====
         const APP_VERSION = 'v18-search'; // UNIQUE FOR V18
 
@@ -872,7 +891,11 @@
             
             console.log(`V18 Tab Manager initialized successfully with version: ${APP_VERSION}`);
 
+            setTimeout(setupContainerScrolling, 100);
+            
             setTimeout(verifyAllFixes, 500);
+
+            setTimeout(debugProfileClicks, 100);
             
             
         }
@@ -1268,6 +1291,8 @@
     <!-- what function is inside: fixProfileTabsScrolling -->
     <script src="js/workingProfileTabsScroll.js"></script>
     <!-- what function is inside: workingProfileTabsScroll -->
+    <script src="js/setupContainerScrolling.js"></script>
+    <!-- what function is inside: setupContainerScrolling -->
 
     <!-- Tree view move tab modal
     <script src="js/move-tab-modal-tree-view.js"></script>

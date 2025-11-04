@@ -3,27 +3,29 @@
 .profile-tabs-container {
     display: flex;
     align-items: center;
-    gap: 12px; /* Increased gap */
-    padding: 12px 16px; /* Increased padding */
+    gap: 12px;
+    padding: 12px 16px;
     background: var(--panel-bg);
     border-bottom: 1px solid var(--border-color);
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
-    min-height: 60px; /* Increased height */
+    min-height: 60px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
-    scrollbar-color: var(--border-color) transparent;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
 }
 
 /* Individual profile tab */
 .profile-tab {
     display: flex;
     align-items: center;
-    gap: 10px; /* Increased gap */
-    padding: 10px 16px; /* Increased padding */
+    gap: 10px;
+    padding: 10px 16px;
     background: var(--item-bg);
     border: 1px solid var(--border-color);
-    border-radius: 8px; /* Slightly larger radius */
+    border-radius: 8px;
     cursor: pointer;
     transition: all 0.2s ease;
     flex-shrink: 0;
@@ -31,19 +33,14 @@
     min-width: 140px;
     position: relative;
     border-left: 4px solid var(--profile-color, #3498db);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Added subtle shadow */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .profile-tab.active {
     background: var(--active-color);
     border-color: var(--primary-color);
     border-left-color: var(--profile-color, #3498db);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Enhanced shadow for active */
-}
-
-/* Profile color indicator - fixed size and positioning */
-.profile-color-indicator {
-    display: none; /* We're using border-left for color now */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 /* Profile tab content layout */
@@ -76,16 +73,15 @@
 /* Profile tab name with text overflow */
 .profile-tab-name {
     font-weight: 600;
-    color: #ffffff !important; /* Force white text */
+    color: #ffffff !important;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     flex: 1;
     min-width: 0;
     font-size: 14px;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); /* Add text shadow for better readability */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
-
 
 /* Profile tab actions */
 .profile-tab-actions {
@@ -93,22 +89,13 @@
     gap: 4px;
     flex-shrink: 0;
     margin-left: auto;
-    opacity: 1; /* Always visible */
-}
-
-.profile-tab:hover .profile-tab-action-btn {
     opacity: 1;
-}
-
-.profile-tab-action-btn:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    transform: scale(1.1);
 }
 
 .profile-tab-action-btn {
     background: rgba(255, 255, 255, 0.1);
     border: none;
-    color: #ffffff !important; /* White icons */
+    color: #ffffff !important;
     cursor: pointer;
     padding: 6px;
     border-radius: 4px;
@@ -122,29 +109,12 @@
     backdrop-filter: blur(10px);
 }
 
-.profile-tab-action {
-    background: transparent;
-    border: none;
-    color: rgba(255, 255, 255, 0.7);
-    cursor: pointer;
-    font-size: 0.7rem;
-    padding: 2px 4px;
-    border-radius: 3px;
-    transition: all 0.3s ease;
-    flex: none;
-    margin: 0 1px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 18px;
-    height: 18px;
+.profile-tab-action-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
 }
 
-.profile-tab-action:hover {
-    color: white;
-    background: rgba(255, 255, 255, 0.15);
-}
-
+/* Specific profile action colors */
 .profile-delete-btn:hover {
     background-color: #e74c3c !important;
 }
@@ -153,20 +123,6 @@
     background-color: #f39c12 !important;
 }
 
-/* Specific profile action colors */
-.profile-tab-edit:hover {
-    color: #33e90e;
-}
-
-.profile-tab-color-picker:hover {
-    color: #3498db;
-}
-
-.profile-tab-close:hover {
-    color: #ff4800;
-}
-
-/* Move button hover effect */
 .profile-move-btn:hover {
     background-color: #3498db !important;
 }
@@ -199,105 +155,25 @@
     display: none;
 }
 
-/* Force scrollbars to be always visible when content overflows */
-.profile-tabs-container::-webkit-scrollbar,
-.workbook-tabs-container::-webkit-scrollbar {
-    height: 8px !important;
+/* Scrollbar styling - matching side panel */
+.profile-tabs-container::-webkit-scrollbar {
+    height: 6px;
 }
 
-.profile-tabs-container::-webkit-scrollbar-track,
-.workbook-tabs-container::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1) !important;
-    border-radius: 4px !important;
+.profile-tabs-container::-webkit-scrollbar-track {
+    background: transparent;
 }
 
-.profile-tabs-container::-webkit-scrollbar-thumb,
-.workbook-tabs-container::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3) !important;
-    border-radius: 4px !important;
+.profile-tabs-container::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
 }
 
-.profile-tabs-container::-webkit-scrollbar-thumb:hover,
-.workbook-tabs-container::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.5) !important;
+.profile-tabs-container::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.3);
 }
-
 
 /* Visual indicator when scrolling is available */
 .profile-tabs-container.needs-scroll {
     padding-bottom: 4px;
-}
-
-/* Ensure the container is always visible and properly sized */
-.profile-tabs-container {
-    min-height: 52px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-/* Make sure tabs have proper spacing when many are present */
-.profile-tab:not(:last-child) {
-    margin-right: 0;
-}
-
-/* Enable horizontal scrolling with mouse wheel */
-.profile-tabs-container,
-.workbook-tabs-container {
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-}
-
-/* Enable horizontal wheel scrolling */
-.profile-tabs-container::-webkit-scrollbar,
-.workbook-tabs-container::-webkit-scrollbar {
-    height: 8px;
-}
-
-.profile-tabs-container::-webkit-scrollbar-track,
-.workbook-tabs-container::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-}
-
-.profile-tabs-container::-webkit-scrollbar-thumb,
-.workbook-tabs-container::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 4px;
-}
-
-.profile-tabs-container::-webkit-scrollbar-thumb:hover,
-.workbook-tabs-container::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.5);
-}
-
-/* Add to your CSS */
-.profile-color-picker-btn {
-    color: #666;
-    transition: color 0.2s;
-}
-
-.profile-color-picker-btn:hover {
-    color: var(--profile-color, #3498db);
-}
-
-.profile-tab-actions {
-    display: flex;
-    gap: 4px;
-}
-
-.profile-tab-action-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 4px;
-    border-radius: 3px;
-    font-size: 12px;
-    opacity: 0.7;
-    transition: opacity 0.2s, background-color 0.2s;
-}
-
-.profile-tab-action-btn:hover {
-    opacity: 1;
-    background-color: rgba(0, 0, 0, 0.1);
 }

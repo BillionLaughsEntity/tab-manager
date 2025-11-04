@@ -27,8 +27,11 @@
 }
 
 .add-tab .plus-icon {
-    font-size: 12px;
-    color: var(--primary-color);
+    background: transparent;
+    border: none;
+    color: #3498db;
+    cursor: pointer;
+    font-size: 1.2rem;
 }
 
 /* Ensure it matches the view-type-dropdown style */

@@ -1,6 +1,17 @@
 function renderProfileTabs() {
     const profileTabsContainer = document.getElementById('profile-tabs-container');
     const currentWorkbook = getCurrentWorkbook();
+
+    console.log('=== RENDER PROFILE TABS DEBUG ===');
+    console.log('Current workbook:', currentWorkbook);
+    console.log('Current workbook ID:', currentWorkbook?.id);
+    console.log('Current workbook profiles:', currentWorkbook?.profiles);
+    console.log('Profiles array length:', currentWorkbook?.profiles?.length);
+
+    if (!currentWorkbook) {
+        console.log('No current workbook found');
+        return;
+    }
     
     if (!currentWorkbook) return;
     
@@ -88,6 +99,8 @@ function renderProfileTabs() {
             }
         });
     });
+
+    console.log('=== END RENDER PROFILE TABS DEBUG ===');
     
     // Update scrolling
     updateProfileScroll();

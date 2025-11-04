@@ -1,13 +1,21 @@
 // Call this when profiles change
 function updateProfileScroll() {
-    // Just update the scroll state without calling checkProfileScroll
     const profileTabsContainer = document.getElementById('profile-tabs-container');
     if (profileTabsContainer) {
         const needsScroll = profileTabsContainer.scrollWidth > profileTabsContainer.clientWidth;
+        console.log('Profile Scroll Debug:', {
+            scrollWidth: profileTabsContainer.scrollWidth,
+            clientWidth: profileTabsContainer.clientWidth,
+            needsScroll: needsScroll,
+            hasScrollableClass: profileTabsContainer.classList.contains('scrollable')
+        });
+        
         if (needsScroll) {
             profileTabsContainer.classList.add('scrollable');
+            console.log('Added scrollable class');
         } else {
             profileTabsContainer.classList.remove('scrollable');
+            console.log('Removed scrollable class');
         }
     }
 }

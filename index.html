@@ -793,25 +793,7 @@
             }, { passive: false });
         }
 
-        function debugProfileClicks() {
-            const container = document.querySelector('.profile-tabs-container');
-            
-            container.addEventListener('click', function(e) {
-                console.log('=== PROFILE CLICK DEBUG ===');
-                console.log('Click target:', e.target);
-                console.log('Current target:', e.currentTarget);
-                
-                const profileTab = e.target.closest('.profile-tab');
-                if (profileTab) {
-                    console.log('Profile tab found:', profileTab);
-                    console.log('Profile ID:', profileTab.dataset.profileId);
-                } else {
-                    console.log('No profile tab found for click');
-                }
-            }, true); // Use capture phase to catch all clicks
-        }
-
-
+        
         // ===== VERSION-AWARE STORAGE MANAGER =====
         const APP_VERSION = 'v18-search'; // UNIQUE FOR V18
 
@@ -839,16 +821,14 @@
                 createDefaultWorkbook();
             }
             
-            // Set initial selections - FIXED: Ensure profile is selected
+            // Set initial selections
             if (workbooks.length > 0) {
                 currentWorkbookId = workbooks[0].id;
                 
                 const currentWorkbook = getCurrentWorkbook();
-                // Auto-select first profile
                 if (currentWorkbook && currentWorkbook.profiles && currentWorkbook.profiles.length > 0) {
                     currentProfileId = currentWorkbook.profiles[0].id;
                 } else {
-                    // If no profiles, create a default one
                     createDefaultProfile();
                 }
                 
@@ -857,15 +837,7 @@
                 renderEnvironments();
             }
 
-            setTimeout(workingProfileTabsScroll, 100);
-
-            setupSearchFunctionality();
-            // Debug: Check available functions
-            setTimeout(debugAvailableFunctions, 1000);
-
-            setTimeout(debugProfileTabsScrolling, 1000);
-
-            // Initialize counters
+            // Initialize counters FIRST
             if (typeof updateAllCounters === 'function') {
                 updateAllCounters();
             }
@@ -879,25 +851,32 @@
                 }
             }
             
-            setupProfileTabsScrolling();
+            setupSearchFunctionality();
             positionSearchSuggestions();
             
-            // Optional: Auto-refresh counters every 3 seconds as backup
-            setInterval(() => {
+            // FIXED: Remove problematic scroll functions that break clicks
+            // setupProfileTabsScrolling(); // Remove this if it exists
+            // setTimeout(workingProfileTabsScroll, 100); // Remove this
+            
+            // Add these in the correct order with proper delays:
+            setTimeout(() => {
+                // 1. First reset any broken state
+                resetProfileFunctionality();
+                
+                // 2. Then add debug
+                debugProfileClicks();
+                
+                // 3. Then setup scrolling (conservative version)
+                setupConservativeScrolling();
+                
+                // 4. Update counters again to ensure they're current
                 if (typeof updateAllCounters === 'function') {
                     updateAllCounters();
                 }
-            }, 3000);
+            }, 500);
             
             console.log(`V18 Tab Manager initialized successfully with version: ${APP_VERSION}`);
-
-            setTimeout(setupContainerScrolling, 100);
-            
-            setTimeout(verifyAllFixes, 500);
-
-            setTimeout(debugProfileClicks, 100);
-            
-            
+            setTimeout(verifyAllFixes, 1000);
         }
 
         // Add this to your main script section after workbooks is defined
@@ -1293,6 +1272,12 @@
     <!-- what function is inside: workingProfileTabsScroll -->
     <script src="js/setupContainerScrolling.js"></script>
     <!-- what function is inside: setupContainerScrolling -->
+    <script src="js/resetProfileFunctionality.js"></script>
+    <!-- what function is inside: resetProfileFunctionality -->
+    <script src="js/debugProfileClicks.js"></script>
+    <!-- what function is inside: debugProfileClicks -->
+    <script src="js/setupConservativeScrolling.js"></script>
+    <!-- what function is inside: setupConservativeScrolling -->
 
     <!-- Tree view move tab modal
     <script src="js/move-tab-modal-tree-view.js"></script>

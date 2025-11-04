@@ -1,27 +1,21 @@
 /* ===== PROFILE TABS COMPONENTS ===== */
 /* Profile tabs container with horizontal scrolling */
 .profile-tabs-container {
-    background: #2c3e50 !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 12px !important;
-    padding: 12px 16px !important;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: #2c3e50 !important; /* Force background to see container */
+    border: 2px solid red !important; /* Temporary border to see container bounds */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     overflow-x: auto !important;
     overflow-y: hidden !important;
-    white-space: nowrap !important;
-    min-height: 60px !important;
-    scroll-behavior: smooth !important;
-    -webkit-overflow-scrolling: touch !important;
+    white-space: nowrap;
+    min-height: 60px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
     scrollbar-width: thin !important;
     scrollbar-color: rgba(255, 255, 255, 0.3) transparent !important;
-}
-
-.profile-tabs-container {
-    transform: none !important;
-    will-change: unset !important;
-    position: relative !important;
-    z-index: auto !important;
 }
 
 /* Individual profile tab */
@@ -184,4 +178,3 @@
     overscroll-behavior-x: contain !important;
     -webkit-overflow-scrolling: touch !important;
 }
-

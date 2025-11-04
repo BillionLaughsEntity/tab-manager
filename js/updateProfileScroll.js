@@ -46,6 +46,8 @@ function setupProfileTabsScrolling() {
             workbookTabsContainer.scrollLeft += e.deltaY;
         });
     }
+
+    setTimeout(fixProfileTabsScrolling, 300);
 }
 
 // Simple scroll check function

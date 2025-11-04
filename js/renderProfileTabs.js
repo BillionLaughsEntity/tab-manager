@@ -2,11 +2,6 @@ function renderProfileTabs() {
     const profileTabsContainer = document.getElementById('profile-tabs-container');
     const currentWorkbook = getCurrentWorkbook();
     
-    if (!profileTabsContainer) {
-        console.error('Profile tabs container not found');
-        return;
-    }
-    
     if (!currentWorkbook) return;
     
     // Clear existing tabs except the add button
@@ -37,16 +32,16 @@ function renderProfileTabs() {
         profileTab.innerHTML = `
             <span class="profile-tab-name">${profile.name}</span>
             <div class="profile-tab-actions">
-                <button class="profile-tab-action-btn profile-color-picker-btn" title="Change Color" data-action="color">
+                <button class="profile-tab-action-btn profile-color-picker-btn" title="Change Color">
                     <i class="fas fa-palette"></i>
                 </button>
-                <button class="profile-tab-action-btn profile-move-btn" title="Move Profile" data-action="move">
+                <button class="profile-tab-action-btn profile-move-btn" title="Move Profile">
                     <i class="fas fa-arrows-alt"></i>
                 </button>
-                <button class="profile-tab-action-btn profile-rename-btn" title="Rename Profile" data-action="rename">
+                <button class="profile-tab-action-btn profile-rename-btn" title="Rename Profile">
                     <i class="fas fa-edit"></i>
                 </button>
-                <button class="profile-tab-action-btn profile-delete-btn" title="Delete Profile" data-action="delete">
+                <button class="profile-tab-action-btn profile-delete-btn" title="Delete Profile">
                     <i class="fas fa-trash"></i>
                 </button>
             </div>
@@ -54,83 +49,46 @@ function renderProfileTabs() {
         
         profileTabsContainer.insertBefore(profileTab, profileTabsContainer.querySelector('.add-profile-tab'));
         
-        // Add main tab click event
+        // Add click event
         profileTab.addEventListener('click', (e) => {
-            // Only trigger profile switch if clicking on the tab itself, not action buttons
             if (!e.target.closest('.profile-tab-action-btn')) {
-                if (typeof switchProfile === 'function') {
-                    switchProfile(profile.id);
-                } else {
-                    console.error('switchProfile function not found');
-                }
+                switchProfile(profile.id);
             }
         });
         
-        // Add individual button handlers with better error handling
-        attachButtonHandlers(profileTab, profile);
-    });
-    
-    // Update scrolling
-    if (typeof updateProfileScroll === 'function') {
-        updateProfileScroll();
-    }
-}
-
-function attachButtonHandlers(profileTab, profile) {
-    const buttons = {
-        move: profileTab.querySelector('.profile-move-btn'),
-        color: profileTab.querySelector('.profile-color-picker-btn'),
-        rename: profileTab.querySelector('.profile-rename-btn'),
-        delete: profileTab.querySelector('.profile-delete-btn')
-    };
-    
-    // Move button
-    if (buttons.move) {
-        buttons.move.addEventListener('click', (e) => {
+        // Add move event
+        const moveBtn = profileTab.querySelector('.profile-move-btn');
+        moveBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             if (typeof openMoveProfileModal === 'function') {
                 openMoveProfileModal(profile);
-            } else {
-                console.error('openMoveProfileModal function not found');
             }
         });
-    }
-    
-    // Color button
-    if (buttons.color) {
-        buttons.color.addEventListener('click', (e) => {
+
+        // Add color picker event
+        const colorBtn = profileTab.querySelector('.profile-color-picker-btn');
+        colorBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            if (typeof openProfileColorModal === 'function') {
-                openProfileColorModal(profile);
-            } else {
-                console.error('openProfileColorModal function not found');
-            }
+            openProfileColorModal(profile);
         });
-    }
-    
-    // Rename button
-    if (buttons.rename) {
-        buttons.rename.addEventListener('click', (e) => {
+        
+        // Add rename event
+        const renameBtn = profileTab.querySelector('.profile-rename-btn');
+        renameBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            if (typeof openRenameProfileModal === 'function') {
-                openRenameProfileModal(profile);
-            } else {
-                console.error('openRenameProfileModal function not found');
-            }
+            openRenameProfileModal(profile);
         });
-    }
-    
-    // Delete button
-    if (buttons.delete) {
-        buttons.delete.addEventListener('click', (e) => {
+        
+        // Add delete event
+        const deleteBtn = profileTab.querySelector('.profile-delete-btn');
+        deleteBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            if (typeof deleteProfile === 'function') {
-                if (confirm(`Are you sure you want to delete the profile "${profile.name}"?`)) {
-                    deleteProfile(profile.id);
-                }
-            } else {
-                console.error('deleteProfile function not found');
+            if (confirm(`Are you sure you want to delete the profile "${profile.name}"?`)) {
+                deleteProfile(profile.id);
             }
         });
-    }
+    });
+    
+    // Update scrolling
+    updateProfileScroll();
 }

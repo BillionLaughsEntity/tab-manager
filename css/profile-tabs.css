@@ -10,27 +10,15 @@
     
     white-space: nowrap;
     min-height: 60px;
-    scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin !important;
     scrollbar-color: rgba(255, 255, 255, 0.3) transparent !important;
 
-    overflow-x: auto !important;
-    overflow-y: hidden !important;
-    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    scroll-behavior: smooth;
     
-    /* Remove any potential scroll blocking */
-    overscroll-behavior: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-    
-    /* Ensure proper box model */
-    box-sizing: border-box !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    
-    /* Remove any transforms that might interfere */
-    transform: none !important;
-    position: relative !important;
 }
 
 /* Force all children to be non-flexible */

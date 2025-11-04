@@ -745,41 +745,6 @@
         testButton.onclick = testMoveTabModal;
         document.body.appendChild(testButton);
 
-        // Add error handling
-        window.addEventListener('error', function(e) {
-            console.error('Global error:', e.error);
-            console.error('In file:', e.filename);
-            console.error('Line:', e.lineno);
-        });
-
-        // Check if debug function is being called
-        function debugProfileTabsScrolling() {
-            console.log('=== DEBUG FUNCTION IS RUNNING ===');
-            
-            const profileTabsContainer = document.querySelector('.profile-tabs-container');
-            if (!profileTabsContainer) {
-                console.error('Profile tabs container not found!');
-                return;
-            }
-            
-            console.log('Container found:', profileTabsContainer);
-            console.log('Scroll width:', profileTabsContainer.scrollWidth);
-            console.log('Client width:', profileTabsContainer.clientWidth);
-            console.log('Overflow X:', getComputedStyle(profileTabsContainer).overflowX);
-            console.log('Overflow Y:', getComputedStyle(profileTabsContainer).overflowY);
-            
-            // Force check all computed styles
-            const styles = getComputedStyle(profileTabsContainer);
-            console.log('All relevant styles:');
-            console.log('- display:', styles.display);
-            console.log('- position:', styles.position);
-            console.log('- width:', styles.width);
-            console.log('- max-width:', styles.maxWidth);
-            console.log('- overflow:', styles.overflow);
-            console.log('- overflow-x:', styles.overflowX);
-            console.log('- overflow-y:', styles.overflowY);
-        }
-
 
         window.saveWorkbooks = function() {
             console.trace('saveWorkbooks called from:');
@@ -879,13 +844,7 @@
 
             setTimeout(debugProfileTabsScrolling, 1000);
 
-            setTimeout(() => {
-                console.log('=== TESTING SCROLLING ===');
-                debugProfileTabsScrolling();
-                testScrollingManually();
-            }, 1000);
-
-            setTimeout(checkScrollableContent, 1500);
+            setTimeout(fixProfileTabsScrolling, 100);
 
             // Initialize counters
             if (typeof updateAllCounters === 'function') {
@@ -966,57 +925,6 @@
                 };
             }, 1000);
         })();
-
-        function testScrollingManually() {
-            const container = document.querySelector('.profile-tabs-container');
-            if (!container) return;
-            
-            // Try to force scroll
-            container.scrollLeft = 100;
-            console.log('Manually scrolled to:', container.scrollLeft);
-            
-            // Add direct wheel event listener
-            container.addEventListener('wheel', function(e) {
-                console.log('Wheel event detected:', e.deltaX, e.deltaY);
-                container.scrollLeft += e.deltaY;
-                e.preventDefault();
-            }, { passive: false });
-        }
-
-        function checkScrollableContent() {
-            const container = document.querySelector('.profile-tabs-container');
-            const tabs = container.querySelectorAll('.profile-tab');
-            
-            console.log('Number of profile tabs:', tabs.length);
-            console.log('Container width:', container.clientWidth);
-            
-            let totalWidth = 0;
-            tabs.forEach(tab => {
-                totalWidth += tab.offsetWidth + 12; // 12px gap
-            });
-            
-            console.log('Total tabs width:', totalWidth);
-            console.log('Can scroll?:', totalWidth > container.clientWidth);
-            
-            // If not enough content, add some test tabs
-            if (totalWidth <= container.clientWidth) {
-                console.log('Not enough content to scroll. Adding test tabs...');
-                for (let i = 0; i < 10; i++) {
-                    const testTab = document.createElement('div');
-                    testTab.className = 'profile-tab';
-                    testTab.innerHTML = `
-                        <div class="profile-tab-content">
-                            <div class="profile-tab-color" style="background-color: #3498db;"></div>
-                            <div class="profile-tab-name">Test Profile ${i}</div>
-                        </div>
-                    `;
-                    testTab.style.minWidth = '200px';
-                    container.insertBefore(testTab, container.lastElementChild);
-                }
-            }
-        }
-
-
     </script>
 
     <!-- 1. Core utilities first -->
@@ -1355,6 +1263,8 @@
     <!-- Color picker modal for profiles -->
     <script src="js/openProfileColorModal.js"></script>
     <!-- what function is inside: openColorModal -->
+    <script src="js/fixProfileTabsScrolling.js"></script>
+    <!-- what function is inside: fixProfileTabsScrolling -->
 
     <!-- Tree view move tab modal
     <script src="js/move-tab-modal-tree-view.js"></script>

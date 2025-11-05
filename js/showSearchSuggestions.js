@@ -92,6 +92,11 @@ function showSearchSuggestions(searchTerm) {
                             // Search links
                             if (tab.links) {
                                 tab.links.forEach(link => {
+                                    // Check if link exists and has required properties
+                                    if (!link || typeof link !== 'object') {
+                                        console.warn('Invalid link found:', link);
+                                        return; // Skip this link
+                                    }
                                     const titleMatch = link.title.toLowerCase().includes(searchTermLower);
                                     const urlMatch = link.url && link.url.toLowerCase().includes(searchTermLower);
                                     const multiLinkMatch = link.urls && link.urls.some(url => url.toLowerCase().includes(searchTermLower));
@@ -100,7 +105,7 @@ function showSearchSuggestions(searchTerm) {
                                         suggestions.push({
                                             type: 'link',
                                             icon: 'link',
-                                            title: link.title,
+                                            title: link.title || 'Untitled Link',
                                             path: `${workbook.name} → ${profile.name} → ${environment.name} → ${tab.name}`,
                                             workbook: workbook,
                                             profile: profile,
@@ -136,6 +141,11 @@ function showSearchSuggestions(searchTerm) {
     } else {
         // Add suggestions to the list
         suggestions.forEach(suggestion => {
+            // Skip null or invalid suggestions
+            if (!suggestion || !suggestion.title) {
+                console.warn('Invalid suggestion skipped:', suggestion);
+                return;
+            }
             const suggestionItem = document.createElement('div');
             suggestionItem.className = 'search-suggestion-item';
             
@@ -157,8 +167,12 @@ function showSearchSuggestions(searchTerm) {
             
             // Add click event to navigate to the item
             suggestionItem.addEventListener('click', () => {
-                navigateToSearchResult(suggestion);
-                hideSearchSuggestions();
+                if (typeof navigateToSearchResult === 'function') {
+                    navigateToSearchResult(suggestion);
+                }
+                if (typeof hideSearchSuggestions === 'function') {
+                    hideSearchSuggestions();
+                }
             });
             
             suggestionsList.appendChild(suggestionItem);

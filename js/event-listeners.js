@@ -2,6 +2,27 @@
 function setupEventListeners() {
     try {
         console.log('Setting up event listeners for V18...');
+
+        // === ADD THIS PROFILE TAB CLICK HANDLER ===
+        const profileTabsContainer = document.getElementById('profile-tabs-container');
+        if (profileTabsContainer) {
+            profileTabsContainer.addEventListener('click', function(e) {
+                const profileTab = e.target.closest('.profile-tab');
+                if (profileTab) {
+                    const profileId = profileTab.dataset.profileId;
+                    console.log('Profile tab clicked, switching to:', profileId);
+                    
+                    // Call the switchProfile function
+                    if (typeof switchProfile === 'function') {
+                        switchProfile(profileId);
+                    } else {
+                        console.error('switchProfile function not available');
+                    }
+                }
+            });
+            console.log('Profile tab click handler added');
+        }
+        // === END PROFILE TAB CLICK HANDLER ===
         
         // Check for duplicate IDs
         const allElements = document.querySelectorAll('[id]');

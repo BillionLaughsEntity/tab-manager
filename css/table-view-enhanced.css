@@ -14,6 +14,7 @@
     overflow: hidden !important;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08) !important;
     min-width: 800px !important;
+    table-layout: fixed !important; /* Add this for consistent column widths */
 }
 
 .links-table th {
@@ -25,6 +26,7 @@
     border-bottom: 2px solid #e9ecef !important;
     font-size: 0.9rem !important;
     white-space: nowrap !important;
+    vertical-align: middle !important; /* Add this to match td alignment */
 }
 
 .links-table td {
@@ -32,7 +34,16 @@
     border-bottom: 1px solid #e9ecef !important;
     vertical-align: middle !important;
     font-size: 0.9rem !important;
+    white-space: nowrap !important; /* Add this to match th */
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
 }
+
+/* Add specific column widths for better alignment */
+.links-table th:nth-child(1), .links-table td:nth-child(1) { width: 30%; } /* Title */
+.links-table th:nth-child(2), .links-table td:nth-child(2) { width: 45%; } /* URL */
+.links-table th:nth-child(3), .links-table td:nth-child(3) { width: 15%; } /* Type */
+.links-table th:nth-child(4), .links-table td:nth-child(4) { width: 10%; } /* Actions */
 
 .links-table tr:last-child td {
     border-bottom: none !important;

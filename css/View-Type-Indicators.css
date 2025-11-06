@@ -1,0 +1,29 @@
+/* View Type Indicators */
+.view-type-indicator {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    background: #ecf0f1;
+    color: #7f8c8d;
+    vertical-align: middle;
+}
+
+.view-type-indicator.grid { 
+    background: transparent; 
+    color: transparent;
+    padding: 2px 0;
+}
+
+.view-type-indicator.list { 
+    background: #e8f4fd; 
+    color: #3498db;
+}
+
+.view-type-indicator.table { 
+    background: #e8f6f3; 
+    color: #27ae60;
+}

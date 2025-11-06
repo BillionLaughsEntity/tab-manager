@@ -8,6 +8,9 @@ function selectTab(environment, tab) {
     currentEnvironment = environment;
     currentTab = tab;
     
+    // Update the view type indicator for the newly selected tab
+    updateViewTypeIndicator(currentViewType);
+    
     // Update UI
     currentTabName.textContent = tab.name;
     noTabsMessage.style.display = 'none';

@@ -1,0 +1,99 @@
+/* === TABLE VIEW === */
+.links-table {
+    width: 100% !important;
+    padding: 20px !important;
+    box-sizing: border-box !important;
+    overflow-x: auto !important;
+}
+
+.links-table table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    background: white !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08) !important;
+    min-width: 800px !important;
+}
+
+.links-table th {
+    background: #f8f9fa !important;
+    padding: 15px 12px !important;
+    text-align: left !important;
+    font-weight: 600 !important;
+    color: #2c3e50 !important;
+    border-bottom: 2px solid #e9ecef !important;
+    font-size: 0.9rem !important;
+    white-space: nowrap !important;
+}
+
+.links-table td {
+    padding: 12px !important;
+    border-bottom: 1px solid #e9ecef !important;
+    vertical-align: middle !important;
+    font-size: 0.9rem !important;
+}
+
+.links-table tr:last-child td {
+    border-bottom: none !important;
+}
+
+.links-table tr:hover {
+    background: #f8f9fa !important;
+}
+
+/* Table action buttons */
+.table-action-btn {
+    padding: 6px 10px !important;
+    border: 1px solid #e0e0e0 !important;
+    border-radius: 4px !important;
+    background: white !important;
+    cursor: pointer !important;
+    font-size: 0.8rem !important;
+    margin: 2px !important;
+    transition: all 0.2s ease !important;
+}
+
+.table-action-btn:hover {
+    background: #f8f9fa !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Table action button variants */
+.table-action-btn.open-link { color: #3498db !important; }
+.table-action-btn.edit-link { color: #27ae60 !important; }
+.table-action-btn.move-link { color: #9b59b6 !important; }
+.table-action-btn.delete-link { color: #e74c3c !important; }
+
+.table-action-btn.open-link:hover { border-color: #3498db !important; background: #e8f4fd !important; }
+.table-action-btn.edit-link:hover { border-color: #27ae60 !important; background: #e8f6f3 !important; }
+.table-action-btn.move-link:hover { border-color: #9b59b6 !important; background: #f3e8fd !important; }
+.table-action-btn.delete-link:hover { border-color: #e74c3c !important; background: #ffece8 !important; }
+
+/* Table content styling */
+.table-url {
+    color: #7f8c8d !important;
+    text-decoration: none !important;
+    word-break: break-all !important;
+    max-width: 300px !important;
+    display: block !important;
+}
+
+.table-url:hover {
+    color: #3498db !important;
+    text-decoration: underline !important;
+}
+
+.table-title {
+    font-weight: 600 !important;
+    color: #2c3e50 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.table-title i {
+    color: #3498db !important;
+    width: 16px !important;
+    text-align: center !important;
+}

@@ -630,25 +630,6 @@
         </div>
     </div>
 
-    <div class="modal" id="trash-bin-modal">
-        <div class="trash-bin-modal-content">
-            <div class="trash-bin-header">
-                <h3 class="modal-title">Trash Bin</h3>
-                <span class="close-modal">&times;</span>
-            </div>
-            <div class="trash-bin-count" id="trash-bin-count">0 items in trash</div>
-            <div id="trash-bin-items">
-                <!-- Trash bin items will be populated here -->
-            </div>
-            <div class="modal-actions">
-                <button class="modal-btn modal-btn-secondary" id="close-trash-bin-modal">Close</button>
-                <button class="modal-btn trash-bin-clear-all-btn" id="clear-trash-bin-btn">
-                    <i class="fas fa-trash"></i>Empty Trash Bin
-                </button>
-            </div>
-        </div>
-    </div>
-  
     <script>
         // Updated data structure with workbooks
         let workbooks = [];
@@ -802,6 +783,7 @@
 
             // Initialize modals
             initOutlookEmailModal(); // Add this line
+            initTrashBinModal(); // Add this line
 
             // Ensure environments are collapsed by default
             ensureEnvironmentsCollapsed();
@@ -1160,6 +1142,8 @@
     <!-- what function is inside: showSearchSuggestions -->
     <script src="js/updateSearchResultsCount.js"></script>
     <!-- what function is inside: updateSearchResultsCount -->
+    <script src="js/trash-bin-modal.js"></script>
+    <!-- what function is inside: createTrashBinModal; initTrashBinModal; openTrashBinModal; closeTrashBinModal -->
     <script src="js/trash-bin-functions.js"></script>
     <!-- openTrashBinModal, clearTrashBin, restoreFromTrash, permanentlyDeleteFromTrash, deleteLink, 
      renderTrashBinModal, saveTrashBin, loadTrashBin, createTrashItem, importTrashBin-->

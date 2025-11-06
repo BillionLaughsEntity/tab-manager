@@ -5,15 +5,24 @@ function switchProfile(profileId) {
     console.log('Current profile before switch:', currentProfileId);
     console.log('Current workbook:', currentWorkbookId);
 
+    // Validate the profile exists
+    const currentWorkbook = getCurrentWorkbook();
+    const profile = currentWorkbook.profiles.find(p => p.id === profileId);
+    
+    if (!profile) {
+        console.error('❌ Profile not found:', profileId);
+        return;
+    }
+
+    // Update current state - DO THIS ONCE
     currentProfileId = profileId;
     currentEnvironment = null;
     currentTab = null;
     
+    console.log('✅ State updated - Profile:', currentProfileId, 'Environment: null, Tab: null');
+
     // Clear the links display using the centralized function
     clearLinksDisplay();
-    
-    // Update UI
-    renderEnvironments();
     
     // Update active profile tab
     document.querySelectorAll('.profile-tab').forEach(tab => {
@@ -23,29 +32,19 @@ function switchProfile(profileId) {
         }
     });
     
-    // Update counters
-    updateAllCounters();
-    saveWorkbooks();
-
-    // Update current profile
-    currentProfileId = profileId;
-    console.log('Current profile after switch:', currentProfileId);
-    
-    // Save the change
-    saveWorkbooks();
-    console.log('Workbooks saved after profile switch');
-    
-    // Re-render everything
-    console.log('Rendering environments...');
+    // Re-render everything - IN THE CORRECT ORDER
+    console.log('🔄 Rendering environments...');
     renderEnvironments();
     
-    console.log('Rendering profile tabs...');
+    console.log('🔄 Rendering profile tabs...');
     renderProfileTabs();
     
-    console.log('Updating counters...');
+    console.log('🔄 Updating counters...');
     updateAllCounters();
+
+    // Save ONCE at the end
+    saveWorkbooks();
+    console.log('💾 Workbooks saved');
     
     console.log('=== END SWITCH PROFILE DEBUG ===');
-
-    
 }

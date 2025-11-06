@@ -1,7 +1,15 @@
 // Render environments in the side panel
 function renderEnvironments() {
+
+    console.log('=== RENDER ENVIRONMENTS DEBUG ===');
+    console.log('Current profile ID:', currentProfileId);
+    console.log('Current workbook ID:', currentWorkbookId);
+
+
     environmentsContainer.innerHTML = '';
     const currentProfile = getCurrentProfile();
+    console.log('Current profile:', currentProfile);
+    console.log('Current profile environments:', currentProfile?.environments);
     
     if (!currentProfile || !currentProfile.environments || currentProfile.environments.length === 0) {
         environmentsContainer.innerHTML = '<p style="padding: 20px; text-align: center; color: rgba(255,255,255,0.7)">No environments yet. Create your first one!</p>';

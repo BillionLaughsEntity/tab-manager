@@ -1,5 +1,7 @@
 // Switch to a different profile
 function switchProfile(profileId) {
+    console.log('Switching to profile:', profileId);
+    
     currentProfileId = profileId;
     currentEnvironment = null;
     currentTab = null;

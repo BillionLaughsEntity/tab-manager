@@ -648,45 +648,7 @@
             </div>
         </div>
     </div>
-
-    <!-- Outlook Email Modal -->
-    <div class="modal" id="outlook-email-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Create Outlook Email Link</h3>
-                <span class="close-modal">&times;</span>
-            </div>
-            <div class="form-group">
-                <label for="email-from">From (optional - usually auto-filled by Outlook)</label>
-                <input type="email" id="email-from" placeholder="sender@example.com">
-            </div>
-            <div class="form-group">
-                <label for="email-to">To (required, separate multiple with semicolons)</label>
-                <input type="text" id="email-to" placeholder="recipient1@example.com; recipient2@example.com" required>
-            </div>
-            <div class="form-group">
-                <label for="email-cc">CC (optional, separate multiple with semicolons)</label>
-                <input type="text" id="email-cc" placeholder="cc1@example.com; cc2@example.com">
-            </div>
-            <div class="form-group">
-                <label for="email-subject">Subject (optional)</label>
-                <input type="text" id="email-subject" placeholder="Email subject">
-            </div>
-            <div class="form-group">
-                <label for="email-body">Body (optional)</label>
-                <textarea id="email-body" placeholder="Email body content" rows="4"></textarea>
-            </div>
-            <div class="email-preview" id="email-preview">
-                <strong>Preview:</strong> <span id="email-preview-text">mailto:...</span>
-            </div>
-            <div class="modal-actions">
-                <button class="modal-btn modal-btn-secondary" id="close-outlook-email-modal">Cancel</button>
-                <button class="modal-btn modal-btn-primary" id="save-outlook-email-btn">Create Email Link</button>
-            </div>
-        </div>
-    </div>
-
-    
+  
     <script>
         // Updated data structure with workbooks
         let workbooks = [];
@@ -837,6 +799,9 @@
             // Load versioned data
             loadWorkbooks();
             loadTrashBin();
+
+            // Initialize modals
+            initOutlookEmailModal(); // Add this line
 
             // Ensure environments are collapsed by default
             ensureEnvironmentsCollapsed();
@@ -1236,6 +1201,8 @@
     <!-- what function is inside: findDuplicateElements -->
     <script src="js/verifyAllFixes.js"></script>
     <!-- what function is inside: verifyAllFixes -->
+    <script src="js/outlook-email-modal.js"></script>
+    <!-- what function is inside: createOutlookEmailModal; initOutlookEmailModal; openOutlookEmailModal; closeOutlookEmailModal -->
     <script src="js/outlook-email.js"></script>
     <!-- what function is inside: debugCurrentTabState; debugEnvironmentState; debugTabState; debugLinkState; 
      openOutlookEmailModal; updateEmailPreview; saveOutlookEmailLink; closeOutlookEmailModal; setupOutlookEmailListeners -->

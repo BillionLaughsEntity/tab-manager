@@ -288,51 +288,180 @@ function permanentlyDeleteFromTrash(index) {
     }
 }
 
-
-// Add this function to your main script
-function deleteLink(link) {
-    if (!confirm(`Are you sure you want to move "${link.title}" to trash?`)) {
+function deleteLink(link, tab, environment) {
+    console.log('=== DELETE LINK DEBUG ===');
+    console.log('Link parameter:', link);
+    console.log('Link title:', link?.title);
+    console.log('Link id:', link?.id);
+    
+    // FIXED: Proper validation that matches your actual link structure
+    if (!link || typeof link !== 'object') {
+        console.error('Invalid link parameter - not an object:', link);
+        alert('Error: Invalid link data');
         return;
+    }
+    
+    // FIXED: Use the actual title property that exists
+    const linkTitle = link.title || 'Untitled Link';
+    const linkId = link.id;
+    
+    console.log('Resolved title:', linkTitle);
+    console.log('Resolved ID:', linkId);
+    
+    if (!linkId) {
+        console.error('Link missing ID:', link);
+        alert('Error: Link missing identifier');
+        return;
+    }
+    
+    if (!confirm(`Are you sure you want to move "${linkTitle}" to trash?`)) {
+        return;
+    }
+    
+    // Use provided parameters or fall back to current context
+    const targetTab = tab || currentTab;
+    const targetEnvironment = environment || currentEnvironment;
+    const targetProfile = getCurrentProfile();
+    const targetWorkbook = getCurrentWorkbook();
+    
+    console.log('Target tab:', targetTab?.name);
+    console.log('Target tab links:', targetTab?.links);
+    
+    if (!targetTab) {
+        console.error('No target tab found');
+        alert('Error: No tab selected');
+        return;
+    }
+    
+    if (!targetTab.links) {
+        console.error('Target tab has no links array');
+        targetTab.links = [];
     }
     
     // Create trash item
     const trashItem = {
         id: 'trash-' + Date.now(),
         type: 'link',
-        originalId: link.id,
-        data: link,
-        parentTab: {
-            id: currentTab.id,
-            name: currentTab.name
-        },
-        parentEnvironment: currentEnvironment ? {
-            id: currentEnvironment.id,
-            name: currentEnvironment.name
+        originalId: linkId,
+        data: link, // Store the actual link object
+        parentTab: targetTab ? {
+            id: targetTab.id,
+            name: targetTab.name
         } : null,
-        parentProfile: getCurrentProfile() ? {
-            id: getCurrentProfile().id,
-            name: getCurrentProfile().name
+        parentEnvironment: targetEnvironment ? {
+            id: targetEnvironment.id,
+            name: targetEnvironment.name
         } : null,
-        parentWorkbook: getCurrentWorkbook() ? {
-            id: getCurrentWorkbook().id,
-            name: getCurrentWorkbook().name
+        parentProfile: targetProfile ? {
+            id: targetProfile.id,
+            name: targetProfile.name
+        } : null,
+        parentWorkbook: targetWorkbook ? {
+            id: targetWorkbook.id,
+            name: targetWorkbook.name
         } : null,
         deletedAt: new Date().toISOString()
     };
+    
+    console.log('Trash item created:', trashItem);
     
     // Add to trash bin
     trashBin.push(trashItem);
     saveTrashBin();
     
     // Remove from current tab
-    currentTab.links = currentTab.links.filter(l => l.id !== link.id);
+    console.log('Removing link with ID:', linkId);
+    console.log('Tab links before:', targetTab.links.map(l => ({id: l.id, title: l.title})));
+    
+    const initialLength = targetTab.links.length;
+    targetTab.links = targetTab.links.filter(l => l.id !== linkId);
+    const finalLength = targetTab.links.length;
+    
+    console.log('Tab links after:', targetTab.links.map(l => ({id: l.id, title: l.title})));
+    console.log(`Links removed: ${initialLength - finalLength}`);
+    
+    if (initialLength === finalLength) {
+        console.error('Link was not found in tab!');
+        console.log('Looking for ID:', linkId);
+        console.log('Available IDs:', targetTab.links.map(l => l.id));
+        alert('Error: Could not find link in tab');
+        return;
+    }
     
     // Save and refresh
     saveWorkbooks();
-    renderLinks(currentTab);
     
-    alert(`"${link.title}" moved to trash`);
+    // Only re-render if this is the currently viewed tab
+    if (targetTab === currentTab) {
+        renderLinks(currentTab);
+    }
+    
+    alert(`"${linkTitle}" moved to trash`);
+    console.log('=== DELETE SUCCESSFUL ===');
 }
+
+// === ADD THIS DEBUG WRAPPER RIGHT AFTER ===
+const originalDeleteLink = window.deleteLink;
+window.deleteLink = function(...args) {
+    console.log('=== DELETE LINK CALLED WITH ===');
+    console.log('Arguments:', args);
+    console.log('Argument types:', args.map(arg => typeof arg));
+    console.log('Number of arguments:', args.length);
+    
+    // Log the call stack to see where it's called from
+    console.log('Call stack:');
+    console.trace();
+    
+    console.log('=== END DEBUG ===');
+    
+    // Call the original function
+    return originalDeleteLink.apply(this, args);
+};
+
+// // Add this function to your main script
+// function deleteLink(link) {
+//     if (!confirm(`Are you sure you want to move "${link.title}" to trash?`)) {
+//         return;
+//     }
+    
+//     // Create trash item
+//     const trashItem = {
+//         id: 'trash-' + Date.now(),
+//         type: 'link',
+//         originalId: link.id,
+//         data: link,
+//         parentTab: {
+//             id: currentTab.id,
+//             name: currentTab.name
+//         },
+//         parentEnvironment: currentEnvironment ? {
+//             id: currentEnvironment.id,
+//             name: currentEnvironment.name
+//         } : null,
+//         parentProfile: getCurrentProfile() ? {
+//             id: getCurrentProfile().id,
+//             name: getCurrentProfile().name
+//         } : null,
+//         parentWorkbook: getCurrentWorkbook() ? {
+//             id: getCurrentWorkbook().id,
+//             name: getCurrentWorkbook().name
+//         } : null,
+//         deletedAt: new Date().toISOString()
+//     };
+    
+//     // Add to trash bin
+//     trashBin.push(trashItem);
+//     saveTrashBin();
+    
+//     // Remove from current tab
+//     currentTab.links = currentTab.links.filter(l => l.id !== link.id);
+    
+//     // Save and refresh
+//     saveWorkbooks();
+//     renderLinks(currentTab);
+    
+//     alert(`"${link.title}" moved to trash`);
+// }
 
 // Helper function to import trash bin
 function importTrashBin(trashBinElement) {

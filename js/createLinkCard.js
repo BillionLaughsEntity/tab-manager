@@ -164,7 +164,7 @@ function createLinkCard(link, index) {
             const linkTitle = link.title || 'Untitled Link';
             if (confirm(`Are you sure you want to delete the link "${linkTitle}"?`)) {
                 if (typeof deleteLink === 'function') {
-                    deleteLink(index);
+                    deleteLink(link, currentTab, currentEnvironment);
                 } else {
                     alert('Link deletion not available');
                 }

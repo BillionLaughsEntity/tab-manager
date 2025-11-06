@@ -75,7 +75,7 @@
     <!-- View type indicators -->
     <link rel="stylesheet" href="css/View-Type-Indicators.css">
     <!-- View type indicators -->
-     
+
     <!-- Add link form components -->
     <link rel="stylesheet" href="css/add-link-form.css">
     <!-- Sticky add link section at bottom; Add link form; Form group; Form group label; Form group input; Add link button -->
@@ -805,6 +805,23 @@
             profileTabsContainer.addEventListener('wheel', (e) => {
                 console.log('Wheel event on profile tabs:', e);
             }, { passive: false });
+        }
+
+        function debugLinkStructure() {
+            if (!currentTab || !currentTab.links.length) {
+                console.log('No links available to debug');
+                return;
+            }
+            
+            const firstLink = currentTab.links[0];
+            console.log('=== LINK STRUCTURE DEBUG ===');
+            console.log('First link object:', firstLink);
+            console.log('Link keys:', Object.keys(firstLink));
+            console.log('Link title property:', firstLink.title);
+            console.log('Link name property:', firstLink.name);
+            console.log('Link id:', firstLink.id);
+            console.log('Link type:', typeof firstLink);
+            console.log('=== END DEBUG ===');
         }
 
         

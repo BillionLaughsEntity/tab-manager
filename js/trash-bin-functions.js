@@ -23,7 +23,17 @@ function openTrashBinModal() {
             new Date(b.deletedAt) - new Date(a.deletedAt)
         );
         
-        sortedTrash.forEach((item, index) => {
+        console.log('=== OPENING TRASH BIN ===');
+        console.log('Original trash bin:', trashBin.map((item, i) => ({index: i, id: item.id, title: item.data?.title})));
+        console.log('Sorted trash bin:', sortedTrash.map(item => ({id: item.id, title: item.data?.title})));
+        
+        // Create a map from item ID to actual index
+        const idToIndexMap = {};
+        trashBin.forEach((item, index) => {
+            idToIndexMap[item.id] = index;
+        });
+        
+        sortedTrash.forEach((item) => {
             // FIX: Add safety checks for undefined properties
             const itemData = item.data || {};
             const itemTitle = itemData.title || 'Untitled Item';
@@ -43,6 +53,8 @@ function openTrashBinModal() {
             } else {
                 content = itemUrl || 'Link';
             }
+            
+            const actualIndex = idToIndexMap[item.id];
             
             const trashItem = document.createElement('div');
             trashItem.className = 'trash-bin-item';
@@ -65,31 +77,38 @@ function openTrashBinModal() {
                     </div>
                 </div>
                 <div class="trash-bin-item-actions">
-                    <button class="trash-bin-action-btn trash-bin-restore-btn" data-index="${index}">
+                    <button class="trash-bin-action-btn trash-bin-restore-btn" data-index="${actualIndex}">
                         <i class="fas fa-undo"></i>Restore
                     </button>
-                    <button class="trash-bin-action-btn trash-bin-permanently-delete-btn" data-index="${index}">
+                    <button class="trash-bin-action-btn trash-bin-permanently-delete-btn" data-index="${actualIndex}">
                         <i class="fas fa-trash"></i>Delete
                     </button>
                 </div>
             `;
+
+            // Add event listeners directly to these buttons
+            const restoreBtn = trashItem.querySelector('.trash-bin-restore-btn');
+            const deleteBtn = trashItem.querySelector('.trash-bin-permanently-delete-btn');
             
-            trashBinItems.appendChild(trashItem);
-        });
-        
-        // Add event listeners for the buttons
-        document.querySelectorAll('.trash-bin-restore-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
+            restoreBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
                 const index = parseInt(e.currentTarget.dataset.index);
+                console.log('=== RESTORE CLICKED ===');
+                console.log('Actual index from map:', index);
+                console.log('Item at that index:', trashBin[index]);
                 restoreFromTrash(index);
             });
-        });
-        
-        document.querySelectorAll('.trash-bin-permanently-delete-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
+            
+            deleteBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
                 const index = parseInt(e.currentTarget.dataset.index);
+                console.log('=== DELETE CLICKED ===');
+                console.log('Actual index from map:', index);
+                console.log('Item at that index:', trashBin[index]);
                 permanentlyDeleteFromTrash(index);
             });
+            
+            trashBinItems.appendChild(trashItem);
         });
     }
     
@@ -121,97 +140,27 @@ function clearTrashBin() {
 
 
 
-// Fix restoreFromTrash function
+// Restore from trash - SIMPLIFIED VERSION
 function restoreFromTrash(index) {
+    console.log('=== RESTORE FUNCTION CALLED ===');
+    console.log('Index received:', index);
+    console.log('Trash bin length:', trashBin.length);
 
-    if (index < 0 || index >= trashBin.length) return;
-    const item = trashBin[index];
-    const itemData = item.data || {};
-
-    
-    if (!item) return;
-    
-    // Find the destination tab
-    let destinationTab = null;
-    let destinationEnvironment = null;
-    let destinationProfile = null;
-    let destinationWorkbook = null;
-    
-    // Try to find the original location
-    workbooks.forEach(workbook => {
-        if (workbook.id === item.origin.workbookId) {
-            destinationWorkbook = workbook;
-            workbook.profiles.forEach(profile => {
-                if (profile.id === item.origin.profileId) {
-                    destinationProfile = profile;
-                    profile.environments.forEach(environment => {
-                        if (environment.id === item.origin.environmentId) {
-                            destinationEnvironment = environment;
-                            environment.tabs.forEach(tab => {
-                                if (tab.id === item.origin.tabId) {
-                                    destinationTab = tab;
-                                }
-                            });
-                        }
-                    });
-                }
-            });
-        }
-    });
-    
-    // If original location not found, use current location
-    if (!destinationTab) {
-        destinationWorkbook = getCurrentWorkbook();
-        destinationProfile = getCurrentProfile();
-        destinationEnvironment = currentEnvironment;
-        destinationTab = currentTab;
+    if (index < 0 || index >= trashBin.length) {
+        console.error('Invalid index!');
+        return;
     }
-    
-    // Create the restored link
-    const restoredLink = {
-        id: 'link-' + Date.now(), // New ID since original is lost
-        title: item.title,
-        url: item.url,
-        isMultiLink: item.isMultiLink,
-        isSearchLink: item.isSearchLink,
-        urls: item.urls || [],
-        linkCount: item.linkCount || 1
-    };
-    
-    // Add to destination tab
-    if (!destinationTab.links) {
-        destinationTab.links = [];
-    }
-    destinationTab.links.push(restoredLink);
-    
-    // Remove from trash
-    trashBin.splice(index, 1);
-    
-    // Save changes
-    saveWorkbooks();
-    saveTrashBin();
-    
-    // Update UI
-    renderEnvironments();
-    if (currentTab === destinationTab) {
-        renderLinks(currentTab);
-    }
-    
-    // Close and reopen modal to refresh
-    document.getElementById('trash-bin-modal').style.display = 'none';
-    setTimeout(() => {
-        openTrashBinModal();
-    }, 100);
-    
-    alert(`"${item.title}" restored successfully`);
-}
-
-
-// Restore from trash
-function restoreFromTrash(index) {
-    if (index < 0 || index >= trashBin.length) return;
     
     const item = trashBin[index];
+    console.log('Item at index:', item);
+
+    if (!item) {
+        console.error('No item found at index!');
+        return;
+    }
+
+    console.log('Item data:', item.data);
+    console.log('Item title:', item.data?.title);
     
     // Find the destination (try original location first, then current)
     let destinationWorkbook = getCurrentWorkbook();
@@ -243,7 +192,12 @@ function restoreFromTrash(index) {
     if (!destinationTab.links) {
         destinationTab.links = [];
     }
-    destinationTab.links.push(item.data);
+    
+    // Check if link already exists to prevent duplicates
+    const linkExists = destinationTab.links.some(link => link.id === item.data.id);
+    if (!linkExists) {
+        destinationTab.links.push(item.data);
+    }
     
     // Remove from trash
     trashBin.splice(index, 1);
@@ -271,11 +225,13 @@ function restoreFromTrash(index) {
 }
 
 
-// Permanently delete from trash
+// Permanently delete from trash - SIMPLIFIED VERSION
 function permanentlyDeleteFromTrash(index) {
     if (index < 0 || index >= trashBin.length) return;
     
     const item = trashBin[index];
+    if (!item) return;
+    
     if (confirm(`Are you sure you want to permanently delete "${item.data.title}"? This cannot be undone.`)) {
         trashBin.splice(index, 1);
         saveTrashBin();
@@ -288,25 +244,35 @@ function permanentlyDeleteFromTrash(index) {
     }
 }
 
+
+// Update the deleteLink function in trash-bin-functions.js:
 function deleteLink(link, tab, environment) {
-    console.log('=== DELETE LINK DEBUG ===');
-    console.log('Link parameter:', link);
-    console.log('Link title:', link?.title);
-    console.log('Link id:', link?.id);
+    // Handle different parameter formats
+    if (arguments.length === 1) {
+        // Called from createLinkCard.js with just link
+        tab = currentTab;
+        environment = currentEnvironment;
+    } else if (arguments.length === 2 && typeof tab === 'number') {
+        // Called with (index) - old format, handle gracefully
+        const linkIndex = tab;
+        if (currentTab && currentTab.links && currentTab.links[linkIndex]) {
+            link = currentTab.links[linkIndex];
+            tab = currentTab;
+            environment = currentEnvironment;
+        } else {
+            console.error('Invalid deleteLink call with index:', linkIndex);
+            return;
+        }
+    }
     
-    // FIXED: Proper validation that matches your actual link structure
     if (!link || typeof link !== 'object') {
-        console.error('Invalid link parameter - not an object:', link);
+        console.error('Invalid link parameter:', link);
         alert('Error: Invalid link data');
         return;
     }
     
-    // FIXED: Use the actual title property that exists
     const linkTitle = link.title || 'Untitled Link';
     const linkId = link.id;
-    
-    console.log('Resolved title:', linkTitle);
-    console.log('Resolved ID:', linkId);
     
     if (!linkId) {
         console.error('Link missing ID:', link);
@@ -318,14 +284,10 @@ function deleteLink(link, tab, environment) {
         return;
     }
     
-    // Use provided parameters or fall back to current context
     const targetTab = tab || currentTab;
     const targetEnvironment = environment || currentEnvironment;
     const targetProfile = getCurrentProfile();
     const targetWorkbook = getCurrentWorkbook();
-    
-    console.log('Target tab:', targetTab?.name);
-    console.log('Target tab links:', targetTab?.links);
     
     if (!targetTab) {
         console.error('No target tab found');
@@ -334,7 +296,6 @@ function deleteLink(link, tab, environment) {
     }
     
     if (!targetTab.links) {
-        console.error('Target tab has no links array');
         targetTab.links = [];
     }
     
@@ -343,7 +304,7 @@ function deleteLink(link, tab, environment) {
         id: 'trash-' + Date.now(),
         type: 'link',
         originalId: linkId,
-        data: link, // Store the actual link object
+        data: link,
         parentTab: targetTab ? {
             id: targetTab.id,
             name: targetTab.name
@@ -363,27 +324,17 @@ function deleteLink(link, tab, environment) {
         deletedAt: new Date().toISOString()
     };
     
-    console.log('Trash item created:', trashItem);
-    
     // Add to trash bin
     trashBin.push(trashItem);
     saveTrashBin();
     
     // Remove from current tab
-    console.log('Removing link with ID:', linkId);
-    console.log('Tab links before:', targetTab.links.map(l => ({id: l.id, title: l.title})));
-    
     const initialLength = targetTab.links.length;
     targetTab.links = targetTab.links.filter(l => l.id !== linkId);
     const finalLength = targetTab.links.length;
     
-    console.log('Tab links after:', targetTab.links.map(l => ({id: l.id, title: l.title})));
-    console.log(`Links removed: ${initialLength - finalLength}`);
-    
     if (initialLength === finalLength) {
         console.error('Link was not found in tab!');
-        console.log('Looking for ID:', linkId);
-        console.log('Available IDs:', targetTab.links.map(l => l.id));
         alert('Error: Could not find link in tab');
         return;
     }
@@ -397,71 +348,7 @@ function deleteLink(link, tab, environment) {
     }
     
     alert(`"${linkTitle}" moved to trash`);
-    console.log('=== DELETE SUCCESSFUL ===');
 }
-
-// === ADD THIS DEBUG WRAPPER RIGHT AFTER ===
-const originalDeleteLink = window.deleteLink;
-window.deleteLink = function(...args) {
-    console.log('=== DELETE LINK CALLED WITH ===');
-    console.log('Arguments:', args);
-    console.log('Argument types:', args.map(arg => typeof arg));
-    console.log('Number of arguments:', args.length);
-    
-    // Log the call stack to see where it's called from
-    console.log('Call stack:');
-    console.trace();
-    
-    console.log('=== END DEBUG ===');
-    
-    // Call the original function
-    return originalDeleteLink.apply(this, args);
-};
-
-// // Add this function to your main script
-// function deleteLink(link) {
-//     if (!confirm(`Are you sure you want to move "${link.title}" to trash?`)) {
-//         return;
-//     }
-    
-//     // Create trash item
-//     const trashItem = {
-//         id: 'trash-' + Date.now(),
-//         type: 'link',
-//         originalId: link.id,
-//         data: link,
-//         parentTab: {
-//             id: currentTab.id,
-//             name: currentTab.name
-//         },
-//         parentEnvironment: currentEnvironment ? {
-//             id: currentEnvironment.id,
-//             name: currentEnvironment.name
-//         } : null,
-//         parentProfile: getCurrentProfile() ? {
-//             id: getCurrentProfile().id,
-//             name: getCurrentProfile().name
-//         } : null,
-//         parentWorkbook: getCurrentWorkbook() ? {
-//             id: getCurrentWorkbook().id,
-//             name: getCurrentWorkbook().name
-//         } : null,
-//         deletedAt: new Date().toISOString()
-//     };
-    
-//     // Add to trash bin
-//     trashBin.push(trashItem);
-//     saveTrashBin();
-    
-//     // Remove from current tab
-//     currentTab.links = currentTab.links.filter(l => l.id !== link.id);
-    
-//     // Save and refresh
-//     saveWorkbooks();
-//     renderLinks(currentTab);
-    
-//     alert(`"${link.title}" moved to trash`);
-// }
 
 // Helper function to import trash bin
 function importTrashBin(trashBinElement) {
@@ -546,83 +433,3 @@ function saveTrashBin() {
     }
 }
 
-
-// Add this function to render the trash bin modal
-function renderTrashBinModal() {
-    const trashBinItems = document.getElementById('trash-bin-items');
-    const trashBinCount = document.getElementById('trash-bin-count');
-    
-    trashBinCount.textContent = `${trashBin.length} item${trashBin.length !== 1 ? 's' : ''} in trash`;
-    
-    if (trashBin.length === 0) {
-        trashBinItems.innerHTML = `
-            <div class="trash-bin-empty">
-                <i class="fas fa-trash" style="font-size: 3rem; margin-bottom: 20px; color: #bdc3c7;"></i>
-                <h3>Trash Bin is Empty</h3>
-                <p>Deleted links will appear here</p>
-            </div>
-        `;
-        return;
-    }
-    
-    trashBinItems.innerHTML = '';
-    
-    // Sort by deletion date (newest first)
-    const sortedTrash = [...trashBin].sort((a, b) => 
-        new Date(b.deletedAt) - new Date(a.deletedAt)
-    );
-    
-    sortedTrash.forEach(trashedLink => {
-        const itemElement = document.createElement('div');
-        itemElement.className = 'trash-bin-item';
-        
-        // Determine icon based on link type
-        let iconClass = 'fa-link';
-        let linkText = trashedLink.url;
-        
-        if (trashedLink.isMultiLink) {
-            iconClass = 'fa-layer-group';
-            linkText = 'Multiple links card';
-        } else if (trashedLink.isSearchLink) {
-            iconClass = 'fa-search';
-            linkText = trashedLink.url;
-        }
-        
-        itemElement.innerHTML = `
-            <div class="trash-bin-item-icon">
-                <i class="fas ${iconClass}"></i>
-            </div>
-            <div class="trash-bin-item-content">
-                <div class="trash-bin-item-title">${trashedLink.title}</div>
-                <div class="trash-bin-item-url">${linkText}</div>
-                <div class="trash-bin-item-origin">
-                    Originally from: ${trashedLink.origin?.profileName || 'Unknown'} → 
-                    ${trashedLink.origin?.environmentName || 'Unknown'} → 
-                    ${trashedLink.origin?.tabName || 'Unknown'}
-                </div>
-            </div>
-            <div class="trash-bin-item-actions">
-                <button class="trash-bin-action-btn trash-bin-restore-btn" title="Restore to original location">
-                    <i class="fas fa-undo"></i>Restore
-                </button>
-                <button class="trash-bin-action-btn trash-bin-permanently-delete-btn" title="Permanently delete">
-                    <i class="fas fa-trash"></i>Delete
-                </button>
-            </div>
-        `;
-        
-        trashBinItems.appendChild(itemElement);
-        
-        // Add event listeners
-        const restoreBtn = itemElement.querySelector('.trash-bin-restore-btn');
-        const deleteBtn = itemElement.querySelector('.trash-bin-permanently-delete-btn');
-        
-        restoreBtn.addEventListener('click', () => {
-            restoreLink(trashedLink);
-        });
-        
-        deleteBtn.addEventListener('click', () => {
-            permanentlyDeleteLink(trashedLink);
-        });
-    });
-}

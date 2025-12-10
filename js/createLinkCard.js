@@ -157,20 +157,19 @@ function createLinkCard(link, index) {
         });
     }
     
-    // Delete button event listener
-    if (deleteBtn) {
-        deleteBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const linkTitle = link.title || 'Untitled Link';
-            if (confirm(`Are you sure you want to delete the link "${linkTitle}"?`)) {
-                if (typeof deleteLink === 'function') {
-                    deleteLink(link, currentTab, currentEnvironment);
-                } else {
-                    alert('Link deletion not available');
-                }
+    // In createLinkCard.js, line 167:
+    deleteBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const linkTitle = link.title || 'Untitled Link';
+        if (confirm(`Are you sure you want to delete the link "${linkTitle}"?`)) {
+            if (typeof deleteLink === 'function') {
+                // Pass the link object, not the index
+                deleteLink(link, currentTab, currentEnvironment);
+            } else {
+                alert('Link deletion not available');
             }
-        });
-    }
+        }
+    });
     
     // Add click event for selection mode
     card.addEventListener('click', (e) => {

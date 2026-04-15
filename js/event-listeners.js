@@ -99,6 +99,19 @@ function setupEventListeners() {
         environmentModal.style.display = 'flex';
     });
 
+    // Add profile button (from the profiles-container section)
+    const addProfileBtn = document.getElementById('add-profile-btn');
+    if (addProfileBtn) {
+        addProfileBtn.addEventListener('click', () => {
+            console.log('Add profile button clicked');
+            document.getElementById('new-profile-name').value = '';
+            profileModal.style.display = 'flex';
+        });
+        console.log('Add profile button listener added');
+    } else {
+        console.error('Add profile button not found in DOM');
+    }
+
     // View type dropdown
     const viewTypeToggle = document.getElementById('view-type-toggle');
     const viewTypeMenu = document.getElementById('view-type-menu');

@@ -99,18 +99,35 @@ function setupEventListeners() {
         environmentModal.style.display = 'flex';
     });
 
-    // Add profile button (from the profiles-container section)
-    const addProfileBtn = document.getElementById('add-profile-btn');
-    if (addProfileBtn) {
-        addProfileBtn.addEventListener('click', () => {
-            console.log('Add profile button clicked');
-            document.getElementById('new-profile-name').value = '';
-            profileModal.style.display = 'flex';
-        });
-        console.log('Add profile button listener added');
-    } else {
-        console.error('Add profile button not found in DOM');
-    }
+    // ============================================
+    // EVENT DELEGATION FOR PROFILE BUTTONS (MOST RELIABLE)
+    // ============================================
+
+    // Handle Add Profile button clicks via delegation
+    document.body.addEventListener('click', function(e) {
+        // Check if clicked element is either profile button
+        const addProfileBtn = e.target.closest('#add-profile-btn');
+        const addProfileTabBtn = e.target.closest('#add-profile-tab-btn');
+        
+        if (addProfileBtn || addProfileTabBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Profile add button clicked via delegation:', addProfileBtn ? 'add-profile-btn' : 'add-profile-tab-btn');
+            
+            // Clear input and show modal
+            const nameInput = document.getElementById('new-profile-name');
+            if (nameInput) nameInput.value = '';
+            
+            const modal = document.getElementById('profile-modal');
+            if (modal) {
+                modal.style.display = 'flex';
+                console.log('Profile modal should now be visible');
+            } else {
+                console.error('Profile modal not found!');
+            }
+            return false;
+        }
+    });
 
     // View type dropdown
     const viewTypeToggle = document.getElementById('view-type-toggle');

@@ -1,10 +1,14 @@
 /* ===== SEARCH SUGGESTIONS DROPDOWN ===== */
-/* Search suggestions container */
+/* Update the search-suggestions container to match search input width */
 .search-suggestions {
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
+    width: 100%;
+    /* Explicitly set to 100% of parent */
+    min-width: 100%;
+    /* Ensure minimum width matches parent */
     background: white;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -13,6 +17,8 @@
     overflow-y: auto;
     z-index: 1000;
     margin-top: 5px;
+    box-sizing: border-box;
+    /* Include padding/border in width calculation */
 }
 
 .search-suggestions-header {
@@ -62,11 +68,25 @@
     flex-shrink: 0;
 }
 
-.search-suggestion-icon.workbook { background: #9b59b6; }
-.search-suggestion-icon.profile { background: #3498db; }
-.search-suggestion-icon.environment { background: #2ecc71; }
-.search-suggestion-icon.tab { background: #e67e22; }
-.search-suggestion-icon.link { background: #e74c3c; }
+.search-suggestion-icon.workbook {
+    background: #9b59b6;
+}
+
+.search-suggestion-icon.profile {
+    background: #3498db;
+}
+
+.search-suggestion-icon.environment {
+    background: #2ecc71;
+}
+
+.search-suggestion-icon.tab {
+    background: #e67e22;
+}
+
+.search-suggestion-icon.link {
+    background: #e74c3c;
+}
 
 /* Search suggestion content */
 .search-suggestion-content {

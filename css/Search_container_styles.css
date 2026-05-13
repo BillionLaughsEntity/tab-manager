@@ -4,6 +4,8 @@
     margin: 0 20px;
     flex: 1;
     max-width: 800px;
+    width: 100%;
+    /* Add this */
 }
 
 .search-container i {
